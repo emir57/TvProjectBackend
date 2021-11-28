@@ -7,11 +7,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Core.Entities.Dtos;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, TvProjectContext>, IUserDal
     {
+        public async Task<List<UserForAddressDto>> GetAddress(User user)
+        {
+            using(var context = new TvProjectContext())
+            {
+                var result = from address in context.UserAddresses
+                             where address.UserId == user.Id
+                             select new UserForAddressDto
+                             {
+                                 UserId = user.Id,
+                                 AddressText = address.AddressText,
+                                 CityId = address.CityId
+                             };
+                return await result.ToListAsync();
+            }
+        }
+
         public async Task<List<Role>> GetClaims(User user)
         {
             using(var context = new TvProjectContext())
@@ -24,6 +41,23 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  Id = roles.Id,
                                  Name = roles.Name
+                             };
+                return await result.ToListAsync();
+            }
+        }
+
+        public async Task<List<UserForCreditCardDto>> GetCrediCards(User user)
+        {
+            using(var context = new TvProjectContext())
+            {
+                var result = from card in context.UserCreditCards
+                             where card.UserId == user.Id
+                             select new UserForCreditCardDto
+                             {
+                                 UserId = user.Id,
+                                 CreditCardNumber = card.CreditCardNumber,
+                                 CVV = card.CVV,
+                                 Date = card.Date
                              };
                 return await result.ToListAsync();
             }

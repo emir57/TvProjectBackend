@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Core.Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +12,8 @@ namespace Business.Abstract
         Task<List<Role>> GetClaims(User user);
         Task Add(User user);
         Task<User> GetByMail(string email);
+
+        Task<List<UserForAddressDto>> GetAddress(User user);
+        Task<List<UserForCreditCardDto>> GetCrediCards(User user);
     }
 }
