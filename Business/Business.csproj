@@ -8,9 +8,17 @@
     <Folder Include="Abstract\" />
     <Folder Include="Concrete\" />
     <Folder Include="Constants\" />
-    <Folder Include="DependencyResolvers\" />
     <Folder Include="BusinessAspects\" />
     <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>
