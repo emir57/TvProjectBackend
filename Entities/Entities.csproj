@@ -8,8 +8,4 @@
     <Folder Include="Abstract\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\deneme\Core\Core.csproj" />
-  </ItemGroup>
-
 </Project>
