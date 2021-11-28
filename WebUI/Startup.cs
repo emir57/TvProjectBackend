@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Extensions;
+using Core.DependencyResolvers;
+using Core.Utilities.IoC;
+using Core.Security.JWT;
 
 namespace WebUI
 {
@@ -26,6 +30,12 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            services.AddDependencyResolvers(new ICoreModule[] {
+                new CoreModule()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +49,8 @@ namespace WebUI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication ();
 
             app.UseAuthorization();
 
