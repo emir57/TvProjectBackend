@@ -15,6 +15,9 @@ namespace DataAccess.Concrete.EntityFramework
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
         public DbSet<Tv> Tvs { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<TvBrand> TvBrands { get; set; }
