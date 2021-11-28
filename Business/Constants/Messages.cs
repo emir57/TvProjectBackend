@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -10,5 +11,7 @@ namespace Business.Constants
         public static string SuccessDelete = "Silme Başarılı";
         public static string SuccessUpdate = "Güncelleme Başarılı";
         public static string SuccessGet = "Listeleme Başarılı";
+
+        public static string AuthorizationDenied = "Yetkisiz işlem";
     }
 }
