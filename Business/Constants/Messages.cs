@@ -23,5 +23,13 @@ namespace Business.Constants
 
         public static string AlreadyUserExists = "Böyle bir kullanıcı zaten var";
         public static string SuccessfulRegister = "Kayıt işlemi başarılı";
+
+        public static string CreateUserAddress = "Adres başarıyla oluşturuldu";
+        public static string DeleteUserAddress = "Adres başarıyla silindi";
+        public static string UpdateUserAddress = "Adres başarıyla güncellendi";
+
+        public static string UpdateCreditCard = "Kredi kartı başarıyla güncellendi";
+        public static string DeleteUserCreditCard = "Kredi kartı başarıyla silindi";
+        public static string AddUserCreditCard = "Kredi kartı başarıyla eklendi";
     }
 }

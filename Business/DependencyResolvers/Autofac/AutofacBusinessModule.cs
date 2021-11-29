@@ -40,7 +40,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfTvDal>().As<ITvDal>().SingleInstance();
             builder.RegisterType<EfTvPhotoDal>().As<ITvPhotoDal>().SingleInstance();
             builder.RegisterType<EfUserAddressDal>().As<IUserAddressDal>().SingleInstance();
-            builder.RegisterType<EfUserCreditCardDal>().As<IUserCrediCardDal>().SingleInstance();
+            builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
 
