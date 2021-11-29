@@ -23,8 +23,16 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
 
+            builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
+            builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
+            builder.RegisterType<EfTvBrandDal>().As<ITvBrandDal>().SingleInstance();
+            builder.RegisterType<EfTvDal>().As<ITvDal>().SingleInstance();
+            builder.RegisterType<EfTvPhotoDal>().As<ITvPhotoDal>().SingleInstance();
+            builder.RegisterType<EfUserAddressDal>().As<IUserAddressDal>().SingleInstance();
+            builder.RegisterType<EfUserCreditCardDal>().As<IUserCrediCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
-            
+
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
