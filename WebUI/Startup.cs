@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Core.Security.Encryption;
 using Core.Security.JWT;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WebUI
 {
@@ -55,6 +57,8 @@ namespace WebUI
                 new CoreModule()
             });
 
+            
+
             services.AddCors(options=> 
             {
                 options.AddDefaultPolicy(
@@ -72,6 +76,12 @@ namespace WebUI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images/")),
+                RequestPath = "/images"
+            });
+
             app.UseCors();
 
             app.UseHttpsRedirection();
