@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Autofac;
 using Autofac.Extras.DynamicProxy;
+using Business.Abstract;
+using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Security.JWT;
 using Core.Utilities.Interceptors;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -16,6 +20,11 @@ namespace Business.DependencyResolvers.Autofac
             //builder.RegisterType<>().As<>().SingleInstance();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
+            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+
+            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
