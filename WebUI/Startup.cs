@@ -54,6 +54,15 @@ namespace WebUI
             services.AddDependencyResolvers(new ICoreModule[] {
                 new CoreModule()
             });
+
+            services.AddCors(options=> 
+            {
+                options.AddDefaultPolicy(
+                   builder =>
+                   {
+                       builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                   });
+                 });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +72,7 @@ namespace WebUI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
@@ -71,6 +81,8 @@ namespace WebUI
             app.UseAuthentication ();
 
             app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

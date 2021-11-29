@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
 using Core.Entities.Dtos;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +54,23 @@ namespace WebUI.Controllers
             }
             var token = await _authService.CreateAccessToken(user);
             return Ok(token);
+        }
+        [HttpPost]
+        [Route("uploadImage")]
+        public async Task<IActionResult> UploadImage([FromForm]IFormFile image)
+        {
+            if (!(image.Length > 0))
+            {
+                return BadRequest("Lütfen resmi yükleyiniz.");
+            }
+            var ex = Path.GetExtension(image.FileName);
+            var name = Guid.NewGuid() + ex;
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Images/" + name);
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+            return Ok();
         }
     }
 }
