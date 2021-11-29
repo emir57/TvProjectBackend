@@ -64,7 +64,9 @@ namespace WebUI
                 options.AddDefaultPolicy(
                    builder =>
                    {
-                       builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                       builder.WithOrigins("http://localhost:4200")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
                    });
                  });
         }

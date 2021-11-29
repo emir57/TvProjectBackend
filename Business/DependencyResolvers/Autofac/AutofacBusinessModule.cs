@@ -20,9 +20,13 @@ namespace Business.DependencyResolvers.Autofac
             //builder.RegisterType<>().As<>().SingleInstance();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
+
+            //Business
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
 
+
+            //DAtaAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
             builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
             builder.RegisterType<EfTvBrandDal>().As<ITvBrandDal>().SingleInstance();
@@ -33,7 +37,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
 
-
+            //Aspects
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
