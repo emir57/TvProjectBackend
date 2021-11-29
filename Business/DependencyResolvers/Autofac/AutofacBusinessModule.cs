@@ -22,8 +22,15 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
             //Business
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+            builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
+            builder.RegisterType<PhotoManager>().As<IPhotoService>().SingleInstance();
+            builder.RegisterType<TvBrandManager>().As<ITvBrandService>().SingleInstance();
+            builder.RegisterType<TvPhotoManager>().As<ITvPhotoService>().SingleInstance();
+            builder.RegisterType<TvManager>().As<ITvService>().SingleInstance();
+            builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
+            builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
+            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
 
 
             //DAtaAccess
