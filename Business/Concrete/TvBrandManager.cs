@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Validators.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,24 +24,30 @@ namespace Business.Concrete
             _tvBrandDal = tvBrandDal;
         }
         [ValidationAspect(typeof(TvBrandValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Add(TvBrand entity)
         {
             await _tvBrandDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
 
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Delete(TvBrand entity)
         {
             await _tvBrandDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<TvBrand>> Get(Expression<Func<TvBrand, bool>> filter)
         {
             var result = await _tvBrandDal.Get(filter);
             return new SuccessDataResult<TvBrand>(result, Messages.SuccessGet);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvBrand>>> GetAll(Expression<Func<TvBrand, bool>> filter = null)
         {
             var result = filter == null ?
@@ -46,7 +55,9 @@ namespace Business.Concrete
                 await _tvBrandDal.GetAll(filter);
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
-
+        [ValidationAspect(typeof(TvBrandValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Update(TvBrand entity)
         {
             await _tvBrandDal.Update(entity);
