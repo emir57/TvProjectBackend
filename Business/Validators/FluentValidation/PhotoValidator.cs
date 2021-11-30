@@ -10,7 +10,8 @@ namespace Business.Validators.FluentValidation
     {
         public PhotoValidator()
         {
-
+            RuleFor(p => p.ImageUrl).NotEmpty();
+            RuleFor(p => p.ImageUrl).MaximumLength(250);
         }
     }
 }
