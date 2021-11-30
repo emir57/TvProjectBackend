@@ -16,5 +16,7 @@ namespace Business.Abstract
         Task<IDataResult<Tv>> Get(Expression<Func<Tv, bool>> filter);
         Task<IDataResult<List<Tv>>> GetByBrand(int brandId);
         Task<IDataResult<List<Tv>>> GetAll(Expression<Func<Tv, bool>> filter = null);
+
+        Task<IDataResult<List<Photo>>> GetPhotos(int tvId);
     }
 }

@@ -61,6 +61,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
             
         }
+
+        public async Task<IDataResult<List<Photo>>> GetPhotos(int tvId)
+        {
+            var result = await _tvDal.GetPhotos(tvId);
+            return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
+        }
+
         [ValidationAspect(typeof(TvValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
