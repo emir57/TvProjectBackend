@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,11 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        Task<List<Role>> GetClaims(User user);
-        Task Add(User user);
-        Task<User> GetByMail(string email);
+        Task<IDataResult<List<Role>>> GetClaims(User user);
+        Task<IResult> Add(User user);
+        Task<IDataResult<User>> GetByMail(string email);
 
-        Task<List<UserForAddressDto>> GetAddress(User user);
-        Task<List<UserForCreditCardDto>> GetCrediCards(User user);
+        Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user);
+        Task<IDataResult<List<UserForCreditCardDto>>> GetCrediCards(User user);
     }
 }
