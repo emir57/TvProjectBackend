@@ -22,7 +22,9 @@ namespace DataAccess.Concrete.EntityFramework
                     RoleId = 3,
                     UserId = user.Id
                 };
-                await context.UserRoles.AddAsync(userRole);
+                context.UserRoles.Add(userRole);
+                await context.SaveChangesAsync();
+                
             }
         }
 

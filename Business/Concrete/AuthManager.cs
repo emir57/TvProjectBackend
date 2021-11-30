@@ -69,7 +69,7 @@ namespace Business.Concrete
         public async Task<IResult> UserExists(string email)
         {
             var result = await _userDal.GetByMail(email);
-            if (result == null)
+            if (result.Data == null)
             {
                 return new SuccessResult();
             }
