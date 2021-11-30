@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,25 +22,28 @@ namespace Business.Concrete
         {
             _citydal = citydal;
         }
-
+        [ValidationAspect(typeof(City))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Add(City entity)
         {
             await _citydal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
-
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Delete(City entity)
         {
             await _citydal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<City>> Get(Expression<Func<City, bool>> filter)
         {
             var result = await _citydal.Get(filter);
             return new SuccessDataResult<City>(result, Messages.SuccessGet);
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<City>>> GetAll(Expression<Func<City, bool>> filter = null)
         {
             var result = filter == null ?
@@ -45,7 +51,9 @@ namespace Business.Concrete
                 await _citydal.GetAll(filter);
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
-
+        [ValidationAspect(typeof(City))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Update(City entity)
         {
             await _citydal.Update(entity);

@@ -29,7 +29,7 @@ namespace Business.Concrete
             var result = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
-
+        [ValidationAspect(typeof(UserForLoginDto))]
         public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
             var result = await _userDal.GetByMail(userForLoginDto.Email);
@@ -44,7 +44,7 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<User>(user, Messages.SuccessfulLogin);
         }
-        [ValidationAspect(typeof(UserValidator))]
+        [ValidationAspect(typeof(UserForRegisterDtoValidator))]
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
