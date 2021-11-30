@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Validators.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,25 +23,30 @@ namespace Business.Concrete
         {
             _creditCardDal = creditCardDal;
         }
-
+        [ValidationAspect(typeof(UserCreditCardValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Add(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Add(userCreditCard);
             return new SuccessResult(Messages.AddUserCreditCard);
         }
-
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Delete(userCreditCard);
             return new SuccessResult(Messages.DeleteUserCreditCard);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<UserCreditCard>> Get(Expression<Func<UserCreditCard, bool>> filter)
         {
             var result = await _creditCardDal.Get(filter);
             return new SuccessDataResult<UserCreditCard>(result);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetAll(Expression<Func<UserCreditCard, bool>> filter = null)
         {
             var result = filter == null ?
@@ -45,13 +54,16 @@ namespace Business.Concrete
                 await _creditCardDal.GetAll(filter);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetByUserId(int userId)
         {
             var result = await _creditCardDal.GetAll(c => c.UserId == userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
-
+        [ValidationAspect(typeof(UserCreditCardValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Update(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Update(userCreditCard);
