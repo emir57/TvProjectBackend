@@ -43,7 +43,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userService.GetByMail(userForLoginDto.Email);
-            if (user == null)
+            if (user.Data == null)
             {
                 return BadRequest("Kullanıcı bulunamadı");
             }
@@ -52,7 +52,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(result.Message);
             }
-            var token = await _authService.CreateAccessToken(user);
+            var token = await _authService.CreateAccessToken(user.Data);
             return Ok(token);
         }
         [HttpPost]
