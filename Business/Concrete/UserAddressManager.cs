@@ -40,12 +40,13 @@ namespace Business.Concrete
             await _userAddressDal.Delete(userAddress);
             return new SuccessResult(Messages.DeleteUserAddress);
         }
-
+        [SecuredOperation("User")]
         public async Task<IDataResult<UserAddress>> Get(Expression<Func<UserAddress, bool>> filter)
         {
             var result = await _userAddressDal.Get(filter);
             return new SuccessDataResult<UserAddress>(result);
         }
+        [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress, bool>> filter = null)
@@ -55,6 +56,7 @@ namespace Business.Concrete
                 await _userAddressDal.GetAll(filter);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
+        [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetByUserId(int userId)

@@ -33,6 +33,7 @@ namespace Business.Concrete
             await _creditCardDal.Add(userCreditCard);
             return new SuccessResult(Messages.AddUserCreditCard);
         }
+        [SecuredOperation("User")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserCreditCard userCreditCard)
@@ -40,6 +41,7 @@ namespace Business.Concrete
             await _creditCardDal.Delete(userCreditCard);
             return new SuccessResult(Messages.DeleteUserCreditCard);
         }
+        [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<UserCreditCard>> Get(Expression<Func<UserCreditCard, bool>> filter)
@@ -47,6 +49,7 @@ namespace Business.Concrete
             var result = await _creditCardDal.Get(filter);
             return new SuccessDataResult<UserCreditCard>(result);
         }
+        [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetAll(Expression<Func<UserCreditCard, bool>> filter = null)
@@ -56,6 +59,7 @@ namespace Business.Concrete
                 await _creditCardDal.GetAll(filter);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
+        [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetByUserId(int userId)
