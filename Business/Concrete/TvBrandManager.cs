@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,7 +20,7 @@ namespace Business.Concrete
         {
             _tvBrandDal = tvBrandDal;
         }
-
+        [ValidationAspect(typeof(TvBrandValidator))]
         public async Task<IResult> Add(TvBrand entity)
         {
             await _tvBrandDal.Add(entity);
