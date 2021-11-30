@@ -38,12 +38,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<City>> Get(Expression<Func<City, bool>> filter)
         {
             var result = await _citydal.Get(filter);
             return new SuccessDataResult<City>(result, Messages.SuccessGet);
         }
         [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<City>>> GetAll(Expression<Func<City, bool>> filter = null)
         {
             var result = filter == null ?
