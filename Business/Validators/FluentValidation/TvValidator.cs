@@ -13,7 +13,6 @@ namespace Business.Validators.FluentValidation
             RuleFor(t => t.ProductName).NotEmpty();
             RuleFor(t => t.ProductName).MinimumLength(1);
             RuleFor(t => t.ProductName).MaximumLength(50);
-            RuleFor(t => t.ProductCode).NotEmpty();
             RuleFor(t => t.ProductCode).MinimumLength(1);
             RuleFor(t => t.ProductCode).MaximumLength(50);
             RuleFor(t => t.ScreenType).NotEmpty();

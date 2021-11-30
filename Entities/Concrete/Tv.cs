@@ -16,6 +16,8 @@ namespace Entities.Concrete
         public int BrandId { get; set; }
         public decimal UnitPrice { get; set; }
         public byte Discount { get; set; }
-        
+        public bool IsDiscount { get; set; }
+
+
     }
 }
