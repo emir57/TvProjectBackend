@@ -61,6 +61,7 @@ namespace Business.Concrete
                 Status = true
             };
             await _userDal.Add(user);
+            await _userDal.AddUserRole(user);
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
 
         }
