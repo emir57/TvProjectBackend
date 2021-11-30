@@ -40,9 +40,10 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Photo>>> GetAll(Expression<Func<Photo, bool>> filter = null)
         {
-            return filter == null ?
-                new SuccessDataResult<List<Photo>>(await _photoDal.GetAll(), Messages.SuccessGet) :
-                new SuccessDataResult<List<Photo>>(await _photoDal.GetAll(filter), Messages.SuccessGet);
+            var result = filter == null ?
+                await _photoDal.GetAll() :
+                await _photoDal.GetAll(filter);
+            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
 
         }
 

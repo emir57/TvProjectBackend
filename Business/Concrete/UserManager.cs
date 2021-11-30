@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
@@ -16,29 +18,34 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        public async Task Add(User user)
+        public async Task<IResult> Add(User user)
         {
             await _userDal.Add(user);
+            return new SuccessResult(Messages.SuccessAdd);
         }
 
-        public async Task<List<UserForAddressDto>> GetAddress(User user)
+        public async Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user)
         {
-            return await _userDal.GetAddress(user);
+            var result =  await _userDal.GetAddress(user);
+            return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<User> GetByMail(string email)
+        public async Task<IDataResult<User>> GetByMail(string email)
         {
-            return await _userDal.Get(u => u.Email == email);
+            var result = await _userDal.Get(u => u.Email == email);
+            return new SuccessDataResult<User>(result, Messages.SuccessGet);
         }
 
-        public async Task<List<Role>> GetClaims(User user)
+        public async Task<IDataResult<List<Role>>> GetClaims(User user)
         {
-            return await _userDal.GetClaims(user);
+            var result = await _userDal.GetClaims(user);
+            return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
 
-        public async Task<List<UserForCreditCardDto>> GetCrediCards(User user)
+        public async Task<IDataResult<List<UserForCreditCardDto>>> GetCrediCards(User user)
         {
-            return await _userDal.GetCrediCards(user);
+            var result = await _userDal.GetCrediCards(user);
+            return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
         }
     }
 }

@@ -40,10 +40,10 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<TvBrand>>> GetAll(Expression<Func<TvBrand, bool>> filter = null)
         {
-            return filter == null ?
-                new SuccessDataResult<List<TvBrand>>(await _tvBrandDal.GetAll(), Messages.SuccessGet) :
-                new SuccessDataResult<List<TvBrand>>(await _tvBrandDal.GetAll(filter), Messages.SuccessGet);
-
+            var result = filter == null ?
+                await _tvBrandDal.GetAll() :
+                await _tvBrandDal.GetAll(filter);
+            return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
 
         public async Task<IResult> Update(TvBrand entity)

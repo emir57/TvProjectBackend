@@ -40,10 +40,10 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<TvPhoto>>> GetAll(Expression<Func<TvPhoto, bool>> filter = null)
         {
-            return filter == null ?
-                new SuccessDataResult<List<TvPhoto>>(await _tvPhotoDal.GetAll(), Messages.SuccessGet) :
-                new SuccessDataResult<List<TvPhoto>>(await _tvPhotoDal.GetAll(filter), Messages.SuccessGet);
-
+            var result = filter == null ?
+                await _tvPhotoDal.GetAll() :
+                await _tvPhotoDal.GetAll(filter);
+            return new SuccessDataResult<List<TvPhoto>>(result, Messages.SuccessGet);
         }
 
         public async Task<IResult> Update(TvPhoto entity)
