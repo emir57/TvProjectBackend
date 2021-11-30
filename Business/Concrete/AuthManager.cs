@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Validators.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Security.Hashing;
@@ -42,7 +44,7 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<User>(user, Messages.SuccessfulLogin);
         }
-
+        [ValidationAspect(typeof(UserValidator))]
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
