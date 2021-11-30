@@ -38,14 +38,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
-        [PerformanceAspect(3)]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<TvPhoto>> Get(Expression<Func<TvPhoto, bool>> filter)
         {
             var result = await _tvPhotoDal.Get(filter);
             return new SuccessDataResult<TvPhoto>(result, Messages.SuccessGet);
         }
         [CacheAspect]
-        [PerformanceAspect(3)]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvPhoto>>> GetAll(Expression<Func<TvPhoto, bool>> filter = null)
         {
             var result = filter == null ?

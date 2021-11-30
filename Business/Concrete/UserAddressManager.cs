@@ -1,5 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Validators.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -18,12 +22,16 @@ namespace Business.Concrete
         {
             _userAddressDal = userAddressDal;
         }
+        [ValidationAspect(typeof(UserAddressValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Add(UserAddress userAddress)
         {
             await _userAddressDal.Add(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
         }
-
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserAddress userAddress)
         {
             await _userAddressDal.Delete(userAddress);
@@ -35,7 +43,8 @@ namespace Business.Concrete
             var result = await _userAddressDal.Get(filter);
             return new SuccessDataResult<UserAddress>(result);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress, bool>> filter = null)
         {
             var result = filter == null ?
@@ -43,13 +52,16 @@ namespace Business.Concrete
                 await _userAddressDal.GetAll(filter);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetByUserId(int userId)
         {
             var result = await _userAddressDal.GetAll(u => u.UserId == userId);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
-
+        [ValidationAspect(typeof(UserAddressValidator))]
+        [CacheRemoveAspect("Get")]
+        [PerformanceAspect(3)]
         public async Task<IResult> Update(UserAddress userAddress)
         {
             await _userAddressDal.Update(userAddress);
