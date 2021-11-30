@@ -35,7 +35,7 @@ namespace Business.DependencyResolvers.Autofac
 
             //DAtaAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
-            builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
+            builder.RegisterType<EfPhotoDal>().As<ICityDal>().SingleInstance();
             builder.RegisterType<EfTvBrandDal>().As<ITvBrandDal>().SingleInstance();
             builder.RegisterType<EfTvDal>().As<ITvDal>().SingleInstance();
             builder.RegisterType<EfTvPhotoDal>().As<ITvPhotoDal>().SingleInstance();
