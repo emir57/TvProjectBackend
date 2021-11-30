@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         {
             _photoDal = photoDal;
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -31,6 +33,7 @@ namespace Business.Concrete
             await _photoDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+        [SecuredOperation("Admin,Moderator")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(Photo entity)
         {
@@ -54,6 +57,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
 
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]

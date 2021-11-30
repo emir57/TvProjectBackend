@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         {
             _tvBrandDal = tvBrandDal;
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -31,7 +33,7 @@ namespace Business.Concrete
             await _tvBrandDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
-
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(TvBrand entity)
@@ -55,6 +57,7 @@ namespace Business.Concrete
                 await _tvBrandDal.GetAll(filter);
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         {
             _tvPhotoDal = tvPhotoDal;
         }
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(TvPhoto entity)
@@ -30,6 +32,7 @@ namespace Business.Concrete
             await _tvPhotoDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(TvPhoto entity)
@@ -53,6 +56,7 @@ namespace Business.Concrete
                 await _tvPhotoDal.GetAll(filter);
             return new SuccessDataResult<List<TvPhoto>>(result, Messages.SuccessGet);
         }
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(TvPhoto entity)

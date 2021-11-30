@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -24,6 +25,7 @@ namespace Business.Concrete
         {
             _tvDal = tvDal;
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -32,6 +34,7 @@ namespace Business.Concrete
             await _tvDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(Tv entity)
@@ -57,7 +60,6 @@ namespace Business.Concrete
             BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
         }
-
         private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
         {
             foreach (var product in products)
@@ -82,7 +84,7 @@ namespace Business.Concrete
             var result = await _tvDal.GetPhotos(tvId);
             return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
         }
-
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]

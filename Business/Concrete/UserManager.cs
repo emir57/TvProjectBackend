@@ -53,7 +53,7 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForCreditCardDto>>> GetCrediCards(User user)
+        public async Task<IDataResult<List<UserForCreditCardDto>>> GetCreditCards(User user)
         {
             var result = await _userDal.GetCrediCards(user);
             return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);

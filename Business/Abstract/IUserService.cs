@@ -15,6 +15,6 @@ namespace Business.Abstract
         Task<IDataResult<User>> GetByMail(string email);
 
         Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user);
-        Task<IDataResult<List<UserForCreditCardDto>>> GetCrediCards(User user);
+        Task<IDataResult<List<UserForCreditCardDto>>> GetCreditCards(User user);
     }
 }

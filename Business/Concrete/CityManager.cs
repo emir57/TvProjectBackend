@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         {
             _citydal = citydal;
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -31,6 +33,7 @@ namespace Business.Concrete
             await _citydal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+        [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(City entity)
@@ -54,6 +57,7 @@ namespace Business.Concrete
                 await _citydal.GetAll(filter);
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
+        [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]

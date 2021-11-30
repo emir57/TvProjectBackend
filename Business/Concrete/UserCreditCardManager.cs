@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -23,6 +24,7 @@ namespace Business.Concrete
         {
             _creditCardDal = creditCardDal;
         }
+        [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -61,6 +63,7 @@ namespace Business.Concrete
             var result = await _creditCardDal.GetAll(c => c.UserId == userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
+        [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]

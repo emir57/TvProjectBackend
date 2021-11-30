@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
@@ -22,6 +23,7 @@ namespace Business.Concrete
         {
             _userAddressDal = userAddressDal;
         }
+        [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
@@ -30,6 +32,7 @@ namespace Business.Concrete
             await _userAddressDal.Add(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
         }
+        [SecuredOperation("User")]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserAddress userAddress)
@@ -59,6 +62,7 @@ namespace Business.Concrete
             var result = await _userAddressDal.GetAll(u => u.UserId == userId);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
+        [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
