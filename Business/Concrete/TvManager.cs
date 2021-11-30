@@ -46,6 +46,13 @@ namespace Business.Concrete
 
         }
 
+        public async Task<IDataResult<List<Tv>>> GetByBrand(int brandId)
+        {
+            var result = await _tvDal.GetAll(t => t.BrandId == brandId);
+            return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+            
+        }
+
         public async Task<IResult> Update(Tv entity)
         {
             await _tvDal.Update(entity);
