@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
@@ -22,7 +23,7 @@ namespace Business.Concrete
         {
             _citydal = citydal;
         }
-        [ValidationAspect(typeof(City))]
+        [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(City entity)
@@ -53,7 +54,7 @@ namespace Business.Concrete
                 await _citydal.GetAll(filter);
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
-        [ValidationAspect(typeof(City))]
+        [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(City entity)

@@ -29,7 +29,7 @@ namespace Business.Concrete
             var result = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
-        [ValidationAspect(typeof(UserForLoginDto))]
+        [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
             var result = await _userDal.GetByMail(userForLoginDto.Email);
