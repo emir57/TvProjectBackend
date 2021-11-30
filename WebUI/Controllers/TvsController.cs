@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -44,6 +45,44 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvPhotos(int tvId)
         {
             var result = await _tvService.GetPhotos(tvId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("add")]
+        public async Task<ActionResult> AddTv(Tv tv)
+        {
+            var result = await _tvService.Add(tv);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpPut]
+        [Route("update")]
+        public async Task<ActionResult> UpdateTv(Tv tv)
+        {
+            var result = await _tvService.Update(tv);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<ActionResult> DeleteTv(int tvId)
+        {
+            var tv = await _tvService.Get(t => t.Id == tvId);
+            if (tv.Data == null)
+            {
+                return BadRequest("Silinecek ürün bulunamadı");
+            }
+            var result = await _tvService.Delete(tv.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
