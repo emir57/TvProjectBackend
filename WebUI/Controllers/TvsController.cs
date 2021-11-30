@@ -28,5 +28,16 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        [Route("gettvphotos")]
+        public async Task<ActionResult> GetTvPhotos(int tvId)
+        {
+            var result = await _tvService.GetPhotos(tvId);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
     }
 }

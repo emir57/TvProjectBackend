@@ -4,6 +4,7 @@ using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -52,7 +53,21 @@ namespace Business.Concrete
             var result = filter == null ?
                 await _tvDal.GetAll() :
                 await _tvDal.GetAll(filter);
+
+            BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+        }
+
+        private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
+        {
+            foreach (var product in products)
+            {
+                if (product.IsDiscount)
+                {
+                    product.UnitPrice = product.UnitPrice - (product.UnitPrice * product.Discount / 100);  
+                }
+            }
+            return new SuccessDataResult<List<Tv>>(products);
         }
 
         public async Task<IDataResult<List<Tv>>> GetByBrand(int brandId)
