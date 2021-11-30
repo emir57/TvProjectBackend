@@ -9,6 +9,7 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -92,6 +93,18 @@ namespace Business.Concrete
         {
             await _tvDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);
+        }
+
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter = null)
+        {
+            var result= await _tvDal.GetTvWithPhotos();
+            return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
+        }
+
+        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetails(int tvId)
+        {
+            var result = await _tvDal.GetTvDetails(tvId);
+            return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
         }
     }
 }

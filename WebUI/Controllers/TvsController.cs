@@ -21,7 +21,18 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvs()
         {
-            var result = await _tvService.GetAll();
+            var result = await _tvService.GetTvWithPhotos();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("gettvdetail")]
+        public async Task<ActionResult> GetTvDetails(int tvId)
+        {
+            var result = await _tvService.GetTvDetails(tvId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
