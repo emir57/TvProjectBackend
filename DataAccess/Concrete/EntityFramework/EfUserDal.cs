@@ -13,6 +13,19 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, TvProjectContext>, IUserDal
     {
+        public async Task AddUserRole(User user)
+        {
+            using (var context = new TvProjectContext())
+            {
+                var userRole = new UserRole
+                {
+                    RoleId = 3,
+                    UserId = user.Id
+                };
+                await context.UserRoles.AddAsync(userRole);
+            }
+        }
+
         public async Task<List<UserForAddressDto>> GetAddress(User user)
         {
             using(var context = new TvProjectContext())

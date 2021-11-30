@@ -13,5 +13,6 @@ namespace DataAccess.Abstract
         Task<List<Role>> GetClaims(User user);
         Task<List<UserForAddressDto>> GetAddress(User user);
         Task<List<UserForCreditCardDto>> GetCrediCards(User user);
+        Task AddUserRole(User user);
     }
 }

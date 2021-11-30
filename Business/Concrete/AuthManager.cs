@@ -18,6 +18,7 @@ namespace Business.Concrete
     {
         private readonly IUserService _userDal;
         private readonly ITokenHelper _tokenHelper;
+        
         public AuthManager(ITokenHelper tokenHelper, IUserService userDal)
         {
             _tokenHelper = tokenHelper;

@@ -30,6 +30,13 @@ namespace Business.Concrete
             await _userDal.Add(user);
             return new SuccessResult(Messages.SuccessAdd);
         }
+
+        public async Task<IResult> AddUserRole(User user)
+        {
+            await _userDal.AddUserRole(user);
+            return new SuccessResult();
+        }
+
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user)

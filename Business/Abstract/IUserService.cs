@@ -12,6 +12,7 @@ namespace Business.Abstract
     {
         Task<IDataResult<List<Role>>> GetClaims(User user);
         Task<IResult> Add(User user);
+        Task<IResult> AddUserRole(User user);
         Task<IDataResult<User>> GetByMail(string email);
 
         Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user);
