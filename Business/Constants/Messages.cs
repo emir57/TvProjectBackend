@@ -31,5 +31,7 @@ namespace Business.Constants
         public static string UpdateCreditCard = "Kredi kartı başarıyla güncellendi";
         public static string DeleteUserCreditCard = "Kredi kartı başarıyla silindi";
         public static string AddUserCreditCard = "Kredi kartı başarıyla eklendi";
+
+        public static string UploadImage { get; internal set; }
     }
 }

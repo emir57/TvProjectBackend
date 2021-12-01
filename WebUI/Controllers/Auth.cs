@@ -17,10 +17,12 @@ namespace WebUI.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
-        public Auth(IAuthService authService, IUserService userService)
+        private readonly IImageService _imageService;
+        public Auth(IAuthService authService, IUserService userService, IImageService imageService)
         {
             _authService = authService;
             _userService = userService;
+            _imageService = imageService;
         }
         [HttpPost]
         [Route("register")]
@@ -59,18 +61,12 @@ namespace WebUI.Controllers
         [Route("uploadImage")]
         public async Task<IActionResult> UploadImage([FromForm]IFormFile image)
         {
-            if (!(image.Length > 0))
+            var result = await _imageService.UploadImageAsync(image);
+            if (!result.IsSuccess)
             {
-                return BadRequest("Lütfen resmi yükleyiniz.");
+                return BadRequest(result.Message);
             }
-            var ex = Path.GetExtension(image.FileName);
-            var name = Guid.NewGuid() + ex;
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "Images/" + name);
-            using (var stream = new FileStream(path, FileMode.Create))
-            {
-                await image.CopyToAsync(stream);
-            }
-            return Ok();
+            return Ok(result.Message);
         }
     }
 }
