@@ -17,8 +17,8 @@ namespace WebUI.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
-        private readonly IImageService _imageService;
-        public Auth(IAuthService authService, IUserService userService, IImageService imageService)
+        private readonly IPhotoUploadService _imageService;
+        public Auth(IAuthService authService, IUserService userService, IPhotoUploadService imageService)
         {
             _authService = authService;
             _userService = userService;

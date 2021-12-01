@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IImageService
+    public interface IPhotoUploadService
     {
         Task<IResult> UploadImageAsync(IFormFile file);
         //Task<IResult> UpdateImageAsync(IFormFile file);

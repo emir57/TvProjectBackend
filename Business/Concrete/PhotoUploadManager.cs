@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class ImageManager : IImageService
+    public class PhotoUploadManager : IPhotoUploadService
     {
         private readonly IPhotoService _photoService;
-        public ImageManager(IPhotoService photoService)
+        public PhotoUploadManager(IPhotoService photoService)
         {
             _photoService = photoService;
         }
