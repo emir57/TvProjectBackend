@@ -9,7 +9,7 @@ namespace Core.Extensions
     {
         public static void ConfigureExceptionMiddleware(this IApplicationBuilder app)
         {
-            app.UseMiddleware<>();
+            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }

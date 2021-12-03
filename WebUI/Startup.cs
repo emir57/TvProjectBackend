@@ -84,6 +84,8 @@ namespace WebUI
                 RequestPath = "/images"
             });
 
+            app.ConfigureExceptionMiddleware();
+
             app.UseCors();
 
             app.UseHttpsRedirection();
