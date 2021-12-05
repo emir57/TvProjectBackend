@@ -12,8 +12,7 @@ namespace DataAccess.Abstract
     public interface ITvDal:IEntityRepository<Tv>
     {
         Task<List<Photo>> GetPhotos(int tvId);
-        Task<List<TvAndPhotoDto>> GetTvWithPhotos();
-        Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter);
+        Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null);
         Task<TvAndPhotoDetailDto> GetTvDetails(int tvId);
     }
 }

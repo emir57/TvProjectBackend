@@ -95,9 +95,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos()
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter = null)
         {
-            var result= await _tvDal.GetTvWithPhotos();
+            var result = filter == null ?
+                await _tvDal.GetTvWithPhotos() :
+                await _tvDal.GetTvWithPhotos(filter);
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
 
@@ -107,10 +109,10 @@ namespace Business.Concrete
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
-        {
-            var result = await _tvDal.GetTvWithPhotos(filter);
-            return new SuccessDataResult<List<TvAndPhotoDto>>(result, Messages.SuccessGet);
-        }
+        //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
+        //{
+        //    var result = await _tvDal.GetTvWithPhotos(filter);
+        //    return new SuccessDataResult<List<TvAndPhotoDto>>(result, Messages.SuccessGet);
+        //}
     }
 }

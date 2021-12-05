@@ -55,7 +55,7 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos()
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)
         {
             using (var context = new TvProjectContext())
             {
@@ -77,34 +77,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  IsDiscount = tvs.IsDiscount,
                                  ImageUrl = photos.ImageUrl
                              };
-                return await result.ToListAsync();
+                return filter == null ?
+                    await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
 
-            }
-        }
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto,bool>> filter)
-        {
-            using (var context = new TvProjectContext())
-            {
-                var result = from tvs in context.Tvs
-                             join photos in context.Photos
-                             on tvs.Id equals photos.TvId
-                             where photos.IsMain==true
-                             select new TvAndPhotoDto
-                             {
-                                 Id=tvs.Id,
-                                 ProductName = tvs.ProductName,
-                                 ProductCode = tvs.ProductCode,
-                                 ScreenType = tvs.ScreenType,
-                                 ScreenInch = tvs.ScreenInch,
-                                 Extras = tvs.Extras,
-                                 UnitPrice = tvs.UnitPrice,
-                                 BrandId = tvs.BrandId,
-                                 Discount = tvs.Discount,
-                                 IsDiscount = tvs.IsDiscount,
-                                 ImageUrl = photos.ImageUrl
-                             };
-                return await result.Where(filter).ToListAsync();
-                    
             }
         }
     }
