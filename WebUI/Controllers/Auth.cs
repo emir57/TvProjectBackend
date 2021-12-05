@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Results;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +58,29 @@ namespace WebUI.Controllers
                 return BadRequest(result.Message);
             }
             var token = await _authService.CreateAccessToken(user.Data);
-            return Ok(token);
+            var loginingUser = new LoginDto
+            {
+                AccessToken = token.Data,
+                User = new LoginingUser
+                {
+                    Email=user.Data.Email,
+                    UserId=user.Data.Id,
+                    FirstName=user.Data.FirstName,
+                    LastName=user.Data.LastName
+                }
+            };
+            return Ok(loginingUser);
+        }
+        [HttpPost]
+        [Route("checkuser")]
+        public async Task<ActionResult> Login(User user)
+        {
+            var checkUser = await _userService.GetByMail(user.Email);
+            if (checkUser.Data != null)
+            {
+                return Ok(new SuccessResult());
+            }
+            return BadRequest(new ErrorResult());
         }
         [HttpPost]
         [Route("uploadImage")]
