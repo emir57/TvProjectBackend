@@ -31,7 +31,7 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResult> AddTv(TvBrand tvBrand)
+        public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
             var result = await _brandService.Add(tvBrand);
             if (!result.IsSuccess)
@@ -42,7 +42,7 @@ namespace WebUI.Controllers
         }
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResult> UpdateTv(TvBrand tvBrand)
+        public async Task<ActionResult> UpdateTvBrand(TvBrand tvBrand)
         {
             var result = await _brandService.Update(tvBrand);
             if (!result.IsSuccess)
@@ -53,7 +53,7 @@ namespace WebUI.Controllers
         }
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResult> DeleteTv(int tvBrandId)
+        public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
             var tvBrand = await _brandService.Get(t => t.Id == tvBrandId);
             if (tvBrand.Data == null)
