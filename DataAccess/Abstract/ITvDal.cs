@@ -13,7 +13,7 @@ namespace DataAccess.Abstract
     {
         Task<List<Photo>> GetPhotos(int tvId);
         Task<List<TvAndPhotoDto>> GetTvWithPhotos();
-        Task<List<TvAndPhotoDto>> GetTvWithPhotos(int categoryId);
+        Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter);
         Task<TvAndPhotoDetailDto> GetTvDetails(int tvId);
     }
 }

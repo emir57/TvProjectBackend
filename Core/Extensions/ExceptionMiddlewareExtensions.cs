@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Core.Extensions
 {
-    public static class ExceptionMiddlewareExttensions
+    public static class ExceptionMiddlewareExtensions
     {
         public static void ConfigureExceptionMiddleware(this IApplicationBuilder app)
         {

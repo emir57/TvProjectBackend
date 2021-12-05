@@ -20,7 +20,7 @@ namespace Business.Abstract
 
         Task<IDataResult<List<Photo>>> GetPhotos(int tvId);
         Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos();
-        Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(int categoryId);
+        Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter);
         Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetails(int tvId);
     }
 }

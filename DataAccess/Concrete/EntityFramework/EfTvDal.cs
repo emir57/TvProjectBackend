@@ -81,7 +81,7 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(int categoryId)
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto,bool>> filter)
         {
             using (var context = new TvProjectContext())
             {
@@ -89,7 +89,6 @@ namespace DataAccess.Concrete.EntityFramework
                              join photos in context.Photos
                              on tvs.Id equals photos.TvId
                              where photos.IsMain==true
-                             where tvs.BrandId == categoryId
                              select new TvAndPhotoDto
                              {
                                  Id=tvs.Id,
@@ -104,7 +103,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  IsDiscount = tvs.IsDiscount,
                                  ImageUrl = photos.ImageUrl
                              };
-                return await result.ToListAsync();
+                return await result.Where(filter).ToListAsync();
                     
             }
         }
