@@ -66,6 +66,7 @@ namespace DataAccess.Concrete.EntityFramework
                              where photos.IsMain==true
                              select new TvAndPhotoDto
                              {
+                                 Id=tvs.Id,
                                  ProductName = tvs.ProductName,
                                  ProductCode = tvs.ProductCode,
                                  ScreenType = tvs.ScreenType,
