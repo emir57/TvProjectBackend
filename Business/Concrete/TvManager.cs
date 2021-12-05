@@ -95,7 +95,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter = null)
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos()
         {
             var result= await _tvDal.GetTvWithPhotos();
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
@@ -105,6 +105,12 @@ namespace Business.Concrete
         {
             var result = await _tvDal.GetTvDetails(tvId);
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
+        }
+
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(int categoryId)
+        {
+            var result = await _tvDal.GetTvWithPhotos(categoryId);
+            return new SuccessDataResult<List<TvAndPhotoDto>>(result, Messages.SuccessGet);
         }
     }
 }

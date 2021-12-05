@@ -55,8 +55,33 @@ namespace DataAccess.Concrete.EntityFramework
                 return result;
             }
         }
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos()
+        {
+            using (var context = new TvProjectContext())
+            {
+                var result = from tvs in context.Tvs
+                             join photos in context.Photos
+                             on tvs.Id equals photos.TvId
+                             where photos.IsMain == true
+                             select new TvAndPhotoDto
+                             {
+                                 Id = tvs.Id,
+                                 ProductName = tvs.ProductName,
+                                 ProductCode = tvs.ProductCode,
+                                 ScreenType = tvs.ScreenType,
+                                 ScreenInch = tvs.ScreenInch,
+                                 Extras = tvs.Extras,
+                                 UnitPrice = tvs.UnitPrice,
+                                 BrandId = tvs.BrandId,
+                                 Discount = tvs.Discount,
+                                 IsDiscount = tvs.IsDiscount,
+                                 ImageUrl = photos.ImageUrl
+                             };
+                return await result.ToListAsync();
 
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter = null)
+            }
+        }
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(int categoryId)
         {
             using (var context = new TvProjectContext())
             {
@@ -64,6 +89,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join photos in context.Photos
                              on tvs.Id equals photos.TvId
                              where photos.IsMain==true
+                             where tvs.BrandId == categoryId
                              select new TvAndPhotoDto
                              {
                                  Id=tvs.Id,
