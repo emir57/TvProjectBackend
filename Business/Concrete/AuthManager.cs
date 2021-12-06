@@ -37,11 +37,11 @@ namespace Business.Concrete
             var user = result.Data;
             if (user == null)
             {
-                new ErrorDataResult<User>(Messages.UserNotFound);
+                return new ErrorDataResult<User>(Messages.UserNotFound);
             }
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                new ErrorDataResult<User>(Messages.WrongPassword);
+                return new ErrorDataResult<User>(Messages.WrongPassword);
             }
             return new SuccessDataResult<User>(user, Messages.SuccessfulLogin);
         }

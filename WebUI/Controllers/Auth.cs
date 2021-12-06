@@ -55,7 +55,7 @@ namespace WebUI.Controllers
             var result = await _authService.Login(userForLoginDto);
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
             var token = await _authService.CreateAccessToken(user.Data);
             var loginingUser = new LoginDto
@@ -69,7 +69,7 @@ namespace WebUI.Controllers
                     LastName=user.Data.LastName
                 }
             };
-            return Ok(loginingUser);
+            return Ok(new SuccessDataResult<LoginDto>(loginingUser,result.Message));
         }
         [HttpPost]
         [Route("checkuser")]
