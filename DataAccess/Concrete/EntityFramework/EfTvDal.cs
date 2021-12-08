@@ -31,11 +31,11 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<TvAndPhotoDetailDto> GetTvDetails(int tvId)
+        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())
             {
-                var result = await context.Tvs.Select(t=>
+                var result = context.Tvs.Select(t =>
                              new TvAndPhotoDetailDto
                              {
                                  Id = t.Id,
@@ -49,10 +49,12 @@ namespace DataAccess.Concrete.EntityFramework
                                  Discount = t.Discount,
                                  IsDiscount = t.IsDiscount,
                                  Photos = context.Photos
-                                        .Where(p => p.TvId == tvId)
+                                        .Where(p => p.TvId == t.Id)
                                         .ToList()
-                            }).SingleOrDefaultAsync(tv => tv.Id == tvId);
-                return result;
+                             });
+                return filter == null ?
+                    await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
             }
         }
         public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)

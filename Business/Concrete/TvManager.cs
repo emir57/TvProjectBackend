@@ -103,10 +103,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetails(int tvId)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null)
         {
-            var result = await _tvDal.GetTvDetails(tvId);
-            return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
+            var result = filter == null ?
+                await _tvDal.GetTvDetails() :
+                await _tvDal.GetTvDetails(filter);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
