@@ -25,7 +25,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(UserAddress userAddress)
         {
@@ -33,7 +33,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CreateUserAddress);
         }
         [SecuredOperation("User")]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserAddress userAddress)
         {
@@ -66,7 +66,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(UserAddress userAddress)
         {
