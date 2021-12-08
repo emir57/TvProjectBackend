@@ -93,9 +93,10 @@ namespace WebUI.Controllers
             var userCheck = await _userService.GetByMail(email);
             if (userCheck.Data == null)
             {
-                return BadRequest("Böyle bir kullanıcı bulunamadı");
+                return BadRequest(new ErrorResult("Böyle bir kullanıcı bulunamadı"));
             }
-
+            await _emailService.SendEmailAsync(email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{Guid.NewGuid()}'>Şifreni Sıfırlamak İçin Tıkla</a>");
+            return Ok(new SuccessResult("Şifre Sıfırlama isteği Başarıyla gönderildi"));
         }
 
         [HttpPost]
