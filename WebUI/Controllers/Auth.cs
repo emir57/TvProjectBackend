@@ -44,9 +44,9 @@ namespace WebUI.Controllers
             var result = await _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
-            return Ok(result.Message);
+            return Ok(result);
         }
         [HttpPost]
         [Route("login")]
@@ -55,7 +55,7 @@ namespace WebUI.Controllers
             var user = await _userService.GetByMail(userForLoginDto.Email);
             if (user.Data == null)
             {
-                return BadRequest("Kullanıcı bulunamadı");
+                return BadRequest(new ErrorResult("Böyle bir kullanıcı yok"));
             }
             var result = await _authService.Login(userForLoginDto);
             if (!result.IsSuccess)
