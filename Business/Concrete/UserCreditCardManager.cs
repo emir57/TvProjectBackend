@@ -26,7 +26,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(UserCreditCard userCreditCard)
         {
@@ -34,7 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.AddUserCreditCard);
         }
         [SecuredOperation("User")]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(UserCreditCard userCreditCard)
         {
@@ -69,7 +69,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(UserCreditCard userCreditCard)
         {
