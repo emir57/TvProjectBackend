@@ -26,7 +26,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IPhotoService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(Photo entity)
         {
@@ -59,7 +59,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IPhotoService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(Photo entity)
         {
