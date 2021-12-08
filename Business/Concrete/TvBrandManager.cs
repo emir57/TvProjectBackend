@@ -26,7 +26,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(TvBrand entity)
         {
@@ -34,7 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(TvBrand entity)
         {
@@ -59,7 +59,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(TvBrand entity)
         {
