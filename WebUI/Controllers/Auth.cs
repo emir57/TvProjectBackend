@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Email;
 using Core.Utilities.Results;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Cors;
@@ -21,11 +22,13 @@ namespace WebUI.Controllers
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IPhotoUploadService _imageService;
-        public Auth(IAuthService authService, IUserService userService, IPhotoUploadService imageService)
+        private readonly IEmailService _emailService;
+        public Auth(IAuthService authService, IUserService userService, IPhotoUploadService imageService,IEmailService emailService)
         {
             _authService = authService;
             _userService = userService;
             _imageService = imageService;
+            _emailService = emailService;
         }
         [HttpPost]
         [Route("register")]
@@ -87,6 +90,11 @@ namespace WebUI.Controllers
         [Route("sendemail")]
         public async Task<IActionResult> SendEmail(string email)
         {
+            var userCheck = await _userService.GetByMail(email);
+            if (userCheck.Data == null)
+            {
+                return BadRequest("Böyle bir kullanıcı bulunamadı");
+            }
 
         }
 

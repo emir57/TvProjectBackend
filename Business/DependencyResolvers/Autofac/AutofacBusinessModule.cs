@@ -7,6 +7,7 @@ using Business.Abstract;
 using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Security.JWT;
+using Core.Utilities.Email;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -42,6 +43,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserAddressDal>().As<IUserAddressDal>().SingleInstance();
             builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+
+            //Email
+            builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
 
 
             //Aspects
