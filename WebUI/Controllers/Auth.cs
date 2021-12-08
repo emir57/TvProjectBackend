@@ -3,6 +3,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -88,14 +89,14 @@ namespace WebUI.Controllers
         
         [HttpPost]
         [Route("sendemail")]
-        public async Task<IActionResult> SendEmail(string email)
+        public async Task<IActionResult> SendEmail(SendMail email)
         {
-            var userCheck = await _userService.GetByMail(email);
+            var userCheck = await _userService.GetByMail(email.Email);
             if (userCheck.Data == null)
             {
                 return BadRequest(new ErrorResult("Böyle bir kullanıcı bulunamadı"));
             }
-            await _emailService.SendEmailAsync(email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{Guid.NewGuid()}'>Şifreni Sıfırlamak İçin Tıkla</a>");
+            await _emailService.SendEmailAsync(email.Email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{Guid.NewGuid()}'>Şifreni Sıfırlamak İçin Tıkla</a>");
             return Ok(new SuccessResult("Şifre Sıfırlama isteği Başarıyla gönderildi"));
         }
 
