@@ -26,7 +26,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(City entity)
         {
@@ -34,7 +34,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Delete(City entity)
         {
@@ -59,7 +59,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Update(City entity)
         {
