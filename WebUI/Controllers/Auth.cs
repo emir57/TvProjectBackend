@@ -82,9 +82,17 @@ namespace WebUI.Controllers
             }
             return BadRequest(new ErrorResult());
         }
+        
+        [HttpPost]
+        [Route("sendemail")]
+        public async Task<IActionResult> SendEmail(string email)
+        {
+
+        }
+
         [HttpPost]
         [Route("uploadImage")]
-        public async Task<IActionResult> UploadImage([FromForm]IFormFile image)
+        public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
         {
             var result = await _imageService.UploadImageAsync(image);
             if (!result.IsSuccess)
