@@ -3,6 +3,7 @@ using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Business.Abstract
     {
         Task<IDataResult<List<Role>>> GetClaims(User user);
         Task<IResult> Add(User user);
+        Task<IResult> Update(User user);
+        Task<IDataResult<User>> Get(Expression<Func<User,bool>> filter);
         Task<IResult> AddUserRole(User user);
         Task<IDataResult<User>> GetByMail(string email);
 

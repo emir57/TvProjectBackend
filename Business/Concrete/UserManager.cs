@@ -10,6 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,12 @@ namespace Business.Concrete
         {
             await _userDal.AddUserRole(user);
             return new SuccessResult();
+        }
+
+        public async Task<IDataResult<User>> Get(Expression<Func<User, bool>> filter)
+        {
+            var result = await _userDal.Get(filter);
+            return new SuccessDataResult<User>(result);
         }
 
         [CacheAspect]
@@ -64,6 +71,12 @@ namespace Business.Concrete
         {
             var result = await _userDal.GetCrediCards(user);
             return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
+        }
+        [CacheRemoveAspect("IUserService.Get")]
+        public async Task<IResult> Update(User user)
+        {
+            await _userDal.Update(user);
+            return new SuccessResult();
         }
     }
 }
