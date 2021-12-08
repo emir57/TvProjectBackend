@@ -24,7 +24,7 @@ namespace Business.Concrete
             _userDal = userDal;
         }
         [ValidationAspect(typeof(UserValidator))]
-        [CacheRemoveAspect("Get")]
+        [CacheRemoveAspect("IUserService.Get")]
         [PerformanceAspect(3)]
         public async Task<IResult> Add(User user)
         {
