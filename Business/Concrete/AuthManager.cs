@@ -16,24 +16,24 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        private readonly IUserService _userDal;
+        private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
         
-        public AuthManager(ITokenHelper tokenHelper, IUserService userDal)
+        public AuthManager(ITokenHelper tokenHelper, IUserService userService)
         {
             _tokenHelper = tokenHelper;
-            _userDal = userDal;
+            _userService = userService;
         }
         public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
-            var claims = await _userDal.GetClaims(user);
+            var claims = await _userService.GetClaims(user);
             var result = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
-            var result = await _userDal.GetByMail(userForLoginDto.Email);
+            var result = await _userService.GetByMail(userForLoginDto.Email);
             var user = result.Data;
             if (user == null)
             {
@@ -60,15 +60,15 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            await _userDal.Add(user);
-            await _userDal.AddUserRole(user);
+            await _userService.Add(user);
+            await _userService.AddUserRole(user);
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
 
         }
 
         public async Task<IResult> UserExists(string email)
         {
-            var result = await _userDal.GetByMail(email);
+            var result = await _userService.GetByMail(email);
             if (result.Data == null)
             {
                 return new SuccessResult();
