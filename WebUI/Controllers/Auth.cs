@@ -87,7 +87,18 @@ namespace WebUI.Controllers
             }
             return BadRequest(new ErrorResult());
         }
-        
+        [HttpGet]
+        [Route("getuser")]
+        public async Task<ActionResult> Login(int id)
+        {
+            var user = await _userService.Get(x => x.Id == id);
+            if (user.Data != null)
+            {
+                return Ok(new SuccessDataResult<User>(user.Data));
+            }
+            return BadRequest(new ErrorResult());
+        }
+
         [HttpPost]
         [Route("sendemail")]
         public async Task<IActionResult> SendEmail(SendMailModel email)
