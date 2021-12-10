@@ -58,7 +58,7 @@ namespace Business.Concrete
                 await _tvDal.GetAll() :
                 await _tvDal.GetAll(filter);
 
-            BusinessRules.Run(ApplyDiscount(result));
+            //BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
         }
         private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
