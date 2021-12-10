@@ -69,7 +69,7 @@ namespace WebUI.Controllers
                 User = new LoginingUser
                 {
                     Email=user.Data.Email,
-                    UserId=user.Data.Id,
+                    Id=user.Data.Id,
                     FirstName=user.Data.FirstName,
                     LastName=user.Data.LastName
                 }
@@ -129,6 +129,18 @@ namespace WebUI.Controllers
             return Ok(new SuccessResult("Şifreniz Başarıyla Sıfırlandı"));
 
         }
+        [HttpGet]
+        [Route("getroles")]
+        public async Task<IActionResult> GetUserRoles(int id)
+        {
+            var user = await _userService.Get(x => x.Id == id);
+            if (user.Data == null)
+            {
+                return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
+            }
+            var roles = await _userService.GetClaims(user.Data);
+            return Ok(roles);
+        }
 
         [HttpPost]
         [Route("uploadImage")]
@@ -141,5 +153,6 @@ namespace WebUI.Controllers
             }
             return Ok(result.Message);
         }
+        
     }
 }
