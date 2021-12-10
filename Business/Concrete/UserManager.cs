@@ -58,7 +58,7 @@ namespace Business.Concrete
             var result = await _userDal.Get(u => u.Email == email);
             return new SuccessDataResult<User>(result, Messages.SuccessGet);
         }
-        [CacheAspect]
+        
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Role>>> GetClaims(User user)
         {
