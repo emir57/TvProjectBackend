@@ -77,7 +77,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  BrandId = tvs.BrandId,
                                  Discount = tvs.Discount,
                                  IsDiscount = tvs.IsDiscount,
-                                 ImageUrl = photos.ImageUrl
+                                 ImageUrl = photos.ImageUrl,
+                                 Stock = tvs.Stock
                              };
                 return filter == null ?
                     await result.ToListAsync() :
