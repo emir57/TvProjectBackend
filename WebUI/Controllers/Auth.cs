@@ -78,7 +78,7 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("checkuser")]
-        public async Task<ActionResult> Login(User user)
+        public async Task<ActionResult> CheckUser(User user)
         {
             var checkUser = await _userService.GetByMail(user.Email);
             if (checkUser.Data != null)
@@ -89,7 +89,7 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getuser")]
-        public async Task<ActionResult> Login(int id)
+        public async Task<ActionResult> GetUser(int id)
         {
             var user = await _userService.Get(x => x.Id == id);
             if (user.Data != null)
