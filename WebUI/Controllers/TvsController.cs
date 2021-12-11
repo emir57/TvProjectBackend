@@ -30,6 +30,17 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpGet]
+        [Route("get")]
+        public async Task<ActionResult> GetTv(int id)
+        {
+            var result = await _tvService.Get(x => x.Id == id);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id)
         {
