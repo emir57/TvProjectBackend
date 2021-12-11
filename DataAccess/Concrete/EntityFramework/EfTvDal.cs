@@ -31,6 +31,32 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public Task<TvAndPhotoDetailDto> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
+        {
+            using (var context = new TvProjectContext())
+            {
+                var result = context.Tvs.Select(t =>
+                             new TvAndPhotoDetailDto
+                             {
+                                 Id = t.Id,
+                                 ProductName = t.ProductName,
+                                 ProductCode = t.ProductCode,
+                                 ScreenType = t.ScreenType,
+                                 ScreenInch = t.ScreenInch,
+                                 Extras = t.Extras,
+                                 UnitPrice = t.UnitPrice,
+                                 BrandId = t.BrandId,
+                                 Discount = t.Discount,
+                                 IsDiscount = t.IsDiscount,
+                                 Photos = context.Photos
+                                        .Where(p => p.TvId == t.Id)
+                                        .ToList(),
+                                 Stock = t.Stock
+                             })
+                return result.SingleOrDefaultAsync(filter);
+            }
+        }
+
         public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())

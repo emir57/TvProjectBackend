@@ -111,6 +111,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
+        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
+        {
+            var result = await _tvDal.GetTvDetail(filter);
+            return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
+
+        }
+
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
         //{
         //    var result = await _tvDal.GetTvWithPhotos(filter);

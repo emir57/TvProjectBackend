@@ -14,5 +14,6 @@ namespace DataAccess.Abstract
         Task<List<Photo>> GetPhotos(int tvId);
         Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null);
         Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null);
+        Task<TvAndPhotoDetailDto> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter);
     }
 }
