@@ -33,7 +33,7 @@ namespace WebUI.Controllers
         [Route("get")]
         public async Task<ActionResult> GetTv(int id)
         {
-            var result = await _tvService.Get(x => x.Id == id);
+            var result = await _tvService.GetTvDetail(x => x.Id == id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
