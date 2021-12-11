@@ -50,7 +50,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  IsDiscount = t.IsDiscount,
                                  Photos = context.Photos
                                         .Where(p => p.TvId == t.Id)
-                                        .ToList()
+                                        .ToList(),
+                                 Stock=t.Stock
                              });
                 return filter == null ?
                     await result.ToListAsync() :
