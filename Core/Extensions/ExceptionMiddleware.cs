@@ -49,6 +49,7 @@ namespace Core.Extensions
             }
             return httpContext.Response.WriteAsync(new ErrorDetails
             {
+                //todos
                 Message = e.Message,
                 StatusCode = httpContext.Response.StatusCode
             }.ToString());
