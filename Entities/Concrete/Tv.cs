@@ -17,6 +17,7 @@ namespace Entities.Concrete
         public decimal UnitPrice { get; set; }
         public byte Discount { get; set; }
         public bool IsDiscount { get; set; }
+        public int Stock { get; set; }
 
 
     }
