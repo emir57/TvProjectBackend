@@ -19,5 +19,6 @@ namespace Entities.Dtos
         public byte Discount { get; set; }
         public bool IsDiscount { get; set; }
         public string ImageUrl { get; set; }
+        public byte Stock { get; set; }
     }
 }
