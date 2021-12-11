@@ -31,7 +31,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public Task<TvAndPhotoDetailDto> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
+        public async Task<TvAndPhotoDetailDto> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
         {
             using (var context = new TvProjectContext())
             {
@@ -52,8 +52,8 @@ namespace DataAccess.Concrete.EntityFramework
                                         .Where(p => p.TvId == t.Id)
                                         .ToList(),
                                  Stock = t.Stock
-                             })
-                return result.SingleOrDefaultAsync(filter);
+                             });
+                return await result.SingleOrDefaultAsync(filter);
             }
         }
 
