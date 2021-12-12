@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
@@ -33,6 +34,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
+            Thread.Sleep(1);
             var result = await _brandService.Add(tvBrand);
             if (!result.IsSuccess)
             {
@@ -44,6 +46,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateTvBrand(TvBrand tvBrand)
         {
+            Thread.Sleep(1);
             var result = await _brandService.Update(tvBrand);
             if (!result.IsSuccess)
             {
@@ -55,6 +58,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
+            Thread.Sleep(1);
             var tvBrand = await _brandService.Get(t => t.Id == tvBrandId);
             if (tvBrand.Data == null)
             {
