@@ -27,6 +27,7 @@ namespace WebUI.Controllers
         {
             string databasePath = "";
             FileUploadHelper.Upload(file, out databasePath);
+            photo.ImageUrl = databasePath;
             var result = await _photoService.Add(photo);
             if (!result.IsSuccess)
             {
