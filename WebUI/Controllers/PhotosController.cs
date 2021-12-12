@@ -27,7 +27,7 @@ namespace WebUI.Controllers
         {
             string databasePath = "";
             FileUploadHelper.Upload(file, out databasePath);
-            var result = await _photoService.Add(photo)
+            var result = await _photoService.Add(photo);
             if (!result.IsSuccess)
             {
                 return BadRequest(new ErrorResult("Resim Yükleme Başarısız"));
