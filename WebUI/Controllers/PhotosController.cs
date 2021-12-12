@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
@@ -25,6 +26,7 @@ namespace WebUI.Controllers
         [Route("upload")]
         public async Task<IActionResult> UploadImage([FromForm]Photo photo,[FromForm]IFormFile file)
         {
+            Thread.Sleep(1);
             string databasePath = "";
             FileUploadHelper.Upload(file, out databasePath);
             photo.ImageUrl = databasePath;

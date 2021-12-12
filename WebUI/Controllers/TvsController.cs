@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
@@ -82,7 +83,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddTv(Tv tv,[FromForm]IFormFile photo)
         {
-            
+            Thread.Sleep(1);
             var result = await _tvService.Add(tv);
             
             if (!result.IsSuccess)
@@ -95,6 +96,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateTv(Tv tv)
         {
+            Thread.Sleep(1);
             var result = await _tvService.Update(tv);
             if (!result.IsSuccess)
             {
@@ -106,6 +108,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteTv(int tvId)
         {
+            Thread.Sleep(1);
             var tv = await _tvService.Get(t => t.Id == tvId);
             if (tv.Data == null)
             {
