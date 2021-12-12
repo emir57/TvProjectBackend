@@ -18,11 +18,11 @@ namespace Business.Concrete
         {
             _photoService = photoService;
         }
-        public async Task<IResult> UploadImageAsync(IFormFile file)
+        public async Task<IResult> UploadImageAsync(IFormFile file,int tvId)
         {
             string dataBasePath = "";
             FileUploadHelper.Upload(file, out dataBasePath);
-            var image = new Photo() { ImageUrl = dataBasePath };
+            var image = new Photo() { ImageUrl = dataBasePath,TvId=tvId };
             await _photoService.Add(image);
             return new SuccessResult(Messages.UploadImage);
         }

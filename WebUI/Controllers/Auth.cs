@@ -157,12 +157,13 @@ namespace WebUI.Controllers
         [Route("uploadImage")]
         public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
         {
-            var result = await _imageService.UploadImageAsync(image);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Message);
-            }
-            return Ok(result.Message);
+            //var result = await _imageService.UploadImageAsync(image);
+            //if (!result.IsSuccess)
+            //{
+            //    return BadRequest(result.Message);
+            //}
+            //return Ok(result.Message);
+            return Ok();
         }
         
     }

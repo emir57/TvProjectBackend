@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface IPhotoUploadService
     {
-        Task<IResult> UploadImageAsync(IFormFile file);
+        Task<IResult> UploadImageAsync(IFormFile file, int tvId);
         //Task<IResult> UpdateImageAsync(IFormFile file);
     }
 }

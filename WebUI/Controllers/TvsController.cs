@@ -14,9 +14,13 @@ namespace WebUI.Controllers
     public class TvsController : ControllerBase
     {
         private readonly ITvService _tvService;
-        public TvsController(ITvService tvService)
+        private readonly IPhotoUploadService _imageUploadService;
+        private readonly IPhotoService _photoService;
+        public TvsController(ITvService tvService, IPhotoUploadService imageUploadService, IPhotoService photoService)
         {
             _tvService = tvService;
+            _imageUploadService = imageUploadService;
+            _photoService = photoService;
         }
         [HttpGet]
         [Route("getall")]
@@ -75,9 +79,10 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResult> AddTv(Tv tv)
+        public async Task<IActionResult> AddTv(Tv tv,[FromForm]IFormFile photo)
         {
             var result = await _tvService.Add(tv);
+            var imageResult = await _imageUploadService.UploadImageAsync(photo,tv.Id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
