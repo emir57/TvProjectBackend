@@ -26,7 +26,7 @@ namespace Core.Utilities.Helpers
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Images/" + fileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                file.CopyToAsync(stream);
+                file.CopyTo(stream);
                 stream.FlushAsync();
             }
             databasePath = $"/images/{fileName}";
