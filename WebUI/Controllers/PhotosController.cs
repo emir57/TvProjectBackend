@@ -33,7 +33,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(new ErrorResult("Resim Yükleme Başarısız"));
             }
-            return Ok(new ErrorResult("Resim Yükleme Başarılı"));
+            return Ok(new SuccessResult("Resim Yükleme Başarılı"));
         }
     }
 }
