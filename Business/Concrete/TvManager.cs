@@ -12,6 +12,7 @@ using Entities.Concrete;
 using Entities.Dtos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +33,14 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> Add(Tv entity)
         {
+            BusinessRules.Run(
+                await CheckTvName(entity)
+                );
             await _tvDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+
+
         [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("ITvService.Get")]
         [PerformanceAspect(3)]
@@ -116,6 +122,15 @@ namespace Business.Concrete
             var result = await _tvDal.GetTvDetail(filter);
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
 
+        }
+        private async Task<IResult> CheckTvName(Tv entity)
+        {
+            var tvs = await _tvDal.GetAll();
+            if(tvs.Any(x => x.ProductName == entity.ProductName))
+            {
+                return new ErrorResult(Messages.ProductAlreadyExists);
+            }
+            return new SuccessResult();
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
