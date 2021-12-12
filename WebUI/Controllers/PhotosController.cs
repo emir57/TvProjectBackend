@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("upload")]
-        public async Task<IActionResult> UploadImage([FromForm]Photo photo ,[FromForm]IFormFile file)
+        public async Task<IActionResult> UploadImage([FromForm]Photo photo,[FromForm]IFormFile file)
         {
             string databasePath = "";
             FileUploadHelper.Upload(file, out databasePath);
