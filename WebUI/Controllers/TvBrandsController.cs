@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
-            Thread.Sleep(1);
+            Thread.Sleep(5);
             var result = await _brandService.Add(tvBrand);
             if (!result.IsSuccess)
             {
