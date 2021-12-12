@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Helpers;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -81,8 +82,9 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddTv(Tv tv,[FromForm]IFormFile photo)
         {
+            
             var result = await _tvService.Add(tv);
-            var imageResult = await _imageUploadService.UploadImageAsync(photo,tv.Id);
+            
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
