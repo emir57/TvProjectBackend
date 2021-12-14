@@ -33,7 +33,20 @@ namespace DataAccess.Concrete.EntityFramework
                                  User = u,
                                  AddressText=a.AddressText,
                                  City=c.CityName,
-                                 Tv=t
+                                 Tv=new TvAndPhotoDto
+                                 {
+                                     Id=t.Id,
+                                     ImageUrl=context.Photos.SingleOrDefault(x=>x.Id==t.Id && x.IsMain==true).ImageUrl,
+                                     Discount=t.Discount,
+                                     IsDiscount=t.IsDiscount,
+                                     ProductCode=t.ProductCode,
+                                     Stock=t.Stock,
+                                     UnitPrice=t.UnitPrice,
+                                     Extras=t.Extras,
+                                     ScreenType=t.ScreenType,
+                                     ProductName=t.ProductName,
+                                     ScreenInch=t.ScreenInch
+                                 }
                              };
                 return await result.Where(x => x.User.Id == userId).ToListAsync();            }
         }

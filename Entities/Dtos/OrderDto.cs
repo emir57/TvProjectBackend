@@ -10,7 +10,7 @@ namespace Entities.Dtos
     public class OrderDto:IDto
     {
         public User User { get; set; }
-        public Tv Tv { get; set; }
+        public TvAndPhotoDto Tv { get; set; }
         public DateTime ShippedDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string AddressText { get; set; }
