@@ -31,8 +31,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  TotalPrice = o.TotalPrice,
                                  ShippedDate = o.ShippedDate,
                                  User = u,
-                                 Address = a,
-                                 Tv = t
+                                 AddressText=a.AddressText,
+                                 City=c.CityName,
+                                 Tv=t
                              };
                 return await result.Where(x => x.User.Id == userId).ToListAsync();            }
         }
