@@ -42,7 +42,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
