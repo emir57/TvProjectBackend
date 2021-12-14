@@ -19,13 +19,13 @@ namespace WebUI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Auth : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IPhotoUploadService _imageService;
         private readonly IEmailService _emailService;
-        public Auth(IAuthService authService, IUserService userService, IPhotoUploadService imageService,IEmailService emailService)
+        public AuthController(IAuthService authService, IUserService userService, IPhotoUploadService imageService,IEmailService emailService)
         {
             _authService = authService;
             _userService = userService;
