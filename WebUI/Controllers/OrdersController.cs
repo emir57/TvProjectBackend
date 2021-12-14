@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Business.Abstract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,33 @@ namespace WebUI.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
+        private readonly IOrderService _orderService;
+
+        public OrdersController(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+        [HttpGet]
+        [Route("getall")]
+        public async Task<IActionResult> GetOrders()
+        {
+            var result = await _orderService.GetAll();
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("getbyid")]
+        public async Task<IActionResult> GetOrders(int id)
+        {
+            var result = await _orderService.GetOrdersByUserId(id);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
     }
 }
