@@ -24,5 +24,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<UserCreditCard> UserCreditCards { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<City> Cities { get; set; }
     }
 }
