@@ -23,5 +23,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<TvBrand> TvBrands { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<UserCreditCard> UserCreditCards { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }
