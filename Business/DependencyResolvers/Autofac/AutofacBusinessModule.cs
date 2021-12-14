@@ -27,7 +27,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
             builder.RegisterType<PhotoManager>().As<IPhotoService>().SingleInstance();
             builder.RegisterType<TvBrandManager>().As<ITvBrandService>().SingleInstance();
-            
+            builder.RegisterType<PhotoUploadManager>().As<IPhotoUploadService>().SingleInstance();
+
             builder.RegisterType<TvManager>().As<ITvService>().SingleInstance();
             builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();

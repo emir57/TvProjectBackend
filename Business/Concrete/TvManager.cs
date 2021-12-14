@@ -33,9 +33,13 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> Add(Tv entity)
         {
-            BusinessRules.Run(
+            var result = BusinessRules.Run(
                 await CheckTvName(entity)
                 );
+            if (result != null)
+            {
+                return result;
+            }
             await _tvDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }

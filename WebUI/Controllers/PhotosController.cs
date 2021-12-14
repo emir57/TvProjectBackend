@@ -17,25 +17,24 @@ namespace WebUI.Controllers
     public class PhotosController : ControllerBase
     {
         private readonly IPhotoService _photoService;
+        private readonly IPhotoUploadService _photoUploadService;
 
-        public PhotosController(IPhotoService photoService)
+        public PhotosController(IPhotoService photoService,IPhotoUploadService photoUploadService)
         {
             _photoService = photoService;
+            _photoUploadService = photoUploadService;
         }
         [HttpPost]
         [Route("upload")]
         public async Task<IActionResult> UploadImage([FromForm]Photo photo,[FromForm]IFormFile file)
         {
             Thread.Sleep(1);
-            string databasePath = "";
-            FileUploadHelper.Upload(file, out databasePath);
-            photo.ImageUrl = databasePath;
-            var result = await _photoService.Add(photo);
+            var result = await _photoUploadService.UploadImageAsync(file, photo);
             if (!result.IsSuccess)
             {
-                return BadRequest(new ErrorResult("Resim Yükleme Başarısız"));
+                return Ok(result);
             }
-            return Ok(new SuccessResult("Resim Yükleme Başarılı"));
+            return Ok(result);
         }
     }
 }
