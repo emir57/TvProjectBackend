@@ -16,7 +16,7 @@ namespace Business.Abstract
         Task<IResult> Delete(Order entity);
         Task<IDataResult<Order>> Get(Expression<Func<Order, bool>> filter);
         Task<IDataResult<List<Order>>> GetAll(Expression<Func<Order, bool>> filter = null);
-        Task<List<OrderDto>> GetOrdersByUserId(int userId);
+        Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId);
 
     }
 }
