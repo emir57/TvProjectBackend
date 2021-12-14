@@ -35,17 +35,22 @@ namespace Business.Concrete
 
         public async Task<IDataResult<Order>> Get(Expression<Func<Order, bool>> filter)
         {
-            throw new NotImplementedException();
+            var result = await _orderDal.Get(filter);
+            return new SuccessDataResult<Order>(result, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<List<Order>>> GetAll(Expression<Func<Order, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            var result = filter == null ?
+                await _orderDal.GetAll() :
+                await _orderDal.GetAll(filter);
+            return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
-        public async Task<List<OrderDto>> GetOrdersByUserId(int userId)
+        public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId)
         {
-            var res
+            var result = await _orderDal.GetOrdersByUserId(userId);
+            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
 
         public async Task<IResult> Update(Order entity)
