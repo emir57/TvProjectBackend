@@ -13,6 +13,7 @@ namespace Entities.Dtos
         public Tv Tv { get; set; }
         public DateTime ShippedDate { get; set; }
         public decimal TotalPrice { get; set; }
-        public UserAddress Address { get; set; }
+        public string AddressText { get; set; }
+        public string City { get; set; }
     }
 }
