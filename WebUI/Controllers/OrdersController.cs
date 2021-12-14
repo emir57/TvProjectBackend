@@ -46,11 +46,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var result = await _orderService.Get(x => x.Id == id);
-            if (result.Data == null)
+            var order = await _orderService.Get(x => x.Id == id);
+            if (order.Data == null)
             {
                 return Ok(new ErrorResult(Messages.OrderIsNotFound));
             }
+            var result = await _orderService.Delete(order.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
