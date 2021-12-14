@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -34,6 +36,21 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetOrders(int id)
         {
             var result = await _orderService.GetOrdersByUserId(id);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var result = await _orderService.Get(x => x.Id == id);
+            if (result.Data == null)
+            {
+                return Ok(new ErrorResult(Messages.OrderIsNotFound));
+            }
             if (!result.IsSuccess)
             {
                 return Ok(result);

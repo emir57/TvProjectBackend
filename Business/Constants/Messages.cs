@@ -40,5 +40,7 @@ namespace Business.Constants
         public static string SuccessfulChangePassword = "Parola başarıyla sıfırlandı";
 
         public static string SuccessfulUserUpdate = "Başarıyla Güncellendi";
+
+        public static string OrderIsNotFound = "Sipariş Bulunamadı";
     }
 }
