@@ -39,7 +39,27 @@ namespace WebUI.Controllers
             {
                 return Ok(result);
             }
-            return Ok(result);
+            return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
+        }
+        [HttpPost]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
+        {
+            var user = await _userService.Get(x => x.Id == changePasswordModel.UserId);
+            if (!HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash, user.Data.PasswordSalt))
+            {
+                return Ok(new ErrorResult(Messages.WrongPassword));
+            }
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(changePasswordModel.NewPassword, out passwordHash, out passwordSalt);
+            user.Data.PasswordHash = passwordHash;
+            user.Data.PasswordSalt = passwordSalt;
+            var result = await _userService.Update(user.Data);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
         }
     }
 }
