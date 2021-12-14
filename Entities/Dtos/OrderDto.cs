@@ -9,6 +9,7 @@ namespace Entities.Dtos
 {
     public class OrderDto:IDto
     {
+        public int Id { get; set; }
         public User User { get; set; }
         public TvAndPhotoDto Tv { get; set; }
         public DateTime ShippedDate { get; set; }

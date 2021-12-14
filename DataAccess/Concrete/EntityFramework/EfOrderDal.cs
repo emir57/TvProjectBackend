@@ -28,6 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
+                                 Id=o.Id
                                  TotalPrice = o.TotalPrice,
                                  ShippedDate = o.ShippedDate,
                                  User = u,
