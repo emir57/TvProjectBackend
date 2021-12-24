@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System;
@@ -31,6 +32,13 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Delete(Role entity)
         {
+            var result = BusinessRules.Run(
+                CheckAdminRole(entity)
+                );
+            if (result != null)
+            {
+                return result;
+            }
             await _roleDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
@@ -54,8 +62,24 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Update(Role entity)
         {
+            var result = BusinessRules.Run(
+                CheckAdminRole(entity)
+                );
+            if (result != null)
+            {
+                return result;
+            }
             await _roleDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);
+        }
+
+        private IResult CheckAdminRole(Role entity)
+        {
+            if (entity.Name == "Admin")
+            {
+                return new ErrorResult(Messages.DontChangeAdminRole);
+            }
+            return new SuccessResult();
         }
     }
 }

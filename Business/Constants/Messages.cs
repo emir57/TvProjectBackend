@@ -44,5 +44,7 @@ namespace Business.Constants
         public static string OrderIsNotFound = "Sipariş Bulunamadı";
 
         public static string RoleNotFound = "Rol Bulunamadı";
+
+        public static string DontChangeAdminRole = "Admin Rolü Değiştirilemez";
     }
 }
