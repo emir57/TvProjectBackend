@@ -67,7 +67,7 @@ namespace WebUI.Controllers
             var result = await _roleService.Update(role);
             if (!result.IsSuccess)
             {
-                return BadRequest(result);
+                return Ok(result);
             }
             return Ok(result);
         }
