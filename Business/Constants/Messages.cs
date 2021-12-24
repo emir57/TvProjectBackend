@@ -42,5 +42,7 @@ namespace Business.Constants
         public static string SuccessfulUserUpdate = "Başarıyla Güncellendi";
 
         public static string OrderIsNotFound = "Sipariş Bulunamadı";
+
+        public static string RoleNotFound = "Rol Bulunamadı";
     }
 }

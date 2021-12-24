@@ -73,9 +73,14 @@ namespace WebUI.Controllers
         }
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResult> DeleteRole(Role role)
+        public async Task<ActionResult> DeleteRole(int roleId)
         {
-            var result = await _roleService.Delete(role);
+            var role = await _roleService.Get(x => x.Id == roleId);
+            if (role.Data == null)
+            {
+                return BadRequest(new ErrorResult(Messages.RoleNotFound));
+            }
+            var result = await _roleService.Delete(role.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
