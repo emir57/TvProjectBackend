@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,24 +20,29 @@ namespace Business.Concrete
         {
             _roleDal = roleDal;
         }
+        [SecuredOperation("Admin")]
+        [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Add(Role entity)
         {
             await _roleDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
-
+        [SecuredOperation("Admin")]
+        [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Delete(Role entity)
         {
             await _roleDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
-
+        [SecuredOperation("Admin")]
+        [CacheAspect(20)]
         public async Task<IDataResult<Role>> Get(Expression<Func<Role, bool>> filter)
         {
             var result = await _roleDal.Get(filter);
             return new SuccessDataResult<Role>(result, Messages.SuccessGet);
         }
-
+        [SecuredOperation("Admin")]
+        [CacheAspect(20)]
         public async Task<IDataResult<List<Role>>> GetAll(Expression<Func<Role, bool>> filter = null)
         {
             var result = filter == null ?
@@ -43,7 +50,8 @@ namespace Business.Concrete
                 await _roleDal.GetAll(filter);
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
-
+        [SecuredOperation("Admin")]
+        [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Update(Role entity)
         {
             await _roleDal.Update(entity);
