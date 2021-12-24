@@ -51,6 +51,13 @@ namespace Business.Concrete
             var result =  await _userDal.GetAddress(user);
             return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
         }
+
+        public async Task<IDataResult<List<User>>> GetAll()
+        {
+            var result = await _userDal.GetAll();
+            return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
+        }
+
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<User>> GetByMail(string email)

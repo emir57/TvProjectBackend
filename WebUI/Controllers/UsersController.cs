@@ -23,6 +23,17 @@ namespace WebUI.Controllers
         {
             _userService = userService;
         }
+        [HttpGet]
+        [Route("get")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _userService.GetAll();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
