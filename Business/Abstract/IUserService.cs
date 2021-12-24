@@ -17,7 +17,7 @@ namespace Business.Abstract
         Task<IDataResult<User>> Get(Expression<Func<User,bool>> filter);
         Task<IResult> AddUserRole(User user);
         Task<IDataResult<User>> GetByMail(string email);
-        Task<IDataResult<List<User>>> GetAll();
+        Task<IDataResult<List<User>>> GetAll(); 
 
         Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user);
         Task<IDataResult<List<UserForCreditCardDto>>> GetCreditCards(User user);
