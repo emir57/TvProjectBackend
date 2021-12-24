@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,39 @@ namespace WebUI.Controllers
                 return BadRequest(new ErrorResult(Messages.UserNotFound));
             }
             var result = await _userService.GetClaims(user.Data);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("add")]
+        public async Task<ActionResult> AddRole(Role role)
+        {
+            var result = await _roleService.Add(role);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPut]
+        [Route("update")]
+        public async Task<ActionResult> UpdateRole(Role role)
+        {
+            var result = await _roleService.Update(role);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<ActionResult> DeleteRole(Role role)
+        {
+            var result = await _roleService.Delete(role);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
