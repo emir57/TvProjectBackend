@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Business.Validators.FluentValidation
 {
-    public class UserAddressValidator:AbstractValidator<UserAddress>
+    public class UserAddressValidator:AbstractValidator<UserAddres>
     {
         public UserAddressValidator()
         {

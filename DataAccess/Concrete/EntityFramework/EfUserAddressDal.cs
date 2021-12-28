@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserAddressDal : EfEntityRepositoryBase<UserAddress, TvProjectContext>, IUserAddressDal
+    public class EfUserAddressDal : EfEntityRepositoryBase<UserAddres, TvProjectContext>, IUserAddressDal
     {
-        public async Task AddUserAddress(UserAddress userAddress)
+        public async Task AddUserAddress(UserAddres userAddress)
         {
             using(var context = new TvProjectContext())
             {

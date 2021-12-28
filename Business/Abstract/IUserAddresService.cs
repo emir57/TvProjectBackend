@@ -10,12 +10,12 @@ namespace Business.Abstract
 {
     public interface IUserAddresService 
     {
-        Task<IResult> Add(UserAddress userAddress);
-        Task<IResult> Delete(UserAddress userAddress);
-        Task<IResult> Update(UserAddress userAddress);
-        Task<IDataResult<List<UserAddress>>> GetByUserId(int userId);
-        Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress,bool>> filter=null);
-        Task<IDataResult<UserAddress>> Get(Expression<Func<UserAddress,bool>> filter);
+        Task<IResult> Add(UserAddres userAddress);
+        Task<IResult> Delete(UserAddres userAddress);
+        Task<IResult> Update(UserAddres userAddress);
+        Task<IDataResult<List<UserAddres>>> GetByUserId(int userId);
+        Task<IDataResult<List<UserAddres>>> GetAll(Expression<Func<UserAddres,bool>> filter=null);
+        Task<IDataResult<UserAddres>> Get(Expression<Func<UserAddres,bool>> filter);
 
     }
 }
