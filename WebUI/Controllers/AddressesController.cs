@@ -59,6 +59,17 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddAddress(UserAddress userAddress)
+        {
+            var result = await _userAddressService.Add(userAddress);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
         [HttpPut]
         [Route("update")]
         public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
