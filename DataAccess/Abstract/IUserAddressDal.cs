@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface IUserAddressDal:IEntityRepository<UserAddress>
     {
-        Task AddUserAddress(UserAddress userAddress);
+        
     }
 }

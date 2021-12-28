@@ -10,13 +10,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserAddressDal : EfEntityRepositoryBase<UserAddress, TvProjectContext>, IUserAddressDal
     {
-        public async Task AddUserAddress(UserAddress userAddress)
-        {
-            using(var context = new TvProjectContext())
-            {
-                await context.UserAddresses.AddAsync(userAddress);
-                await context.SaveChangesAsync();
-            }
-        }
+        
     }
 }
