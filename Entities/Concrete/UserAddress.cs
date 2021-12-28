@@ -8,6 +8,7 @@ namespace Entities.Concrete
     public class UserAddress:IEntity
     {
         public int Id { get; set; }
+        public string AddressName { get; set; }
         public int UserId { get; set; }
         public string AddressText { get; set; }
         public byte CityId { get; set; }
