@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -52,6 +53,17 @@ namespace WebUI.Controllers
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));
             }
             var result = await _userAddressService.Delete(address.Data);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
+        {
+            var result = await _userAddressService.Update(userAddress);
             if (!result.IsSuccess)
             {
                 return Ok(result);
