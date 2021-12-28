@@ -43,7 +43,7 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> UpdateCity(City city)
+        public async Task<IActionResult> AddCity(City city)
         {
             var result = await _cityService.Add(city);
             if (!result.IsSuccess)
@@ -65,7 +65,7 @@ namespace WebUI.Controllers
         }
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> UpdateCity(int cityId)
+        public async Task<IActionResult> DeleteCity(int cityId)
         {
             var city = await _cityService.Get(x=>x.Id==cityId);
             if (city.Data == null)
