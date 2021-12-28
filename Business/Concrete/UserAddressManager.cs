@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -56,6 +57,13 @@ namespace Business.Concrete
                 await _userAddressDal.GetAll(filter);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
+
+        public async Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(Expression<Func<UserAddressCityDto, bool>> filter)
+        {
+            var result = await _userAddressDal.GetAddressByCityName(filter);
+            return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);
+        }
+
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
