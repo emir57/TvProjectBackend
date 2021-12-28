@@ -25,6 +25,7 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  Id = adress.Id,
                                  UserId = adress.UserId,
+                                 AddressName=adress.AddressName,
                                  CityId = adress.CityId,
                                  AddressText = adress.AddressText,
                                  CityName = city.CityName
