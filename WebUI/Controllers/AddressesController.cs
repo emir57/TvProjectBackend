@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
-            var result = await _userAddressService.GetAll(x => x.UserId == userId);
+            var result = await _userAddressService.GetByCityName(x => x.UserId == userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
