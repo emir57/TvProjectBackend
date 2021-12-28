@@ -14,9 +14,9 @@ namespace WebUI.Controllers
     [ApiController]
     public class AddressesController : ControllerBase
     {
-        private readonly IUserAddresService _userAddressService;
+        private readonly IUserAddressService _userAddressService;
 
-        public CreditCardsController(IUserCreditCardService userCreditCardService)
+        public AddressesController(IUserCreditCardService userCreditCardService)
         {
             _userCreditCardService = userCreditCardService;
         }

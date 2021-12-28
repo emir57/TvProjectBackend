@@ -32,7 +32,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
 
             builder.RegisterType<TvManager>().As<ITvService>().SingleInstance();
-            builder.RegisterType<UserAddressManager>().As<IUserAddresService>().SingleInstance();
+            builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();

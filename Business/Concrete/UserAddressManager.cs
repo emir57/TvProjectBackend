@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserAddressManager : IUserAddresService
+    public class UserAddressManager : IUserAddressService
     {
         private readonly IUserAddressDal _userAddressDal;
         public UserAddressManager(IUserAddressDal userAddressDal)
@@ -27,7 +27,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserAddressValidator))]
         [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(UserAddres userAddress)
+        public async Task<IResult> Add(UserAddress userAddress)
         {
             await _userAddressDal.Add(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
@@ -35,40 +35,40 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(UserAddres userAddress)
+        public async Task<IResult> Delete(UserAddress userAddress)
         {
             await _userAddressDal.Delete(userAddress);
             return new SuccessResult(Messages.DeleteUserAddress);
         }
         [SecuredOperation("User")]
-        public async Task<IDataResult<UserAddres>> Get(Expression<Func<UserAddres, bool>> filter)
+        public async Task<IDataResult<UserAddress>> Get(Expression<Func<UserAddress, bool>> filter)
         {
             var result = await _userAddressDal.Get(filter);
-            return new SuccessDataResult<UserAddres>(result);
+            return new SuccessDataResult<UserAddress>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddres>>> GetAll(Expression<Func<UserAddres, bool>> filter = null)
+        public async Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress, bool>> filter = null)
         {
             var result = filter == null ?
                 await _userAddressDal.GetAll() :
                 await _userAddressDal.GetAll(filter);
-            return new SuccessDataResult<List<UserAddres>>(result);
+            return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddres>>> GetByUserId(int userId)
+        public async Task<IDataResult<List<UserAddress>>> GetByUserId(int userId)
         {
             var result = await _userAddressDal.GetAll(u => u.UserId == userId);
-            return new SuccessDataResult<List<UserAddres>>(result);
+            return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]
         [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(UserAddres userAddress)
+        public async Task<IResult> Update(UserAddress userAddress)
         {
             await _userAddressDal.Update(userAddress);
             return new SuccessResult(Messages.UpdateUserAddress);

@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IUserAddressDal:IEntityRepository<UserAddres>
+    public interface IUserAddressDal:IEntityRepository<UserAddress>
     {
-        Task AddUserAddress(UserAddres userAddress);
+        Task AddUserAddress(UserAddress userAddress);
     }
 }
