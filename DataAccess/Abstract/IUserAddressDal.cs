@@ -12,6 +12,6 @@ namespace DataAccess.Abstract
 {
     public interface IUserAddressDal:IEntityRepository<UserAddress>
     {
-        Task<List<UserAddressCityDto>> GetUserAddress(Expression<Func<UserAddressCityDto>>)
+        Task<List<UserAddressCityDto>> GetAddressByCityName(Expression<Func<UserAddressCityDto, bool>> filter);
     }
 }
