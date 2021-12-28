@@ -47,6 +47,8 @@ namespace Business.Constants
 
         public static string AddressIsNotFound = "Adres Bulunamadı";
 
+        public static string CityIsNotFound = "Şehir Bulunamadı";
+
         public static string RoleNotFound = "Rol Bulunamadı";
 
         public static string DontChangeAdminRole = "Admin Rolü Değiştirilemez";
