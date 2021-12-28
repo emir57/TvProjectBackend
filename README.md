@@ -91,3 +91,45 @@ Teams Table <br>
     </tr>
   </tbody>
 </table>
+<br>
+
+Posts Table <br>
+<table>
+  <thead>
+    <tr>
+      <th>Column Name</th>
+      <th>Data Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostId</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>Title</td>
+      <td>nvarchar(45)</td>
+    </tr>
+    <tr>
+      <td>ImageTitleUrl</td>
+      <td>nvarchar(120)</td>
+    </tr>
+    <tr>
+      <td>BodyText</td>
+      <td>nvarchar(max)</td>
+    </tr>
+    <tr>
+      <td>ImageUrl1</td>
+      <td>nvarchar(120)</td>
+    </tr>
+    <tr>
+      <td>ImageUrl2</td>
+      <td>nvarchar(120)</td>
+    </tr>
+    <tr>
+      <td>SharingDateTime</td>
+      <td>datetime2(7)</td>
+    </tr>
+  </tbody>
+</table>
+<br>
