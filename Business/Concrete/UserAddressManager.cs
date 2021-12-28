@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserAddressManager : IUserAddressService
+    public class UserAddressManager : IUserAddresService
     {
         private readonly IUserAddressDal _userAddressDal;
         public UserAddressManager(IUserAddressDal userAddressDal)

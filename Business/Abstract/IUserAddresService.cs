@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IUserAddressService 
+    public interface IUserAddresService 
     {
         Task<IResult> Add(UserAddress userAddress);
         Task<IResult> Delete(UserAddress userAddress);
