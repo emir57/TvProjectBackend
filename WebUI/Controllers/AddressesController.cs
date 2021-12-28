@@ -16,15 +16,15 @@ namespace WebUI.Controllers
     {
         private readonly IUserAddressService _userAddressService;
 
-        public AddressesController(IUserCreditCardService userCreditCardService)
+        public AddressesController(IUserAddressService userAddressService)
         {
-            _userCreditCardService = userCreditCardService;
+            _userAddressService = userAddressService;
         }
         [HttpGet]
         [Route("getall")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
-            var result = await _userCreditCardService.GetAll(x => x.UserId == userId);
+            var result = await _userAddressService.GetAll(x => x.UserId == userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetAddress(int id)
         {
-            var result = await _userCreditCardService.Get(x => x.Id == id);
+            var result = await _userAddressService.Get(x => x.Id == id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -46,12 +46,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            var address = await _userCreditCardService.Get(x => x.Id == id);
+            var address = await _userAddressService.Get(x => x.Id == id);
             if (address.Data == null)
             {
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));
             }
-            var result = await _userCreditCardService.Delete(address.Data);
+            var result = await _userAddressService.Delete(address.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
