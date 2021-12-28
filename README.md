@@ -55,3 +55,39 @@ Drivers Table <br>
     </tr>
   </tbody>
 </table>
+<br>
+Teams Table <br>
+<table>
+  <thead>
+    <tr>
+      <th>Column Name</th>
+      <th>Data Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TeamId</td>
+      <td>int</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>nvarchar(30)</td>
+    </tr>
+    <tr>
+      <td>Founder</td>
+      <td>nvarchar(50)</td>
+    </tr>
+    <tr>
+      <td>FoundationYear</td>
+      <td>datetime2(7)</td>
+    </tr>
+    <tr>
+      <td>TeamBoss</td>
+      <td>nvarchar(30)</td>
+    </tr>
+    <tr>
+      <td>TeamImageUrl</td>
+      <td>nvarchar(120)</td>
+    </tr>
+  </tbody>
+</table>
