@@ -59,6 +59,15 @@ namespace Business.Concrete
                 await _orderDal.GetAll(filter);
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
+
+        public async Task<IDataResult<List<OrderDto>>> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
+        {
+            var result = filter == null ?
+                await _orderDal.GetAllOrdersDto() :
+                await _orderDal.GetAllOrdersDto(filter);
+            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
+        }
+
         [SecuredOperation("User,Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
