@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public async Task<List<OrderDto>> GetOrdersByUserId(int userId)
         {
-            using(var context = new TvProjectContext())
+            using (var context = new TvProjectContext())
             {
                 var result = from o in context.Orders
                              join u in context.Users
@@ -29,28 +29,29 @@ namespace DataAccess.Concrete.EntityFramework
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
-                                 Id=o.Id,
+                                 Id = o.Id,
                                  TotalPrice = o.TotalPrice,
                                  ShippedDate = o.ShippedDate,
                                  User = u,
-                                 AddressText=a.AddressText,
-                                 City=c.CityName,
-                                 Tv=new TvAndPhotoDto
+                                 AddressText = a.AddressText,
+                                 City = c.CityName,
+                                 Tv = new TvAndPhotoDto
                                  {
-                                     Id=t.Id,
-                                     ImageUrl=context.Photos.SingleOrDefault(x=>x.Id==t.Id && x.IsMain==true).ImageUrl,
-                                     Discount=t.Discount,
-                                     IsDiscount=t.IsDiscount,
-                                     ProductCode=t.ProductCode,
-                                     Stock=t.Stock,
-                                     UnitPrice=t.UnitPrice,
-                                     Extras=t.Extras,
-                                     ScreenType=t.ScreenType,
-                                     ProductName=t.ProductName,
-                                     ScreenInch=t.ScreenInch
+                                     Id = t.Id,
+                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     Discount = t.Discount,
+                                     IsDiscount = t.IsDiscount,
+                                     ProductCode = t.ProductCode,
+                                     Stock = t.Stock,
+                                     UnitPrice = t.UnitPrice,
+                                     Extras = t.Extras,
+                                     ScreenType = t.ScreenType,
+                                     ProductName = t.ProductName,
+                                     ScreenInch = t.ScreenInch
                                  }
                              };
-                return await result.Where(x => x.User.Id == userId).ToListAsync();            }
+                return await result.Where(x => x.User.Id == userId).ToListAsync();
+            }
         }
 
         public async Task<List<OrderDto>> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
@@ -93,5 +94,6 @@ namespace DataAccess.Concrete.EntityFramework
                     await result.ToListAsync() :
                     await result.Where(filter).ToListAsync();
             }
+        }
     }
 }
