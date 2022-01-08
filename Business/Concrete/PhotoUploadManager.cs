@@ -39,7 +39,7 @@ namespace Business.Concrete
 
         private async Task<IResult> IsMainExistsCheck(Photo photo)
         {
-            var photos = await _photoService.GetAll(x => x.TvId == photo.TvId);
+            var photos = await _photoService.GetListByTvId(photo.TvId);
             if (photos.Data.Any(x => x.IsMain == true) && photo.IsMain)
             {
                 return new ErrorResult(Messages.IsMainExists);

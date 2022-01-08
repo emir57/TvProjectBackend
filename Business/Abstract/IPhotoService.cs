@@ -14,6 +14,7 @@ namespace Business.Abstract
         Task<IResult> Update(Photo entity);
         Task<IResult> Delete(Photo entity);
         Task<IDataResult<Photo>> GetById(int photoId);
-        Task<IDataResult<List<Photo>>> GetAll();
+        Task<IDataResult<List<Photo>>> GetList();
+        Task<IDataResult<List<Photo>>> GetListByTvId(int tvId);
     }
 }

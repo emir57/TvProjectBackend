@@ -49,11 +49,17 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetAll()
+        public async Task<IDataResult<List<Photo>>> GetList()
         {
             var result = await _photoDal.GetAll();
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
-
+        }
+        [PerformanceAspect(5)]
+        [CacheAspect]
+        public async Task<IDataResult<List<Photo>>> GetListByTvId(int tvId)
+        {
+            var result = await _photoDal.GetAll(x=>x.TvId==tvId);
+            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
