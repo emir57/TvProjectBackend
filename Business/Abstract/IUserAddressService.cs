@@ -15,9 +15,9 @@ namespace Business.Abstract
         Task<IResult> Delete(UserAddress userAddress);
         Task<IResult> Update(UserAddress userAddress);
         Task<IDataResult<List<UserAddress>>> GetByUserId(int userId);
-        Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress,bool>> filter=null);
-        Task<IDataResult<UserAddress>> Get(Expression<Func<UserAddress,bool>> filter);
-        Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(Expression<Func<UserAddressCityDto, bool>> filter);
+        Task<IDataResult<List<UserAddress>>> GetAll();
+        Task<IDataResult<UserAddress>> GetById(int addressId);
+        Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(int userId);
 
     }
 }

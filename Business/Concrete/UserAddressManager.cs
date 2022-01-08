@@ -42,25 +42,23 @@ namespace Business.Concrete
             return new SuccessResult(Messages.DeleteUserAddress);
         }
         [SecuredOperation("User")]
-        public async Task<IDataResult<UserAddress>> Get(Expression<Func<UserAddress, bool>> filter)
+        public async Task<IDataResult<UserAddress>> GetById(int addressId)
         {
-            var result = await _userAddressDal.Get(filter);
+            var result = await _userAddressDal.Get(x=>x.Id== addressId);
             return new SuccessDataResult<UserAddress>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddress>>> GetAll(Expression<Func<UserAddress, bool>> filter = null)
+        public async Task<IDataResult<List<UserAddress>>> GetAll()
         {
-            var result = filter == null ?
-                await _userAddressDal.GetAll() :
-                await _userAddressDal.GetAll(filter);
+            var result = await _userAddressDal.GetAll();
             return new SuccessDataResult<List<UserAddress>>(result);
         }
 
-        public async Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(Expression<Func<UserAddressCityDto, bool>> filter)
+        public async Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(int userId)
         {
-            var result = await _userAddressDal.GetAddressByCityName(filter);
+            var result = await _userAddressDal.GetAddressByCityName(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);
         }
 
