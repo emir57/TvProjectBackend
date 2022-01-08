@@ -13,7 +13,7 @@ namespace Business.Abstract
         Task<IResult> Add(City entity);
         Task<IResult> Update(City entity);
         Task<IResult> Delete(City entity);
-        Task<IDataResult<City>> Get(Expression<Func<City, bool>> filter);
-        Task<IDataResult<List<City>>> GetAll(Expression<Func<City, bool>> filter = null);
+        Task<IDataResult<City>> GetById(int cityId);
+        Task<IDataResult<List<City>>> GetAll();
     }
 }

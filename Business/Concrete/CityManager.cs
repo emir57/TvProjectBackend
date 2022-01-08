@@ -43,18 +43,16 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<City>> Get(Expression<Func<City, bool>> filter)
+        public async Task<IDataResult<City>> GetById(int cityId)
         {
-            var result = await _citydal.Get(filter);
+            var result = await _citydal.Get(x=>x.Id==cityId);
             return new SuccessDataResult<City>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<City>>> GetAll(Expression<Func<City, bool>> filter = null)
+        public async Task<IDataResult<List<City>>> GetAll()
         {
-            var result = filter == null ?
-                await _citydal.GetAll() :
-                await _citydal.GetAll(filter);
+            var result = await _citydal.GetAll();
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
