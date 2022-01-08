@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetCities()
         {
-            var result = await _cityService.GetAll();
+            var result = await _cityService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

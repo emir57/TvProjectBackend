@@ -50,7 +50,7 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<City>>> GetAll()
+        public async Task<IDataResult<List<City>>> GetList()
         {
             var result = await _citydal.GetAll();
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);

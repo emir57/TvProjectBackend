@@ -15,9 +15,9 @@ namespace Business.Abstract
         Task<IResult> Update(Order entity);
         Task<IResult> Delete(Order entity);
         Task<IDataResult<Order>> GetById(int orderId);
-        Task<IDataResult<List<Order>>> GetAll();
+        Task<IDataResult<List<Order>>> GetList();
         Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId);
-        Task<IDataResult<List<OrderDto>>> GetAllOrdersDto();
+        Task<IDataResult<List<OrderDto>>> GetListOrdersDto();
 
     }
 }

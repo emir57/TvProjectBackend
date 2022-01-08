@@ -51,7 +51,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public async Task<IDataResult<List<Role>>> GetAll()
+        public async Task<IDataResult<List<Role>>> GetList()
         {
             var result = await _roleDal.GetAll();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);

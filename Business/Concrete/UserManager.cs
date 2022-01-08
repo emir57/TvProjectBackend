@@ -51,13 +51,13 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user)
+        public async Task<IDataResult<List<UserForAddressDto>>> GetListAddress(User user)
         {
             var result =  await _userDal.GetAddress(user);
             return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<User>>> GetAll()
+        public async Task<IDataResult<List<User>>> GetList()
         {
             var result = await _userDal.GetAll();
             return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
@@ -79,7 +79,7 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForCreditCardDto>>> GetCreditCards(User user)
+        public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCards(User user)
         {
             var result = await _userDal.GetCrediCards(user);
             return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);

@@ -52,13 +52,13 @@ namespace Business.Concrete
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<List<Order>>> GetAll()
+        public async Task<IDataResult<List<Order>>> GetList()
         {
             var result = await _orderDal.GetAll();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<OrderDto>>> GetAllOrdersDto()
+        public async Task<IDataResult<List<OrderDto>>> GetListOrdersDto()
         {
             var result = await _orderDal.GetAllOrdersDto();
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);

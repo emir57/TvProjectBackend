@@ -50,13 +50,13 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddress>>> GetAll()
+        public async Task<IDataResult<List<UserAddress>>> GetList()
         {
             var result = await _userAddressDal.GetAll();
             return new SuccessDataResult<List<UserAddress>>(result);
         }
 
-        public async Task<IDataResult<List<UserAddressCityDto>>> GetByCityName(int userId)
+        public async Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserId(int userId)
         {
             var result = await _userAddressDal.GetAddressByCityName(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);

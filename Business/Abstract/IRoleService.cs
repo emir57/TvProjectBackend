@@ -14,6 +14,6 @@ namespace Business.Abstract
         Task<IResult> Update(Role entity);
         Task<IResult> Delete(Role entity);
         Task<IDataResult<Role>> GetById(int roleId);
-        Task<IDataResult<List<Role>>> GetAll();
+        Task<IDataResult<List<Role>>> GetList();
     }
 }

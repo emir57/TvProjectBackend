@@ -14,6 +14,6 @@ namespace Business.Abstract
         Task<IResult> Update(TvBrand entity);
         Task<IResult> Delete(TvBrand entity);
         Task<IDataResult<TvBrand>> GetById(int brandId);
-        Task<IDataResult<List<TvBrand>>> GetAll();
+        Task<IDataResult<List<TvBrand>>> GetList();
     }
 }

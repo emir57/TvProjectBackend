@@ -50,7 +50,7 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<TvBrand>>> GetAll()
+        public async Task<IDataResult<List<TvBrand>>> GetList()
         {
             var result = await _tvBrandDal.GetAll();
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);

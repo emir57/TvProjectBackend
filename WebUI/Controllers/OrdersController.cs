@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetOrders()
         {
-            var result = await _orderService.GetAllOrdersDto();
+            var result = await _orderService.GetListOrdersDto();
             if (!result.IsSuccess)
             {
                 return Ok(result);

@@ -18,9 +18,9 @@ namespace Business.Abstract
         Task<IDataResult<User>> GetByKey(string key);
         Task<IResult> AddUserRole(User user);
         Task<IDataResult<User>> GetByMail(string email);
-        Task<IDataResult<List<User>>> GetAll(); 
+        Task<IDataResult<List<User>>> GetList(); 
 
-        Task<IDataResult<List<UserForAddressDto>>> GetAddress(User user);
-        Task<IDataResult<List<UserForCreditCardDto>>> GetCreditCards(User user);
+        Task<IDataResult<List<UserForAddressDto>>> GetListAddress(User user);
+        Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCards(User user);
     }
 }

@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvBrands()
         {
-            var result = await _brandService.GetAll();
+            var result = await _brandService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

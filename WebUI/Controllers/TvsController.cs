@@ -28,7 +28,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvs()
         {
-            var result = await _tvService.GetTvWithPhotos();
+            var result = await _tvService.GetListTvWithPhotos();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -50,7 +50,7 @@ namespace WebUI.Controllers
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id)
         {
-            var result = await _tvService.GetTvDetailsByCategoryId(id);
+            var result = await _tvService.GetListTvDetailsByCategoryId(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -61,7 +61,7 @@ namespace WebUI.Controllers
         [Route("gettvdetail")]
         public async Task<ActionResult> GetTvDetails(int tvId)
         {
-            var result = await _tvService.GetTvDetails();
+            var result = await _tvService.GetListTvDetails();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -72,7 +72,7 @@ namespace WebUI.Controllers
         [Route("gettvphotos")]
         public async Task<ActionResult> GetTvPhotos(int tvId)
         {
-            var result = await _tvService.GetPhotos(tvId);
+            var result = await _tvService.GetListPhotos(tvId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

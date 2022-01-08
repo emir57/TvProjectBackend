@@ -26,7 +26,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetRoles()
         {
-            var result = await _roleService.GetAll();
+            var result = await _roleService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

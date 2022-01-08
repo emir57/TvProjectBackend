@@ -15,13 +15,13 @@ namespace Business.Abstract
         Task<IResult> Update(Tv entity);
         Task<IResult> Delete(Tv entity);
         Task<IDataResult<Tv>> GetById(int tvId);
-        Task<IDataResult<List<Tv>>> GetByBrand(int brandId);
-        Task<IDataResult<List<Tv>>> GetAll();
+        Task<IDataResult<List<Tv>>> GetListByBrand(int brandId);
+        Task<IDataResult<List<Tv>>> GetList();
 
-        Task<IDataResult<List<Photo>>> GetPhotos(int tvId);
-        Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos();
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails();
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetailsByCategoryId(int categoryId);
+        Task<IDataResult<List<Photo>>> GetListPhotos(int tvId);
+        Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotos();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId);
         Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId);
     }
 }
