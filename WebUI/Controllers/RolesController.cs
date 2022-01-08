@@ -37,7 +37,7 @@ namespace WebUI.Controllers
         [Route("getuserroles")]
         public async Task<ActionResult> GetUserRoles(int userId)
         {
-            var user = await _userService.Get(x => x.Id == userId);
+            var user = await _userService.GetById(userId);
             if (user.Data == null)
             {
                 return BadRequest(new ErrorResult(Messages.UserNotFound));
@@ -75,7 +75,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteRole(int roleId)
         {
-            var role = await _roleService.Get(x => x.Id == roleId);
+            var role = await _roleService.GetById(roleId);
             if (role.Data == null)
             {
                 return BadRequest(new ErrorResult(Messages.RoleNotFound));

@@ -52,9 +52,17 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserCreditCard>>> GetAll()
+        public async Task<IDataResult<List<UserCreditCard>>> GetList()
         {
             var result = await _creditCardDal.GetAll();
+            return new SuccessDataResult<List<UserCreditCard>>(result);
+        }
+        [SecuredOperation("User")]
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public async Task<IDataResult<List<UserCreditCard>>> GetListByUserId(int userId)
+        {
+            var result = await _creditCardDal.GetAll(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]

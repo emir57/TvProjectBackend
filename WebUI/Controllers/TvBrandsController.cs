@@ -59,7 +59,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
             Thread.Sleep(1);
-            var tvBrand = await _brandService.Get(t => t.Id == tvBrandId);
+            var tvBrand = await _brandService.GetById(tvBrandId);
             if (tvBrand.Data == null)
             {
                 return BadRequest("Silinecek ürün bulunamadı");

@@ -47,7 +47,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            var address = await _userAddressService.Get(x => x.Id == id);
+            var address = await _userAddressService.GetById(id);
             if (address.Data == null)
             {
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));

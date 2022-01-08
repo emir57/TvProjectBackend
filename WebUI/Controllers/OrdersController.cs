@@ -46,7 +46,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _orderService.Get(x => x.Id == id);
+            var order = await _orderService.GetById(id);
             if (order.Data == null)
             {
                 return Ok(new ErrorResult(Messages.OrderIsNotFound));

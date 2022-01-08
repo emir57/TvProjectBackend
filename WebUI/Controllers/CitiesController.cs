@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         [Route("getbyId")]
         public async Task<IActionResult> GetCity(int id)
         {
-            var result = await _cityService.Get(x=>x.Id==id);
+            var result = await _cityService.GetById(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -67,7 +67,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteCity(int cityId)
         {
-            var city = await _cityService.Get(x=>x.Id==cityId);
+            var city = await _cityService.GetById(cityId);
             if (city.Data == null)
             {
                 return BadRequest(Messages.CityIsNotFound);

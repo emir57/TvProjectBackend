@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetCardsByUserId(int userId)
         {
-            var result = await _userCreditCardService.GetAll(x=>x.UserId== userId);
+            var result = await _userCreditCardService.GetListByUserId(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetCard(int id)
         {
-            var result = await _userCreditCardService.Get(x => x.Id == id);
+            var result = await _userCreditCardService.GetById(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -46,7 +46,7 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteCard(int id)
         {
-            var card = await _userCreditCardService.Get(x => x.Id == id);
+            var card = await _userCreditCardService.GetById(id);
             if (card.Data == null)
             {
                 return Ok(new ErrorResult(Messages.CardIsNotFound));

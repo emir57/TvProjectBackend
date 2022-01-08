@@ -38,7 +38,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
-            var user = await _userService.Get(x => x.Id == updateUserDto.UserId);
+            var user = await _userService.GetById(updateUserDto.UserId);
             if (!HashingHelper.VerifyPasswordHash(updateUserDto.Password, user.Data.PasswordHash, user.Data.PasswordSalt))
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
@@ -56,7 +56,7 @@ namespace WebUI.Controllers
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
-            var user = await _userService.Get(x => x.Id == changePasswordModel.UserId);
+            var user = await _userService.GetById(changePasswordModel.UserId);
             if (!HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash, user.Data.PasswordSalt))
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
