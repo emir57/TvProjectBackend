@@ -14,7 +14,7 @@ namespace Business.Abstract
         Task<IResult> Add(Tv entity);
         Task<IResult> Update(Tv entity);
         Task<IResult> Delete(Tv entity);
-        Task<IDataResult<Tv>> GetById(int id);
+        Task<IDataResult<Tv>> GetById(int tvId);
         Task<IDataResult<List<Tv>>> GetByBrand(int brandId);
         Task<IDataResult<List<Tv>>> GetAll();
 
@@ -22,6 +22,6 @@ namespace Business.Abstract
         Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos();
         Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails();
         Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetailsByCategoryId(int categoryId);
-        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int id);
+        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId);
     }
 }

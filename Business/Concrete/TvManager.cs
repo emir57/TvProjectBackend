@@ -55,9 +55,9 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<Tv>> GetById(int id)
+        public async Task<IDataResult<Tv>> GetById(int tvId)
         {
-            var result = await _tvDal.Get(x=>x.Id==id);
+            var result = await _tvDal.Get(x=>x.Id== tvId);
             return new SuccessDataResult<Tv>(result, Messages.SuccessGet);
         }
         [CacheAspect]
@@ -115,9 +115,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int id)
+        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId)
         {
-            var result = await _tvDal.GetTvDetail(x=>x.Id==id);
+            var result = await _tvDal.GetTvDetail(x=>x.Id== tvId);
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
 
         }
