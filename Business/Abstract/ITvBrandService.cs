@@ -13,7 +13,7 @@ namespace Business.Abstract
         Task<IResult> Add(TvBrand entity);
         Task<IResult> Update(TvBrand entity);
         Task<IResult> Delete(TvBrand entity);
-        Task<IDataResult<TvBrand>> Get(Expression<Func<TvBrand, bool>> filter);
-        Task<IDataResult<List<TvBrand>>> GetAll(Expression<Func<TvBrand, bool>> filter = null);
+        Task<IDataResult<TvBrand>> GetById(int brandId);
+        Task<IDataResult<List<TvBrand>>> GetAll();
     }
 }

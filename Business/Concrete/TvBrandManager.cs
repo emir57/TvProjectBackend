@@ -43,18 +43,16 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<TvBrand>> Get(Expression<Func<TvBrand, bool>> filter)
+        public async Task<IDataResult<TvBrand>> GetById(int brandId)
         {
-            var result = await _tvBrandDal.Get(filter);
+            var result = await _tvBrandDal.Get(x=>x.Id==brandId);
             return new SuccessDataResult<TvBrand>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<TvBrand>>> GetAll(Expression<Func<TvBrand, bool>> filter = null)
+        public async Task<IDataResult<List<TvBrand>>> GetAll()
         {
-            var result = filter == null ?
-                await _tvBrandDal.GetAll() :
-                await _tvBrandDal.GetAll(filter);
+            var result = await _tvBrandDal.GetAll();
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
