@@ -55,18 +55,16 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<Tv>> Get(Expression<Func<Tv, bool>> filter)
+        public async Task<IDataResult<Tv>> GetById(int id)
         {
-            var result = await _tvDal.Get(filter);
+            var result = await _tvDal.Get(x=>x.Id==id);
             return new SuccessDataResult<Tv>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<Tv>>> GetAll(Expression<Func<Tv, bool>> filter = null)
+        public async Task<IDataResult<List<Tv>>> GetAll()
         {
-            var result = filter == null ?
-                await _tvDal.GetAll() :
-                await _tvDal.GetAll(filter);
+            var result = await _tvDal.GetAll();
 
             //BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);

@@ -14,9 +14,9 @@ namespace Business.Abstract
         Task<IResult> Add(Tv entity);
         Task<IResult> Update(Tv entity);
         Task<IResult> Delete(Tv entity);
-        Task<IDataResult<Tv>> Get(Expression<Func<Tv, bool>> filter);
+        Task<IDataResult<Tv>> GetById(int id);
         Task<IDataResult<List<Tv>>> GetByBrand(int brandId);
-        Task<IDataResult<List<Tv>>> GetAll(Expression<Func<Tv, bool>> filter = null);
+        Task<IDataResult<List<Tv>>> GetAll();
 
         Task<IDataResult<List<Photo>>> GetPhotos(int tvId);
         Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto,bool>> filter=null);
