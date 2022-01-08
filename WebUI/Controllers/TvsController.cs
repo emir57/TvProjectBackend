@@ -39,7 +39,7 @@ namespace WebUI.Controllers
         [Route("get")]
         public async Task<ActionResult> GetTv(int id)
         {
-            var result = await _tvService.GetTvDetail(x => x.Id == id);
+            var result = await _tvService.GetTvDetail(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -50,7 +50,7 @@ namespace WebUI.Controllers
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id)
         {
-            var result = await _tvService.GetTvDetails(t => t.BrandId == id);
+            var result = await _tvService.GetTvDetailsByCategoryId(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

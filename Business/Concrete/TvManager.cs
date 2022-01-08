@@ -103,25 +103,21 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter = null)
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos()
         {
-            var result = filter == null ?
-                await _tvDal.GetTvWithPhotos() :
-                await _tvDal.GetTvWithPhotos(filter);
+            var result = await _tvDal.GetTvWithPhotos();
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails()
         {
-            var result = filter == null ?
-                await _tvDal.GetTvDetails() :
-                await _tvDal.GetTvDetails(filter);
+            var result = await _tvDal.GetTvDetails();
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
+        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int id)
         {
-            var result = await _tvDal.GetTvDetail(filter);
+            var result = await _tvDal.GetTvDetail(x=>x.Id==id);
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
 
         }
@@ -133,6 +129,12 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductAlreadyExists);
             }
             return new SuccessResult();
+        }
+
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetailsByCategoryId(int categoryId)
+        {
+            var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)

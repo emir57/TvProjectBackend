@@ -19,8 +19,9 @@ namespace Business.Abstract
         Task<IDataResult<List<Tv>>> GetAll();
 
         Task<IDataResult<List<Photo>>> GetPhotos(int tvId);
-        Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto,bool>> filter=null);
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null);
-        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter);
+        Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetails();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetTvDetailsByCategoryId(int categoryId);
+        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int id);
     }
 }
