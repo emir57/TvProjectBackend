@@ -44,19 +44,17 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<UserCreditCard>> Get(Expression<Func<UserCreditCard, bool>> filter)
+        public async Task<IDataResult<UserCreditCard>> GetById(int creditCardId)
         {
-            var result = await _creditCardDal.Get(filter);
+            var result = await _creditCardDal.Get(x=>x.Id== creditCardId);
             return new SuccessDataResult<UserCreditCard>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserCreditCard>>> GetAll(Expression<Func<UserCreditCard, bool>> filter = null)
+        public async Task<IDataResult<List<UserCreditCard>>> GetAll()
         {
-            var result = filter == null ?
-                await _creditCardDal.GetAll() :
-                await _creditCardDal.GetAll(filter);
+            var result = await _creditCardDal.GetAll();
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]

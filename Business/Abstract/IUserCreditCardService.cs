@@ -14,7 +14,7 @@ namespace Business.Abstract
         Task<IResult> Delete(UserCreditCard userCreditCard);
         Task<IResult> Update(UserCreditCard userCreditCard);
         Task<IDataResult<List<UserCreditCard>>> GetByUserId(int userId);
-        Task<IDataResult<List<UserCreditCard>>> GetAll(Expression<Func<UserCreditCard,bool>> filter=null);
-        Task<IDataResult<UserCreditCard>> Get(Expression<Func<UserCreditCard,bool>> filter);
+        Task<IDataResult<List<UserCreditCard>>> GetAll();
+        Task<IDataResult<UserCreditCard>> GetById(int creditCardId);
     }
 }
