@@ -38,9 +38,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<User>> Get(Expression<Func<User, bool>> filter)
+        public async Task<IDataResult<User>> GetById(int userId)
         {
-            var result = await _userDal.Get(filter);
+            var result = await _userDal.Get(x=>x.Id==userId);
             return new SuccessDataResult<User>(result);
         }
 
