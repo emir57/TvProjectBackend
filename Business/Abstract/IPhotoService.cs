@@ -13,7 +13,7 @@ namespace Business.Abstract
         Task<IResult> Add(Photo entity);
         Task<IResult> Update(Photo entity);
         Task<IResult> Delete(Photo entity);
-        Task<IDataResult<Photo>> Get(Expression<Func<Photo, bool>> filter);
-        Task<IDataResult<List<Photo>>> GetAll(Expression<Func<Photo, bool>> filter = null);
+        Task<IDataResult<Photo>> GetById(int photoId);
+        Task<IDataResult<List<Photo>>> GetAll();
     }
 }

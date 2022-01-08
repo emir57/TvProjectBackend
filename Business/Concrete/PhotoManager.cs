@@ -42,18 +42,16 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<Photo>> Get(Expression<Func<Photo, bool>> filter)
+        public async Task<IDataResult<Photo>> GetById(int photoId)
         {
-            var result = await _photoDal.Get(filter);
+            var result = await _photoDal.Get(x=>x.Id==photoId);
             return new SuccessDataResult<Photo>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetAll(Expression<Func<Photo, bool>> filter = null)
+        public async Task<IDataResult<List<Photo>>> GetAll()
         {
-            var result = filter == null ?
-                await _photoDal.GetAll() :
-                await _photoDal.GetAll(filter);
+            var result = await _photoDal.GetAll();
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
 
         }
