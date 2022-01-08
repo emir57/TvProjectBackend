@@ -43,6 +43,11 @@ namespace Business.Concrete
             var result = await _userDal.Get(x=>x.Id==userId);
             return new SuccessDataResult<User>(result);
         }
+        public async Task<IDataResult<User>> GetByKey(string key)
+        {
+            var result = await _userDal.Get(x => x.Key == key);
+            return new SuccessDataResult<User>(result);
+        }
 
         [CacheAspect]
         [PerformanceAspect(5)]

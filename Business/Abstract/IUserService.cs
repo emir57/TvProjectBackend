@@ -15,6 +15,7 @@ namespace Business.Abstract
         Task<IResult> Add(User user);
         Task<IResult> Update(User user);
         Task<IDataResult<User>> GetById(int userId);
+        Task<IDataResult<User>> GetByKey(string key);
         Task<IResult> AddUserRole(User user);
         Task<IDataResult<User>> GetByMail(string email);
         Task<IDataResult<List<User>>> GetAll(); 

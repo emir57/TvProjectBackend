@@ -91,7 +91,7 @@ namespace WebUI.Controllers
         [Route("getuser")]
         public async Task<ActionResult> GetUser(int id)
         {
-            var user = await _userService.Get(x => x.Id == id);
+            var user = await _userService.GetById(id);
             if (user.Data != null)
             {
                 return Ok(new SuccessDataResult<User>(user.Data));
@@ -119,7 +119,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             byte[] passwordHash, passwordSalt;
-            var getUser = await _userService.Get(x => x.Key == resetPasswordModel.Key);
+            var getUser = await _userService.GetByKey(resetPasswordModel.Key);
             if (getUser.Data == null)
             {
                 return BadRequest("Geçersiz Key");
@@ -144,7 +144,7 @@ namespace WebUI.Controllers
         [Route("getroles")]
         public async Task<IActionResult> GetUserRoles(int id)
         {
-            var user = await _userService.Get(x => x.Id == id);
+            var user = await _userService.GetById(id);
             if (user.Data == null)
             {
                 return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
@@ -153,18 +153,18 @@ namespace WebUI.Controllers
             return Ok(roles);
         }
 
-        [HttpPost]
-        [Route("uploadImage")]
-        public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
-        {
-            //var result = await _imageService.UploadImageAsync(image);
-            //if (!result.IsSuccess)
-            //{
-            //    return BadRequest(result.Message);
-            //}
-            //return Ok(result.Message);
-            return Ok();
-        }
+        //[HttpPost]
+        //[Route("uploadImage")]
+        //public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
+        //{
+        //    //var result = await _imageService.UploadImageAsync(image);
+        //    //if (!result.IsSuccess)
+        //    //{
+        //    //    return BadRequest(result.Message);
+        //    //}
+        //    //return Ok(result.Message);
+        //    return Ok();
+        //}
         
     }
 }
