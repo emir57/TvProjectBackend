@@ -44,18 +44,16 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public async Task<IDataResult<Role>> Get(Expression<Func<Role, bool>> filter)
+        public async Task<IDataResult<Role>> GetById(int roleId)
         {
-            var result = await _roleDal.Get(filter);
+            var result = await _roleDal.Get(x=>x.Id==roleId);
             return new SuccessDataResult<Role>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public async Task<IDataResult<List<Role>>> GetAll(Expression<Func<Role, bool>> filter = null)
+        public async Task<IDataResult<List<Role>>> GetAll()
         {
-            var result = filter == null ?
-                await _roleDal.GetAll() :
-                await _roleDal.GetAll(filter);
+            var result = await _roleDal.GetAll();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]

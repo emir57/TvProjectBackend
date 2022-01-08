@@ -13,7 +13,7 @@ namespace Business.Abstract
         Task<IResult> Add(Role entity);
         Task<IResult> Update(Role entity);
         Task<IResult> Delete(Role entity);
-        Task<IDataResult<Role>> Get(Expression<Func<Role, bool>> filter);
-        Task<IDataResult<List<Role>>> GetAll(Expression<Func<Role, bool>> filter = null);
+        Task<IDataResult<Role>> GetById(int roleId);
+        Task<IDataResult<List<Role>>> GetAll();
     }
 }
