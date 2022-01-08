@@ -5,6 +5,7 @@ using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,9 +31,27 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> Add(UserAddress userAddress)
         {
+            var result = BusinessRules.Run(
+                await CheckUserAddressCount6(userAddress.UserId)
+                );
+            if (result != null)
+            {
+                return result;
+            }
             await _userAddressDal.Add(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
         }
+
+        private async Task<IResult> CheckUserAddressCount6(int userId)
+        {
+            var addresses = await _userAddressDal.GetAll(a => a.UserId == userId);
+            if (addresses.Count >= 6)
+            {
+                return new ErrorResult(Messages.UserAddressMaximumCount6);
+            }
+            return new SuccessResult();
+        }
+
         [SecuredOperation("User")]
         [CacheRemoveAspect("IUserAddressService.Get")]
         [PerformanceAspect(3)]
