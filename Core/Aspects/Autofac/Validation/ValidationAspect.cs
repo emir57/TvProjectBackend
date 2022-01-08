@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Messages;
 
 namespace Core.Aspects.Autofac.Validation
 {
@@ -16,7 +17,7 @@ namespace Core.Aspects.Autofac.Validation
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
-                throw new Exception("Doğrulama için geçersiz tip");
+                throw new Exception(AspectMessages.WrongValidationType);
             }
             _validatorType = validatorType;
         }
