@@ -44,27 +44,23 @@ namespace Business.Concrete
         [SecuredOperation("User,Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<Order>> Get(Expression<Func<Order, bool>> filter)
+        public async Task<IDataResult<Order>> GetById(int orderId)
         {
-            var result = await _orderDal.Get(filter);
+            var result = await _orderDal.Get(x=>x.Id==orderId);
             return new SuccessDataResult<Order>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<List<Order>>> GetAll(Expression<Func<Order, bool>> filter = null)
+        public async Task<IDataResult<List<Order>>> GetAll()
         {
-            var result = filter == null ?
-                await _orderDal.GetAll() :
-                await _orderDal.GetAll(filter);
+            var result = await _orderDal.GetAll();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<OrderDto>>> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
+        public async Task<IDataResult<List<OrderDto>>> GetAllOrdersDto()
         {
-            var result = filter == null ?
-                await _orderDal.GetAllOrdersDto() :
-                await _orderDal.GetAllOrdersDto(filter);
+            var result = await _orderDal.GetAllOrdersDto();
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
 

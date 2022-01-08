@@ -14,10 +14,10 @@ namespace Business.Abstract
         Task<IResult> Add(Order entity);
         Task<IResult> Update(Order entity);
         Task<IResult> Delete(Order entity);
-        Task<IDataResult<Order>> Get(Expression<Func<Order, bool>> filter);
-        Task<IDataResult<List<Order>>> GetAll(Expression<Func<Order, bool>> filter = null);
+        Task<IDataResult<Order>> GetById(int orderId);
+        Task<IDataResult<List<Order>>> GetAll();
         Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId);
-        Task<IDataResult<List<OrderDto>>> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null);
+        Task<IDataResult<List<OrderDto>>> GetAllOrdersDto();
 
     }
 }
