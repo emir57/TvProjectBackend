@@ -18,10 +18,12 @@ namespace WebUI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService,IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
         [HttpGet]
         [Route("get")]
@@ -61,6 +63,9 @@ namespace WebUI.Controllers
             {
                 return BadRequest(Messages.UserNotFound);
             }
+
+            
+
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
             findUser.Data.LastName = updateUserAdminDto.LastName;
             var result = await _userService.Update(findUser.Data);

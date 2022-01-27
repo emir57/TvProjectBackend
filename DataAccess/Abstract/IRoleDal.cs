@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface IRoleDal:IEntityRepository<Role>
     {
+        Task AddUserRole(User user, Role role);
     }
 }
