@@ -53,6 +53,17 @@ namespace WebUI.Controllers
             return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
         }
         [HttpPost]
+        [Route("updateAdmin")]
+        public async Task<IActionResult> UpdateUserAdmin(User user,Role[] userRoles)
+        {
+            var result = await _userService.Update(user);
+            if (!result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
+        }
+        [HttpPost]
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
