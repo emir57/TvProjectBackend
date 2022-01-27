@@ -24,14 +24,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<ActionResult> GetRoles(int userId)
+        public async Task<ActionResult> GetRoles()
         {
-            var user = await _userService.GetById(userId);
-            if(user.Data == null)
-            {
-                return BadRequest();
-            }
-            var result = await _userService.GetClaims(user.Data);
+            var result = await _roleService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -42,7 +37,12 @@ namespace WebUI.Controllers
         [Route("getuserroles")]
         public async Task<ActionResult> GetUserRoles(int userId)
         {
-            var result = await _roleService.GetList();
+            var user = await _userService.GetById(userId);
+            if(user.Data == null)
+            {
+                return BadRequest();
+            }
+            var result = await _userService.GetClaims(user.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
