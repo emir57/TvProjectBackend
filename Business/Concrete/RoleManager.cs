@@ -63,6 +63,13 @@ namespace Business.Concrete
             var result = await _roleDal.GetAll();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
+
+        public async Task<IResult> RemoveUserRole(User user, Role role)
+        {
+            await _roleDal.RemoveUserRole(user, role);
+            return new SuccessResult();
+        }
+
         [SecuredOperation("Admin")]
         [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Update(Role entity)
