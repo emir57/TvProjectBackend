@@ -45,9 +45,9 @@ namespace Business.Concrete
             var userRole = await _roleDal.GetUserRole(x => x.UserId == user.Id && x.RoleId == role.Id);
             if(userRole == null)
             {
-                return new SuccessResult();
+                return new ErrorResult();
             }
-            return new ErrorResult();
+            return new SuccessResult();
         }
 
         [SecuredOperation("Admin")]
