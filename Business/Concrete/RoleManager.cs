@@ -29,6 +29,13 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin")]
+        public async Task<IResult> AddUserRole(User user, Role role)
+        {
+            await _roleDal.AddUserRole(user, role);
+            return new SuccessResult();
+        }
+
+        [SecuredOperation("Admin")]
         [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> Delete(Role entity)
         {

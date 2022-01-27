@@ -15,5 +15,6 @@ namespace Business.Abstract
         Task<IResult> Delete(Role entity);
         Task<IDataResult<Role>> GetById(int roleId);
         Task<IDataResult<List<Role>>> GetList();
+        Task<IResult> AddUserRole(User user, Role role);
     }
 }
