@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,14 @@ namespace DataAccess.Concrete.EntityFramework
                 };
                 context.UserRoles.Add(userRole);
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<UserRole> GetUserRole(Expression<Func<UserRole, bool>> filter)
+        {
+            using(var context = new TvProjectContext())
+            {
+                return await context.UserRoles.SingleOrDefaultAsync(filter);
             }
         }
 

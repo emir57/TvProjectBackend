@@ -31,8 +31,15 @@ namespace Business.Concrete
         [SecuredOperation("Admin")]
         public async Task<IResult> AddUserRole(User user, Role role)
         {
+            BusinessRules.Run(
+                await CheckRoleIsAdd(user, role));
             await _roleDal.AddUserRole(user, role);
             return new SuccessResult();
+        }
+
+        private Task<IResult[]> CheckRoleIsAdd(User user, Role role)
+        {
+            
         }
 
         [SecuredOperation("Admin")]
