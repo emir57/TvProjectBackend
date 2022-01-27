@@ -54,9 +54,16 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("updateAdmin")]
-        public async Task<IActionResult> UpdateUserAdmin(User user,Role[] userRoles)
+        public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
-            var result = await _userService.Update(user);
+            var findUser = await _userService.GetById(updateUserAdminDto.Id);
+            if(findUser.Data == null)
+            {
+                return BadRequest(Messages.UserNotFound);
+            }
+            findUser.Data.FirstName = updateUserAdminDto.FirstName;
+            findUser.Data.LastName = updateUserAdminDto.LastName;
+            var result = await _userService.Update(findUser.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
