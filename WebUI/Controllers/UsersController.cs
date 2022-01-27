@@ -63,11 +63,13 @@ namespace WebUI.Controllers
             {
                 return BadRequest(Messages.UserNotFound);
             }
-            var getUserRoles = await _userService.GetClaims(findUser.Data);
-            var addedRoles = updateUserAdminDto.UserRoles.Except(getUserRoles.Data);
-            foreach (var role in addedRoles)
+            foreach (var role in updateUserAdminDto.AddedRoles)
             {
                 await _roleService.AddUserRole(findUser.Data, role);
+            }
+            foreach (var role in updateUserAdminDto.RemovedRoles)
+            {
+                await _roleService.RemoveUserRole(findUser.Data, role);
             }
 
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
