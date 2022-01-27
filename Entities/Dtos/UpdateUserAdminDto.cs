@@ -10,6 +10,7 @@ namespace Entities.Dtos
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public List<Role> UserRoles { get; set; }
+        public List<Role> AddedRoles { get; set; }
+        public List<Role> RemovedRoles { get; set; }
     }
 }
