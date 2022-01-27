@@ -1,8 +1,10 @@
 ﻿using Core.DataAccess.EntityFramework;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +22,16 @@ namespace DataAccess.Concrete.EntityFramework
                     UserId = user.Id
                 };
                 context.UserRoles.Add(userRole);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveUserRole(User user, Role role)
+        {
+            using (var context = new TvProjectContext())
+            {
+                var userRole = await context.UserRoles.SingleOrDefaultAsync(x => x.RoleId == role.Id && x.UserId == user.Id);
+                context.UserRoles.Remove(userRole);
                 await context.SaveChangesAsync();
             }
         }
