@@ -44,22 +44,6 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getuserroles")]
-        public async Task<ActionResult> GetUserRoles(int userId)
-        {
-            var user = await _userService.GetById(userId);
-            if (user.Data == null)
-            {
-                return BadRequest(new ErrorResult(Messages.UserNotFound));
-            }
-            var result = await _userService.GetClaims(user.Data);
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
-        }
         [HttpPost]
         [Route("add")]
         public async Task<ActionResult> AddRole(Role role)
