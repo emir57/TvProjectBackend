@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -50,6 +51,17 @@ namespace WebUI.Controllers
             if (!result.IsSuccess)
             {
                 return Ok(result);
+            }
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddCard(UserCreditCard userCreditCard)
+        {
+            var result = await _userCreditCardService.Add(userCreditCard);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
             }
             return Ok(result);
         }
