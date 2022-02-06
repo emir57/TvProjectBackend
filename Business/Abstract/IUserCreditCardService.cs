@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -17,5 +18,6 @@ namespace Business.Abstract
         Task<IDataResult<List<UserCreditCard>>> GetList();
         Task<IDataResult<List<UserCreditCard>>> GetListByUserId(int userId);
         Task<IDataResult<UserCreditCard>> GetById(int creditCardId);
+        Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCards(int userId);
     }
 }
