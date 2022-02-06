@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         [Route("getallbyuserid")]
         public async Task<IActionResult> GetCardsByUserId(int userId)
         {
-            var result = await _userCreditCardService.GetListByUserId(userId);
+            var result = await _userCreditCardService.GetUserCreditCards(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
