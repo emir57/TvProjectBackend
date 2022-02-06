@@ -32,8 +32,12 @@ namespace DataAccess.Concrete.EntityFramework
                              where c.UserId == userId
                              select new CreditCardWithUserDto
                              {
-                                 User = u,
-                                 UserCreditCard = c
+                                 CreditCardNumber = c.CreditCardNumber,
+                                 CVV=c.CVV,
+                                 Date=c.Date,
+                                 Id=c.Id,
+                                 FirstName=u.FirstName,
+                                 LastName=u.LastName
                              };
                 return await result.ToListAsync();
             }
