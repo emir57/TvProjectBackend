@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -81,6 +82,13 @@ namespace Business.Concrete
         {
             await _creditCardDal.Update(userCreditCard);
             return new SuccessResult(Messages.UpdateCreditCard);
+        }
+        [SecuredOperation("User")]
+        [PerformanceAspect(3)]
+        public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCards(int userId)
+        {
+            var result = await _creditCardDal.GetUserCreditCards(userId);
+            return new SuccessDataResult<List<CreditCardWithUserDto>>(result);
         }
     }
 }
