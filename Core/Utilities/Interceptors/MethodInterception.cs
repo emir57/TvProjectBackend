@@ -24,7 +24,11 @@ namespace Core.Utilities.Interceptors
                 if (task != null)
                 {
                     if (task.IsFaulted)
+                    {
+                        isSuccess = false;
                         OnException(invocation, task.Exception);
+                    }
+                        
                 }
             }
             catch (Exception exception)
