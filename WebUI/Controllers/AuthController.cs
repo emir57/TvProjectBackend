@@ -53,10 +53,6 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userService.GetByMail(userForLoginDto.Email);
-            if (user.Data == null)
-            {
-                return BadRequest(new ErrorResult("Böyle bir kullanıcı yok"));
-            }
             var result = await _authService.Login(userForLoginDto);
             if (!result.IsSuccess)
             {
