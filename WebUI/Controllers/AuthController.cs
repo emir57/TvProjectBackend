@@ -116,11 +116,7 @@ namespace WebUI.Controllers
         {
             byte[] passwordHash, passwordSalt;
             var getUser = await _userService.GetByKey(resetPasswordModel.Key);
-            if (getUser.Data == null)
-            {
-                return BadRequest("Geçersiz Key");
-            }
-            if (getUser.Data.Key != resetPasswordModel.Key)
+            if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
             {
                 return BadRequest("Geçersiz Key");
             }
