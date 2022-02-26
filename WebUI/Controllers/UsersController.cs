@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Security.Hashing;
@@ -19,11 +20,13 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService,IRoleService roleService)
+        public UsersController(IUserService userService, IRoleService roleService, IMapper mapper)
         {
             _userService = userService;
             _roleService = roleService;
+            _mapper = mapper;
         }
         [HttpGet]
         [Route("get")]
@@ -41,12 +44,14 @@ namespace WebUI.Controllers
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
             var user = await _userService.GetById(updateUserDto.UserId);
+            var updatedUser = user.Data;
             if (!HashingHelper.VerifyPasswordHash(updateUserDto.Password, user.Data.PasswordHash, user.Data.PasswordSalt))
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
             }
-            user.Data.FirstName = updateUserDto.FirstName;
-            user.Data.LastName = updateUserDto.LastName;
+            updatedUser = _mapper.Map<User>(updateUserDto);
+            //user.Data.FirstName = updateUserDto.FirstName;
+            //user.Data.LastName = updateUserDto.LastName;
             var result = await _userService.Update(user.Data);
             if (!result.IsSuccess)
             {

@@ -15,6 +15,7 @@ namespace Entities.Mapper.AutoMapper
                 .ForMember(member => member.Id, member2 => member2.MapFrom(x => x.UserId));
             CreateMap<User, UpdateUserDto>()
                 .ForMember(member => member.UserId, member2 => member2.MapFrom(x => x.Id));
+                
         }
     }
 }
