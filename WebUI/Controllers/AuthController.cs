@@ -62,7 +62,6 @@ namespace WebUI.Controllers
                 return BadRequest(result);
             }
             var token = await _authService.CreateAccessToken(user.Data);
-            var tyrUser = _mapper.Map<LoginingUser>(user.Data);
             var loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
