@@ -49,9 +49,8 @@ namespace WebUI.Controllers
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
             }
-            updatedUser = _mapper.Map<User>(updateUserDto);
-            //user.Data.FirstName = updateUserDto.FirstName;
-            //user.Data.LastName = updateUserDto.LastName;
+            user.Data.FirstName = updateUserDto.FirstName;
+            user.Data.LastName = updateUserDto.LastName;
             var result = await _userService.Update(user.Data);
             if (!result.IsSuccess)
             {
