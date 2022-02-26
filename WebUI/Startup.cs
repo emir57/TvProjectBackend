@@ -21,6 +21,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Core.Entities.Mapper.AutoMapper;
 using AutoMapper;
+using Entities.Mapper.AutoMapper;
 
 namespace WebUI
 {
@@ -37,7 +38,7 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(MappingProfileCore),typeof(MappingProfileEntity));
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

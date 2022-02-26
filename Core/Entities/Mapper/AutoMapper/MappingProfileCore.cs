@@ -13,6 +13,8 @@ namespace Core.Entities.Mapper.AutoMapper
         {
             CreateMap<User, LoginingUser>();
             CreateMap<LoginingUser, User>();
+
+            
         }
     }
 }
