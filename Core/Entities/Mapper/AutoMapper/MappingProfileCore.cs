@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Core.Entities.Mapper.AutoMapper
 {
-    public class MappingProfile:Profile
+    public class MappingProfileCore : Profile
     {
-        public MappingProfile()
+        public MappingProfileCore()
         {
             CreateMap<User, LoginingUser>();
             CreateMap<LoginingUser, User>();
