@@ -9,15 +9,15 @@ namespace Core.Utilities.Results
         public DataResult(T data,bool isSuccess,string message,int page=0):base(isSuccess,message)
         {
             Data = data;
-            Page = page;
+            TotalPage = page;
         }
         public DataResult(T data,bool isSuccess,int page=0):base(isSuccess)
         {
             Data = data;
-            Page = page;
+            TotalPage = page;
         }
         public T Data { get; }
 
-        public int Page { get; }
+        public int TotalPage { get; }
     }
 }

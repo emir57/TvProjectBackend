@@ -112,7 +112,8 @@ namespace Business.Concrete
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page)
         {
             var result = await _tvDal.GetTvDetails(page);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            var totalPage = Math.Ceiling((decimal)result.Count / 6);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 
         public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId)
@@ -134,7 +135,8 @@ namespace Business.Concrete
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
         {
             var result = await _tvDal.GetTvDetails(page,x => x.BrandId == categoryId);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            var totalPage = Math.Ceiling((decimal)result.Count / 6);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
