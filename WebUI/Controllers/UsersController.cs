@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Security.Hashing;
@@ -20,13 +19,11 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService, IRoleService roleService, IMapper mapper)
+        public UsersController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
             _roleService = roleService;
-            _mapper = mapper;
         }
         [HttpGet]
         [Route("get")]
