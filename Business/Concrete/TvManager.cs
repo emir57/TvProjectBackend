@@ -26,6 +26,7 @@ namespace Business.Concrete
         public TvManager(ITvDal tvDal)
         {
             _tvDal = tvDal;
+            
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
@@ -112,7 +113,8 @@ namespace Business.Concrete
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page)
         {
             var result = await _tvDal.GetTvDetails(page);
-            var totalPage = Math.Ceiling((decimal)result.Count / 6);
+            var totalProducts = (await _tvDal.GetAll()).Count();
+            var totalPage = Math.Ceiling((decimal)totalProducts / 6);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 
@@ -135,7 +137,8 @@ namespace Business.Concrete
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
         {
             var result = await _tvDal.GetTvDetails(page,x => x.BrandId == categoryId);
-            var totalPage = Math.Ceiling((decimal)result.Count / 6);
+            var totalProducts = (await _tvDal.GetAll()).Count();
+            var totalPage = Math.Ceiling((decimal)totalProducts / 6);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 
