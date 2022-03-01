@@ -50,7 +50,7 @@ namespace WebUI.Controllers
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
         {
-            var result = await _tvService.GetListTvDetailsByCategoryId(page,id);
+            var result = await _tvService.GetListTvDetailsByCategoryId(page-1,id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -59,9 +59,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("gettvdetail")]
-        public async Task<ActionResult> GetTvDetails(int tvId,int page=0)
+        public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
-            var result = await _tvService.GetListTvDetails(page);
+            var result = await _tvService.GetListTvDetails(page-1);
             
             if (!result.IsSuccess)
             {
