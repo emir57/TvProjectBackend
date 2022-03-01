@@ -6,11 +6,11 @@ namespace Core.Utilities.Results
 {
     public class SuccessDataResult<T>:DataResult<T>
     {
-        public SuccessDataResult(T data,string message):base(data,true,message)
+        public SuccessDataResult(T data,string message,int page=0):base(data,true,message,page)
         {
 
         }
-        public SuccessDataResult(T data):base(data,true)
+        public SuccessDataResult(T data,int page=0):base(data,true,page)
         {
 
         }

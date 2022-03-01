@@ -6,11 +6,11 @@ namespace Core.Utilities.Results
 {
     public class ErrorDataResult<T>:DataResult<T>
     {
-        public ErrorDataResult(T data,string message):base(data,false,message)
+        public ErrorDataResult(T data,string message, int page=0) :base(data,false,message,page)
         {
 
         }
-        public ErrorDataResult(T data):base(data,false)
+        public ErrorDataResult(T data,int page=0):base(data,false,page)
         {
 
         }
