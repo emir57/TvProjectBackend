@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-HVLQH67\SQLEXPRESS;Database=TvProjectDb;integrated security=true;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TvProjectDb;integrated security=true;");
         }
 
         public DbSet<User> Users { get; set; }

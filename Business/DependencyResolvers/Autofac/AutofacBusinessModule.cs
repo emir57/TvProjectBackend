@@ -37,7 +37,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
 
-
             //DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
             builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
@@ -49,11 +48,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
-            //Email
             builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
 
-
-            //Aspects
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
