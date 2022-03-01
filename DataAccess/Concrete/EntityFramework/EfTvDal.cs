@@ -57,7 +57,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(int page,Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
+        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())
             {
