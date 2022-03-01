@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers;
+using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -50,7 +52,12 @@ namespace WebUI.Controllers
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
         {
-            var result = await _tvService.GetListTvDetailsByCategoryId(page-1,id);
+            var result = await _tvService.GetListTvDetailsByCategoryId(id);
+            if (page != -1)
+            {
+                result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
+                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, result.Data.Count / 6);
+            }
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -61,8 +68,12 @@ namespace WebUI.Controllers
         [Route("gettvdetail")]
         public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
-            var result = await _tvService.GetListTvDetails(page-1);
-            
+            var result = await _tvService.GetListTvDetails();
+            if (page != -1)
+            {
+                result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
+                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, result.Data.Count / 6);
+            }
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

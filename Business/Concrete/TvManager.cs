@@ -111,12 +111,10 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails()
         {
-            var result = await _tvDal.GetTvDetails(page);
-            var totalProducts = (await _tvDal.GetAll()).Count();
-            var totalPage = Math.Ceiling((decimal)totalProducts / 6);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
+            var result = await _tvDal.GetTvDetails();
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId)
@@ -138,9 +136,7 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
         {
-            var result = await _tvDal.GetTvDetails(page,x => x.BrandId == categoryId);
-            var totalProducts = (await _tvDal.GetAll()).Count();
-            var totalPage = Math.Ceiling((decimal)totalProducts / 6);
+            var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 

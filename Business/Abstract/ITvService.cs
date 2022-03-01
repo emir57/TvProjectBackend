@@ -20,8 +20,8 @@ namespace Business.Abstract
 
         Task<IDataResult<List<Photo>>> GetListPhotos(int tvId);
         Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotos();
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page);
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId);
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId);
         Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId);
     }
 }
