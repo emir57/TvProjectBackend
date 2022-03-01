@@ -55,8 +55,9 @@ namespace WebUI.Controllers
             var result = await _tvService.GetListTvDetailsByCategoryId(id);
             if (page != -1)
             {
+                var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
                 result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
-                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, result.Data.Count / 6);
+                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, (int)totalPage);
             }
             if (!result.IsSuccess)
             {
@@ -71,8 +72,9 @@ namespace WebUI.Controllers
             var result = await _tvService.GetListTvDetails();
             if (page != -1)
             {
+                var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
                 result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
-                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, result.Data.Count / 6);
+                    (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, (int)totalPage);
             }
             if (!result.IsSuccess)
             {

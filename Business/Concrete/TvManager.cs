@@ -134,10 +134,10 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId)
         {
             var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
