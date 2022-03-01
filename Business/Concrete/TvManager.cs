@@ -131,9 +131,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
         {
-            var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId);
+            var result = await _tvDal.GetTvDetails(page,x => x.BrandId == categoryId);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 

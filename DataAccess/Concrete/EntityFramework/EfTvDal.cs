@@ -81,7 +81,7 @@ namespace DataAccess.Concrete.EntityFramework
                              });
                 return filter == null ?
                     await result.Skip(page * 6).Take(6).ToListAsync():
-                    await result.Where(filter).Skip(page * 6).Take(6).ToListAsync();
+                    await result.Skip(page * 6).Take(6).Where(filter).ToListAsync();
             }
         }
         public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)
