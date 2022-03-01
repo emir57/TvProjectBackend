@@ -109,12 +109,12 @@ namespace Business.Concrete
             var result = await _tvDal.GetTvWithPhotos();
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
-
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page)
         {
             var result = await _tvDal.GetTvDetails(page);
-            var totalProducts = (await _tvDal.GetAll()).Count();
-            var totalPage = Math.Ceiling((decimal)totalProducts / 6);
+            //var totalProducts = (await _tvDal.GetAll()).Count();
+            var totalPage = Math.Ceiling((decimal)3 / 6);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet,(int)totalPage);
         }
 
@@ -133,7 +133,7 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
+        [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int page,int categoryId)
         {
             var result = await _tvDal.GetTvDetails(page,x => x.BrandId == categoryId);
