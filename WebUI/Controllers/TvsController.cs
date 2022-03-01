@@ -53,7 +53,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
         {
             var result = await _tvService.GetListTvDetailsByCategoryId(id);
-            if (page == -1)
+            if (page != -1)
             {
                 result = GetProductsPage(page, result);
             }
@@ -77,7 +77,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
             var result = await _tvService.GetListTvDetails();
-            if (page == -1)
+            if (page != -1)
             {
                 result = GetProductsPage(page, result);
             }
