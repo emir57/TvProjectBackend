@@ -68,7 +68,7 @@ namespace WebUI.Controllers
         {
             var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
             result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
-                (result.Data.Skip(page * 6).Take(6).ToList(), result.Message, (int)totalPage);
+                (result.Data.Skip(page-1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
             return result;
         }
 
