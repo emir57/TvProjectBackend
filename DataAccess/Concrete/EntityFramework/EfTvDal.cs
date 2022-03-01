@@ -57,7 +57,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
+        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(int page,Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())
             {
@@ -80,8 +80,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Stock=t.Stock
                              });
                 return filter == null ?
-                    await result.ToListAsync() :
-                    await result.Where(filter).ToListAsync();
+                    await result.Skip(page * 6).Take(6).ToListAsync():
+                    await result.Where(filter).Skip(page * 6).Take(6).ToListAsync();
             }
         }
         public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)

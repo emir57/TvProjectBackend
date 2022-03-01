@@ -59,9 +59,10 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("gettvdetail")]
-        public async Task<ActionResult> GetTvDetails(int tvId)
+        public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
-            var result = await _tvService.GetListTvDetails();
+            var result = await _tvService.GetListTvDetails(page);
+            
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

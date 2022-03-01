@@ -109,9 +109,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails()
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails(int page)
         {
-            var result = await _tvDal.GetTvDetails();
+            var result = await _tvDal.GetTvDetails(page);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
