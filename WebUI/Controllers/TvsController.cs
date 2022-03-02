@@ -53,10 +53,10 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
         {
             var result = await _tvService.GetListTvDetailsByCategoryId(id);
-            if (page != -1)
-            {
-                result = GetProductsPage(page, result);
-            }
+            //if (page != -1)
+            //{
+            //    result = GetProductsPage(page, result);
+            //}
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -77,13 +77,13 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
             var result = await _tvService.GetListTvDetails();
-            if (page != -1)
-            {
-                var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
-                var newResult = new SuccessDataResult<List<TvAndPhotoDetailDto>>
-                    (result.Data.Skip(page - 1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
-                return Ok(newResult);
-            }
+            //if (page != -1)
+            //{
+            //    var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
+            //    var newResult = new SuccessDataResult<List<TvAndPhotoDetailDto>>
+            //        (result.Data.Skip(page - 1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
+            //    return Ok(newResult);
+            //}
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
