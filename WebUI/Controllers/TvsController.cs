@@ -67,9 +67,9 @@ namespace WebUI.Controllers
         private static IDataResult<List<TvAndPhotoDetailDto>> GetProductsPage(int page, IDataResult<List<TvAndPhotoDetailDto>> result)
         {
             var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
-            result = new SuccessDataResult<List<TvAndPhotoDetailDto>>
+            var newResult = new SuccessDataResult<List<TvAndPhotoDetailDto>>
                 (result.Data.Skip(page-1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
-            return result;
+            return newResult;
         }
 
         [HttpGet]
@@ -79,7 +79,10 @@ namespace WebUI.Controllers
             var result = await _tvService.GetListTvDetails();
             if (page != -1)
             {
-                result = GetProductsPage(page, result);
+                var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
+                var newResult = new SuccessDataResult<List<TvAndPhotoDetailDto>>
+                    (result.Data.Skip(page - 1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
+                return Ok(newResult);
             }
             if (!result.IsSuccess)
             {
