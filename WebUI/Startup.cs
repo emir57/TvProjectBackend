@@ -1,3 +1,9 @@
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Security.Encryption;
+using Core.Security.JWT;
+using Core.Utilities.IoC;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,19 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Extensions;
-using Core.DependencyResolvers;
-using Core.Utilities.IoC;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Core.Security.Encryption;
-using Core.Security.JWT;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 
 namespace WebUI
 {
@@ -55,10 +53,10 @@ namespace WebUI
             services.AddDependencyResolvers(new ICoreModule[] {
                 new CoreModule()
             });
-            
 
 
-            services.AddCors(options=> 
+
+            services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                    builder =>
@@ -67,8 +65,7 @@ namespace WebUI
                        .AllowAnyHeader()
                        .AllowAnyMethod();
                    });
-                 });
-            
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,26 +75,15 @@ namespace WebUI
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images/")),
-                RequestPath = "/images"
-            });
-
-            
             app.ConfigureExceptionMiddleware();
-
             app.UseCors();
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthentication ();
+            app.UseAuthentication();
 
             app.UseAuthorization();
-
-            
 
             app.UseEndpoints(endpoints =>
             {
