@@ -30,7 +30,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<PhotoUploadManager>().As<IPhotoUploadService>().SingleInstance();
             builder.RegisterType<OrderManager>().As<IOrderService>().SingleInstance();
             builder.RegisterType<RoleManager>().As<IRoleService>().SingleInstance();
-
             builder.RegisterType<TvManager>().As<ITvService>().SingleInstance();
             builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
@@ -43,7 +42,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfTvBrandDal>().As<ITvBrandDal>().SingleInstance();
             builder.RegisterType<EfTvDal>().As<ITvDal>().SingleInstance();
             builder.RegisterType<EfOrderDal>().As<IOrderDal>().SingleInstance();
-
             builder.RegisterType<EfUserAddressDal>().As<IUserAddressDal>().SingleInstance();
             builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
