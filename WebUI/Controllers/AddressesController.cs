@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
-            var result = await _userAddressService.GetListCityNameByUserId(userId);
+            var result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetAddress(int id)
         {
-            var result = await _userAddressService.GetById(id);
+            var result = await _userAddressService.GetByIdAsync(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -47,12 +47,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            var address = await _userAddressService.GetById(id);
+            var address = await _userAddressService.GetByIdAsync(id);
             if (address.Data == null)
             {
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));
             }
-            var result = await _userAddressService.Delete(address.Data);
+            var result = await _userAddressService.DeleteAsync(address.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -63,7 +63,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddAddress(UserAddress userAddress)
         {
-            var result = await _userAddressService.Add(userAddress);
+            var result = await _userAddressService.AddAsync(userAddress);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -74,7 +74,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
         {
-            var result = await _userAddressService.Update(userAddress);
+            var result = await _userAddressService.UpdateAsync(userAddress);
             if (!result.IsSuccess)
             {
                 return Ok(result);
