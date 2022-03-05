@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,17 +51,17 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public IDataResult<IQueryable<Photo>> GetList()
+        public async Task<IDataResult<List<Photo>>> GetListAsync()
         {
-            var result = _photoDal.GetAll();
-            return new SuccessDataResult<IQueryable<Photo>>(result, Messages.SuccessGet);
+            var result = await _photoDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public IDataResult<IQueryable<Photo>> GetListByTvId(int tvId)
+        public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
         {
-            var result = _photoDal.GetAll(x=>x.TvId==tvId);
-            return new SuccessDataResult<IQueryable<Photo>>(result, Messages.SuccessGet);
+            var result = await _photoDal.GetAll(x=>x.TvId==tvId).ToListAsync();
+            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]

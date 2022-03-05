@@ -15,7 +15,7 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(Photo entity);
         Task<IResult> DeleteAsync(Photo entity);
         Task<IDataResult<Photo>> GetByIdAsync(int photoId);
-        IDataResult<IQueryable<Photo>> GetList();
-        IDataResult<IQueryable<Photo>> GetListByTvId(int tvId);
+        Task<IDataResult<List<Photo>>> GetListAsync();
+        Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId);
     }
 }

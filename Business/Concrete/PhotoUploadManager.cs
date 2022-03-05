@@ -39,7 +39,7 @@ namespace Business.Concrete
 
         private IResult IsMainExistsCheck(Photo photo)
         {
-            var photos = _photoService.GetListByTvId(photo.TvId);
+            var photos = _photoService.GetListByTvIdAsync(photo.TvId);
             if (photos.Data.Any(x => x.IsMain == true) && photo.IsMain)
             {
                 return new ErrorResult(Messages.IsMainExists);
