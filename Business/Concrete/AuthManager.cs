@@ -25,9 +25,9 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
             _userService = userService;
         }
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = await _userService.GetClaimsAsync(user);
             var result = _tokenHelper.CreateToken(user,claims.Data.ToList());
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }

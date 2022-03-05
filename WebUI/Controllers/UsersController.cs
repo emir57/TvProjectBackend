@@ -27,9 +27,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("get")]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            var result = _userService.GetListAsync();
+            var result = await _userService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

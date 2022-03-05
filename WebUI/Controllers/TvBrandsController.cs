@@ -21,9 +21,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public ActionResult GetTvBrands()
+        public async Task<ActionResult> GetTvBrands()
         {
-            var result = _brandService.GetList();
+            var result = await _brandService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
