@@ -40,8 +40,6 @@ namespace WebUI
         {
             services.AddControllers();
             services.AddDbContext<TvProjectContext>();
-            services.AddScoped<ITvService, TvManager>();
-            services.AddScoped<ITvDal, EfTvDal>();
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
