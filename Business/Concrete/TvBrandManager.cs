@@ -28,7 +28,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(TvBrandValidator))]
         [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(TvBrand entity)
+        public async Task<IResult> AddAsync(TvBrand entity)
         {
             await _tvBrandDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
@@ -36,21 +36,21 @@ namespace Business.Concrete
         [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(TvBrand entity)
+        public async Task<IResult> DeleteAsync(TvBrand entity)
         {
             await _tvBrandDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<TvBrand>> GetById(int brandId)
+        public async Task<IDataResult<TvBrand>> GetByIdAsync(int brandId)
         {
             var result = await _tvBrandDal.Get(x=>x.Id==brandId);
             return new SuccessDataResult<TvBrand>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<TvBrand>>> GetList()
+        public async Task<IDataResult<List<TvBrand>>> GetListAsync()
         {
             var result = await _tvBrandDal.GetAll();
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
@@ -59,7 +59,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(TvBrandValidator))]
         [CacheRemoveAspect("ITvBrandService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(TvBrand entity)
+        public async Task<IResult> UpdateAsync(TvBrand entity)
         {
             await _tvBrandDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);

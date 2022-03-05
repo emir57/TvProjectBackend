@@ -10,10 +10,10 @@ namespace Business.Abstract
 {
     public interface ITvBrandService
     {
-        Task<IResult> Add(TvBrand entity);
-        Task<IResult> Update(TvBrand entity);
-        Task<IResult> Delete(TvBrand entity);
-        Task<IDataResult<TvBrand>> GetById(int brandId);
-        Task<IDataResult<List<TvBrand>>> GetList();
+        Task<IResult> AddAsync(TvBrand entity);
+        Task<IResult> UpdateAsync(TvBrand entity);
+        Task<IResult> DeleteAsync(TvBrand entity);
+        Task<IDataResult<TvBrand>> GetByIdAsync(int brandId);
+        Task<IDataResult<List<TvBrand>>> GetListAsync();
     }
 }

@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvBrands()
         {
-            var result = await _brandService.GetList();
+            var result = await _brandService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
             Thread.Sleep(5);
-            var result = await _brandService.Add(tvBrand);
+            var result = await _brandService.AddAsync(tvBrand);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -47,7 +47,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> UpdateTvBrand(TvBrand tvBrand)
         {
             Thread.Sleep(1);
-            var result = await _brandService.Update(tvBrand);
+            var result = await _brandService.UpdateAsync(tvBrand);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -59,12 +59,12 @@ namespace WebUI.Controllers
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
             Thread.Sleep(1);
-            var tvBrand = await _brandService.GetById(tvBrandId);
+            var tvBrand = await _brandService.GetByIdAsync(tvBrandId);
             if (tvBrand.Data == null)
             {
                 return BadRequest("Silinecek ürün bulunamadı");
             }
-            var result = await _brandService.Delete(tvBrand.Data);
+            var result = await _brandService.DeleteAsync(tvBrand.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
