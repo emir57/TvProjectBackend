@@ -34,7 +34,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
+            
 
             //DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
@@ -45,6 +45,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserAddressDal>().As<IUserAddressDal>().SingleInstance();
             builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+            builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
 
             builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
 
