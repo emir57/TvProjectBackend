@@ -18,10 +18,7 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<>().As<>().SingleInstance();
-
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-
             //Business
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
@@ -34,7 +31,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            
 
             //DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
