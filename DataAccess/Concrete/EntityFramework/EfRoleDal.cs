@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRoleDal : EfEntityRepositoryBase<Role, TvProjectContext>, IRoleDal
     {
-        public async Task AddUserRole(User user, Role role)
+        public async Task AddUserRoleAsync(User user, Role role)
         {
             using(var context = new TvProjectContext())
             {
@@ -27,7 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<UserRole> GetUserRole(Expression<Func<UserRole, bool>> filter)
+        public async Task<UserRole> GetUserRoleAsync(Expression<Func<UserRole, bool>> filter)
         {
             using(var context = new TvProjectContext())
             {
@@ -35,7 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task RemoveUserRole(User user, Role role)
+        public async Task RemoveUserRoleAsync(User user, Role role)
         {
             using (var context = new TvProjectContext())
             {

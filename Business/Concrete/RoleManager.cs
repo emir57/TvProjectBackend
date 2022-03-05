@@ -35,14 +35,14 @@ namespace Business.Concrete
                 await CheckRoleIsAdd(user, role));
             if (result == null)
             {
-                await _roleDal.AddUserRole(user, role);
+                await _roleDal.AddUserRoleAsync(user, role);
             }
             return new SuccessResult();
         }
 
         private async Task<IResult> CheckRoleIsAdd(User user, Role role)
         {
-            var userRole = await _roleDal.GetUserRole(x => x.UserId == user.Id && x.RoleId == role.Id);
+            var userRole = await _roleDal.GetUserRoleAsync(x => x.UserId == user.Id && x.RoleId == role.Id);
             if(userRole == null)
             {
                 return new SuccessResult();
@@ -81,7 +81,7 @@ namespace Business.Concrete
 
         public async Task<IResult> RemoveUserRoleAsync(User user, Role role)
         {
-            await _roleDal.RemoveUserRole(user, role);
+            await _roleDal.RemoveUserRoleAsync(user, role);
             return new SuccessResult();
         }
 

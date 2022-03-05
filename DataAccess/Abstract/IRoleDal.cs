@@ -10,8 +10,8 @@ namespace DataAccess.Abstract
 {
     public interface IRoleDal:IEntityRepository<Role>
     {
-        Task AddUserRole(User user, Role role);
-        Task RemoveUserRole(User user, Role role);
-        Task<UserRole> GetUserRole(Expression<Func<UserRole, bool>> filter);
+        Task AddUserRoleAsync(User user, Role role);
+        Task RemoveUserRoleAsync(User user, Role role);
+        Task<UserRole> GetUserRoleAsync(Expression<Func<UserRole, bool>> filter);
     }
 }
