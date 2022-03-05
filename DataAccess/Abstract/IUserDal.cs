@@ -10,9 +10,9 @@ namespace DataAccess.Abstract
 {
     public interface IUserDal:IEntityRepository<User>
     {
-        Task<List<Role>> GetClaims(User user);
-        Task<List<UserForAddressDto>> GetAddress(User user);
-        Task<List<UserForCreditCardDto>> GetCrediCards(User user);
-        Task AddUserRole(User user);
+        Task<List<Role>> GetClaimsAsync(User user);
+        Task<List<UserForAddressDto>> GetAddressAsync(User user);
+        Task<List<UserForCreditCardDto>> GetCrediCardsAsync(User user);
+        Task AddUserRoleAsync(User user);
     }
 }

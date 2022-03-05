@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, TvProjectContext>, IUserDal
     {
-        public async Task AddUserRole(User user)
+        public async Task AddUserRoleAsync(User user)
         {
             using (var context = new TvProjectContext())
             {
@@ -28,7 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<UserForAddressDto>> GetAddress(User user)
+        public async Task<List<UserForAddressDto>> GetAddressAsync(User user)
         {
             using(var context = new TvProjectContext())
             {
@@ -44,7 +44,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<Role>> GetClaims(User user)
+        public async Task<List<Role>> GetClaimsAsync(User user)
         {
             using(var context = new TvProjectContext())
             {
@@ -61,7 +61,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<UserForCreditCardDto>> GetCrediCards(User user)
+        public async Task<List<UserForCreditCardDto>> GetCrediCardsAsync(User user)
         {
             using(var context = new TvProjectContext())
             {
