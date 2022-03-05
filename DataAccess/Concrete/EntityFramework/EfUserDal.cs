@@ -13,26 +13,27 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, TvProjectContext>, IUserDal
     {
+        private readonly TvProjectContext _context;
+
+        public EfUserDal(TvProjectContext context)
+        {
+            _context = context;
+        }
+
         public async Task AddUserRoleAsync(User user)
         {
-            using (var context = new TvProjectContext())
-            {
                 var userRole = new UserRole
                 {
                     RoleId = 3,
                     UserId = user.Id
                 };
-                context.UserRoles.Add(userRole);
-                await context.SaveChangesAsync();
-                
-            }
+                _context.UserRoles.Add(userRole);
+                await _context.SaveChangesAsync();
         }
 
         public IQueryable<UserForAddressDto> GetAddress(User user)
         {
-            using(var context = new TvProjectContext())
-            {
-                var result = from address in context.UserAddresses
+                var result = from address in _context.UserAddresses
                              where address.UserId == user.Id
                              select new UserForAddressDto
                              {
@@ -41,15 +42,12 @@ namespace DataAccess.Concrete.EntityFramework
                                  CityId = address.CityId
                              };
                 return result;
-            }
         }
 
         public IQueryable<Role> GetClaims(User user)
         {
-            using(var context = new TvProjectContext())
-            {
-                var result = from roles in context.Roles
-                             join userRoles in context.UserRoles
+                var result = from roles in _context.Roles
+                             join userRoles in _context.UserRoles
                              on roles.Id equals userRoles.RoleId
                              where userRoles.UserId == user.Id
                              select new Role
@@ -58,14 +56,11 @@ namespace DataAccess.Concrete.EntityFramework
                                  Name = roles.Name
                              };
                 return result;
-            }
         }
 
         public IQueryable<UserForCreditCardDto> GetCrediCards(User user)
         {
-            using(var context = new TvProjectContext())
-            {
-                var result = from card in context.UserCreditCards
+                var result = from card in _context.UserCreditCards
                              where card.UserId == user.Id
                              select new UserForCreditCardDto
                              {
@@ -75,7 +70,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  Date = card.Date
                              };
                 return result;
-            }
         }
     }
 }
