@@ -2,6 +2,7 @@
 using Entities.Concrete;
 using Entities.Dtos;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Abstract
@@ -11,10 +12,10 @@ namespace Business.Abstract
         Task<IResult> AddAsync(UserAddress userAddress);
         Task<IResult> DeleteAsync(UserAddress userAddress);
         Task<IResult> UpdateAsync(UserAddress userAddress);
-        Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId);
-        Task<IDataResult<List<UserAddress>>> GetListAsync();
+        IDataResult<IQueryable<UserAddress>> GetByUserId(int userId);
+        IDataResult<IQueryable<UserAddress>> GetList();
         Task<IDataResult<UserAddress>> GetByIdAsync(int addressId);
-        Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserIdAsync(int userId);
+        IDataResult<IQueryable<UserAddressCityDto>> GetListCityNameByUserId(int userId);
 
     }
 }

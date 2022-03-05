@@ -12,6 +12,7 @@ using Entities.Concrete;
 using Entities.Dtos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(UserAddress userAddress)
         {
             var result = BusinessRules.Run(
-                await CheckUserAddressCount6(userAddress.UserId)
+                CheckUserAddressCount6(userAddress.UserId)
                 );
             if (result != null)
             {
@@ -42,10 +43,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CreateUserAddress);
         }
 
-        private async Task<IResult> CheckUserAddressCount6(int userId)
+        private IResult CheckUserAddressCount6(int userId)
         {
-            var addresses = await _userAddressDal.GetAll(a => a.UserId == userId);
-            if (addresses.Count >= 6)
+            var addresses = _userAddressDal.GetAll(a => a.UserId == userId);
+            if (addresses.Count() >= 6)
             {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
             }
@@ -69,25 +70,25 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddress>>> GetListAsync()
+        public IDataResult<IQueryable<UserAddress>> GetList()
         {
-            var result = await _userAddressDal.GetAll();
-            return new SuccessDataResult<List<UserAddress>>(result);
+            var result = _userAddressDal.GetAll();
+            return new SuccessDataResult<IQueryable<UserAddress>>(result);
         }
 
-        public async Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserIdAsync(int userId)
+        public IDataResult<IQueryable<UserAddressCityDto>> GetListCityNameByUserId(int userId)
         {
-            var result = await _userAddressDal.GetAddressByCityNameAsync(x=>x.UserId==userId);
-            return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);
+            var result = _userAddressDal.GetAddressByCityName(x=>x.UserId==userId);
+            return new SuccessDataResult<IQueryable<UserAddressCityDto>>(result, Messages.SuccessGet);
         }
 
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId)
+        public IDataResult<IQueryable<UserAddress>> GetByUserId(int userId)
         {
-            var result = await _userAddressDal.GetAll(u => u.UserId == userId);
-            return new SuccessDataResult<List<UserAddress>>(result);
+            var result = _userAddressDal.GetAll(u => u.UserId == userId);
+            return new SuccessDataResult<IQueryable<UserAddress>>(result);
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]

@@ -35,7 +35,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(Tv entity)
         {
             var result = BusinessRules.Run(
-                await CheckTvName(entity)
+                CheckTvName(entity)
                 );
             if (result != null)
             {
@@ -63,12 +63,12 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<Tv>>> GetListAsync()
+        public IDataResult<IQueryable<Tv>> GetList()
         {
-            var result = await _tvDal.GetAll();
+            var result = _tvDal.GetAll();
 
             //BusinessRules.Run(ApplyDiscount(result));
-            return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+            return new SuccessDataResult<IQueryable<Tv>>(result, Messages.SuccessGet);
         }
         private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
         {
@@ -82,17 +82,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Tv>>(products);
         }
 
-        public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
+        public IDataResult<IQueryable<Tv>> GetListByBrand(int brandId)
         {
-            var result = await _tvDal.GetAll(t => t.BrandId == brandId);
-            return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+            var result = _tvDal.GetAll(t => t.BrandId == brandId);
+            return new SuccessDataResult<IQueryable<Tv>>(result, Messages.SuccessGet);
             
         }
 
-        public async Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId)
+        public IDataResult<IQueryable<Photo>> GetListPhotos(int tvId)
         {
-            var result = await _tvDal.GetPhotosAsync(tvId);
-            return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
+            var result = _tvDal.GetPhotos(tvId);
+            return new SuccessDataResult<IQueryable<Photo>>(result,Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
@@ -104,17 +104,17 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
+        public IDataResult<IQueryable<TvAndPhotoDto>> GetListTvWithPhotos()
         {
-            var result = await _tvDal.GetTvWithPhotosAsync();
-            return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
+            var result =  _tvDal.GetTvWithPhotos();
+            return new SuccessDataResult<IQueryable<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync()
+        public IDataResult<IQueryable<TvAndPhotoDetailDto>> GetListTvDetails()
         {
-            var result = await _tvDal.GetTvDetailsAsync();
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            var result = _tvDal.GetTvDetails();
+            return new SuccessDataResult<IQueryable<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId)
@@ -123,9 +123,9 @@ namespace Business.Concrete
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
 
         }
-        private async Task<IResult> CheckTvName(Tv entity)
+        private IResult CheckTvName(Tv entity)
         {
-            var tvs = await _tvDal.GetAll();
+            var tvs = _tvDal.GetAll();
             if(tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);
@@ -134,10 +134,10 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId)
+        public IDataResult<IQueryable<TvAndPhotoDetailDto>> GetListTvDetailsByCategoryId(int categoryId)
         {
-            var result = await _tvDal.GetTvDetailsAsync(x => x.BrandId == categoryId);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            var result = _tvDal.GetTvDetails(x => x.BrandId == categoryId);
+            return new SuccessDataResult<IQueryable<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)

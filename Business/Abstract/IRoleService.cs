@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(Role entity);
         Task<IResult> DeleteAsync(Role entity);
         Task<IDataResult<Role>> GetByIdAsync(int roleId);
-        Task<IDataResult<List<Role>>> GetListAsync();
+        IDataResult<IQueryable<Role>> GetList();
         Task<IResult> AddUserRoleAsync(User user, Role role);
         Task<IResult> RemoveUserRoleAsync(User user, Role role);
     }

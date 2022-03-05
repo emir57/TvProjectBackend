@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfOrderDal : EfEntityRepositoryBase<Order, TvProjectContext>, IOrderDal
     {
-        public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId)
+        public IQueryable<OrderDto> GetOrdersByUserId(int userId)
         {
             using (var context = new TvProjectContext())
             {
@@ -50,11 +50,11 @@ namespace DataAccess.Concrete.EntityFramework
                                      ScreenInch = t.ScreenInch
                                  }
                              };
-                return await result.Where(x => x.User.Id == userId).ToListAsync();
+                return result.Where(x => x.User.Id == userId);
             }
         }
 
-        public async Task<List<OrderDto>> GetAllOrdersDtoAsync(Expression<Func<OrderDto, bool>> filter = null)
+        public IQueryable<OrderDto> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
         {
             using (var context = new TvProjectContext())
             {
@@ -91,8 +91,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  }
                              };
                 return filter == null ?
-                    await result.ToListAsync() :
-                    await result.Where(filter).ToListAsync();
+                    result:
+                    result.Where(filter);
             }
         }
     }

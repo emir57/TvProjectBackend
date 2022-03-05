@@ -10,6 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,16 +52,16 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user)
+        public IDataResult<IQueryable<UserForAddressDto>> GetListAddress(User user)
         {
-            var result =  await _userDal.GetAddressAsync(user);
-            return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
+            var result =  _userDal.GetAddress(user);
+            return new SuccessDataResult<IQueryable<UserForAddressDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<User>>> GetListAsync()
+        public IDataResult<IQueryable<User>> GetList()
         {
-            var result = await _userDal.GetAll();
-            return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
+            var result = _userDal.GetAll();
+            return new SuccessDataResult<IQueryable<User>>(result, Messages.SuccessGet);
         }
 
         [CacheAspect]
@@ -72,17 +73,17 @@ namespace Business.Concrete
         }
         
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<Role>>> GetClaimsAsync(User user)
+        public IDataResult<IQueryable<Role>> GetClaims(User user)
         {
-            var result = await _userDal.GetClaimsAsync(user);
-            return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
+            var result = _userDal.GetClaims(user);
+            return new SuccessDataResult<IQueryable<Role>>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user)
+        public IDataResult<IQueryable<UserForCreditCardDto>> GetListCreditCards(User user)
         {
-            var result = await _userDal.GetCrediCardsAsync(user);
-            return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
+            var result = _userDal.GetCrediCards(user);
+            return new SuccessDataResult<IQueryable<UserForCreditCardDto>>(result, Messages.SuccessGet);
         }
         [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> UpdateAsync(User user)

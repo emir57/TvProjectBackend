@@ -10,6 +10,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,17 +50,17 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetListAsync()
+        public IDataResult<IQueryable<Photo>> GetList()
         {
-            var result = await _photoDal.GetAll();
-            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
+            var result = _photoDal.GetAll();
+            return new SuccessDataResult<IQueryable<Photo>>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
+        public IDataResult<IQueryable<Photo>> GetListByTvId(int tvId)
         {
-            var result = await _photoDal.GetAll(x=>x.TvId==tvId);
-            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
+            var result = _photoDal.GetAll(x=>x.TvId==tvId);
+            return new SuccessDataResult<IQueryable<Photo>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]

@@ -10,6 +10,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,10 +51,10 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<TvBrand>>> GetListAsync()
+        public IDataResult<IQueryable<TvBrand>> GetList()
         {
-            var result = await _tvBrandDal.GetAll();
-            return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
+            var result = _tvBrandDal.GetAll();
+            return new SuccessDataResult<IQueryable<TvBrand>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]

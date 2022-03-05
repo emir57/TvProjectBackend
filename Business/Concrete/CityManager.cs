@@ -10,6 +10,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,10 +51,10 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<City>>> GetListAsync()
+        public IDataResult<IQueryable<City>> GetList()
         {
-            var result = await _citydal.GetAll();
-            return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
+            var result = _citydal.GetAll();
+            return new SuccessDataResult<IQueryable<City>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
