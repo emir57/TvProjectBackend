@@ -23,13 +23,13 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin")]
         [CacheRemoveAspect("IRoleService.Get")]
-        public async Task<IResult> Add(Role entity)
+        public async Task<IResult> AddAsync(Role entity)
         {
             await _roleDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin")]
-        public async Task<IResult> AddUserRole(User user, Role role)
+        public async Task<IResult> AddUserRoleAsync(User user, Role role)
         {
             var result = BusinessRules.Run(
                 await CheckRoleIsAdd(user, role));
@@ -52,7 +52,7 @@ namespace Business.Concrete
 
         [SecuredOperation("Admin")]
         [CacheRemoveAspect("IRoleService.Get")]
-        public async Task<IResult> Delete(Role entity)
+        public async Task<IResult> DeleteAsync(Role entity)
         {
             var result = BusinessRules.Run(
                 CheckAdminRole(entity)
@@ -66,20 +66,20 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public async Task<IDataResult<Role>> GetById(int roleId)
+        public async Task<IDataResult<Role>> GetByIdAsync(int roleId)
         {
             var result = await _roleDal.Get(x=>x.Id==roleId);
             return new SuccessDataResult<Role>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public async Task<IDataResult<List<Role>>> GetList()
+        public async Task<IDataResult<List<Role>>> GetListAsync()
         {
             var result = await _roleDal.GetAll();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IResult> RemoveUserRole(User user, Role role)
+        public async Task<IResult> RemoveUserRoleAsync(User user, Role role)
         {
             await _roleDal.RemoveUserRole(user, role);
             return new SuccessResult();
@@ -87,7 +87,7 @@ namespace Business.Concrete
 
         [SecuredOperation("Admin")]
         [CacheRemoveAspect("IRoleService.Get")]
-        public async Task<IResult> Update(Role entity)
+        public async Task<IResult> UpdateAsync(Role entity)
         {
             var result = BusinessRules.Run(
                 CheckAdminRole(entity)

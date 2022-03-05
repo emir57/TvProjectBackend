@@ -10,12 +10,12 @@ namespace Business.Abstract
 {
     public interface IRoleService
     {
-        Task<IResult> Add(Role entity);
-        Task<IResult> Update(Role entity);
-        Task<IResult> Delete(Role entity);
-        Task<IDataResult<Role>> GetById(int roleId);
-        Task<IDataResult<List<Role>>> GetList();
-        Task<IResult> AddUserRole(User user, Role role);
-        Task<IResult> RemoveUserRole(User user, Role role);
+        Task<IResult> AddAsync(Role entity);
+        Task<IResult> UpdateAsync(Role entity);
+        Task<IResult> DeleteAsync(Role entity);
+        Task<IDataResult<Role>> GetByIdAsync(int roleId);
+        Task<IDataResult<List<Role>>> GetListAsync();
+        Task<IResult> AddUserRoleAsync(User user, Role role);
+        Task<IResult> RemoveUserRoleAsync(User user, Role role);
     }
 }

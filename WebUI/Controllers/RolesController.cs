@@ -26,7 +26,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetRoles()
         {
-            var result = await _roleService.GetList();
+            var result = await _roleService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -53,7 +53,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<ActionResult> AddRole(Role role)
         {
-            var result = await _roleService.Add(role);
+            var result = await _roleService.AddAsync(role);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -64,7 +64,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateRole(Role role)
         {
-            var result = await _roleService.Update(role);
+            var result = await _roleService.UpdateAsync(role);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -75,12 +75,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteRole(int roleId)
         {
-            var role = await _roleService.GetById(roleId);
+            var role = await _roleService.GetByIdAsync(roleId);
             if (role.Data == null)
             {
                 return BadRequest(new ErrorResult(Messages.RoleNotFound));
             }
-            var result = await _roleService.Delete(role.Data);
+            var result = await _roleService.DeleteAsync(role.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

@@ -66,11 +66,11 @@ namespace WebUI.Controllers
             }
             foreach (var role in updateUserAdminDto.AddedRoles)
             {
-                await _roleService.AddUserRole(findUser.Data, role);
+                await _roleService.AddUserRoleAsync(findUser.Data, role);
             }
             foreach (var role in updateUserAdminDto.RemovedRoles)
             {
-                await _roleService.RemoveUserRole(findUser.Data, role);
+                await _roleService.RemoveUserRoleAsync(findUser.Data, role);
             }
 
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
