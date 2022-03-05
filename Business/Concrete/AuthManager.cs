@@ -24,14 +24,14 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
             _userService = userService;
         }
-        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
             var claims = await _userService.GetClaims(user);
             var result = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
-        public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
+        public async Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto)
         {
             var result = await _userService.GetByMail(userForLoginDto.Email);
             var user = result.Data;
@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.SuccessfulLogin);
         }
         [ValidationAspect(typeof(UserForRegisterDtoValidator))]
-        public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
+        public async Task<IDataResult<User>> RegisterAsync(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
             
@@ -66,7 +66,7 @@ namespace Business.Concrete
 
         }
 
-        public async Task<IResult> UserExists(string email)
+        public async Task<IResult> UserExistsAsync(string email)
         {
             var result = await _userService.GetByMail(email);
             if (result.Data == null)

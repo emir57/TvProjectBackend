@@ -36,12 +36,12 @@ namespace WebUI.Controllers
         [Route("register")]
         public async Task<ActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var checkUser = await _authService.UserExists(userForRegisterDto.Email);
+            var checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
             if (!checkUser.IsSuccess)
             {
                 return BadRequest(checkUser.Message);
             }
-            var result = await _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            var result = await _authService.RegisterAsync(userForRegisterDto, userForRegisterDto.Password);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -53,12 +53,12 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userService.GetByMail(userForLoginDto.Email);
-            var result = await _authService.Login(userForLoginDto);
+            var result = await _authService.LoginAsync(userForLoginDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
-            var token = await _authService.CreateAccessToken(user.Data);
+            var token = await _authService.CreateAccessTokenAsync(user.Data);
             var loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
