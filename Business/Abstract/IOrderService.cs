@@ -11,13 +11,13 @@ namespace Business.Abstract
 {
     public interface IOrderService
     {
-        Task<IResult> Add(Order entity);
-        Task<IResult> Update(Order entity);
-        Task<IResult> Delete(Order entity);
-        Task<IDataResult<Order>> GetById(int orderId);
-        Task<IDataResult<List<Order>>> GetList();
-        Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId);
-        Task<IDataResult<List<OrderDto>>> GetListOrdersDto();
+        Task<IResult> AddAsync(Order entity);
+        Task<IResult> UpdateAsync(Order entity);
+        Task<IResult> DeleteAsync(Order entity);
+        Task<IDataResult<Order>> GetByIdAsync(int orderId);
+        Task<IDataResult<List<Order>>> GetListAsync();
+        Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId);
+        Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync();
 
     }
 }

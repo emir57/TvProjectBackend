@@ -28,7 +28,7 @@ namespace Business.Concrete
         //[ValidationAspect(typeof())]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
-        public async Task<IResult> Add(Order entity)
+        public async Task<IResult> AddAsync(Order entity)
         {
             await _orderDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
@@ -36,7 +36,7 @@ namespace Business.Concrete
         [SecuredOperation("User,Admin")]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
-        public async Task<IResult> Delete(Order entity)
+        public async Task<IResult> DeleteAsync(Order entity)
         {
             await _orderDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
@@ -44,7 +44,7 @@ namespace Business.Concrete
         [SecuredOperation("User,Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<Order>> GetById(int orderId)
+        public async Task<IDataResult<Order>> GetByIdAsync(int orderId)
         {
             var result = await _orderDal.Get(x=>x.Id==orderId);
             return new SuccessDataResult<Order>(result, Messages.SuccessGet);
@@ -52,13 +52,13 @@ namespace Business.Concrete
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<List<Order>>> GetList()
+        public async Task<IDataResult<List<Order>>> GetListAsync()
         {
             var result = await _orderDal.GetAll();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<OrderDto>>> GetListOrdersDto()
+        public async Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync()
         {
             var result = await _orderDal.GetAllOrdersDto();
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
@@ -67,7 +67,7 @@ namespace Business.Concrete
         [SecuredOperation("User,Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserId(int userId)
+        public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId)
         {
             var result = await _orderDal.GetOrdersByUserId(userId);
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
@@ -76,7 +76,7 @@ namespace Business.Concrete
         //[ValidationAspect(typeof())]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
-        public async Task<IResult> Update(Order entity)
+        public async Task<IResult> UpdateAsync(Order entity)
         {
             await _orderDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);

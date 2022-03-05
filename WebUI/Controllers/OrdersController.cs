@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetOrders()
         {
-            var result = await _orderService.GetListOrdersDto();
+            var result = await _orderService.GetListOrdersDtoAsync();
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetOrders(int id)
         {
-            var result = await _orderService.GetOrdersByUserId(id);
+            var result = await _orderService.GetOrdersByUserIdAsync(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -46,12 +46,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _orderService.GetById(id);
+            var order = await _orderService.GetByIdAsync(id);
             if (order.Data == null)
             {
                 return Ok(new ErrorResult(Messages.OrderIsNotFound));
             }
-            var result = await _orderService.Delete(order.Data);
+            var result = await _orderService.DeleteAsync(order.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
