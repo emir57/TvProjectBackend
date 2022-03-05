@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfTvDal : EfEntityRepositoryBase<Tv, TvProjectContext>, ITvDal
     {
-        public async Task<List<Photo>> GetPhotos(int tvId)
+        public async Task<List<Photo>> GetPhotosAsync(int tvId)
         {
             using(var context = new TvProjectContext())
             {
@@ -31,7 +31,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<TvAndPhotoDetailDto> GetTvDetail(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
+        public async Task<TvAndPhotoDetailDto> GetTvDetailAsync(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
         {
             using (var context = new TvProjectContext())
             {
@@ -57,7 +57,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<TvAndPhotoDetailDto>> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
+        public async Task<List<TvAndPhotoDetailDto>> GetTvDetailsAsync(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())
             {
@@ -84,7 +84,7 @@ namespace DataAccess.Concrete.EntityFramework
                     await result.Where(filter).ToListAsync();
             }
         }
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotosAsync(Expression<Func<TvAndPhotoDto, bool>> filter=null)
         {
             using (var context = new TvProjectContext())
             {
