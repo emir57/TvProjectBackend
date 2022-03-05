@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public IActionResult GetAddressesByUserId(int userId)
         {
-            var result = _userAddressService.GetListCityNameByUserId(userId);
+            var result = _userAddressService.GetListCityNameByUserIdAsync(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);

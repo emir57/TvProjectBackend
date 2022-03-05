@@ -10,6 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,25 +71,25 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<UserAddress>> GetList()
+        public async Task<IDataResult<List<UserAddress>>> GetListAsync()
         {
-            var result = _userAddressDal.GetAll();
-            return new SuccessDataResult<IQueryable<UserAddress>>(result);
+            var result = await _userAddressDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<UserAddress>>(result);
         }
 
-        public IDataResult<IQueryable<UserAddressCityDto>> GetListCityNameByUserId(int userId)
+        public async Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserIdAsync(int userId)
         {
-            var result = _userAddressDal.GetAddressByCityName(x=>x.UserId==userId);
-            return new SuccessDataResult<IQueryable<UserAddressCityDto>>(result, Messages.SuccessGet);
+            var result = await _userAddressDal.GetAddressByCityName(x=>x.UserId==userId).ToListAsync();
+            return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);
         }
 
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<UserAddress>> GetByUserId(int userId)
+        public async Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId)
         {
-            var result = _userAddressDal.GetAll(u => u.UserId == userId);
-            return new SuccessDataResult<IQueryable<UserAddress>>(result);
+            var result = await _userAddressDal.GetAll(u => u.UserId == userId).ToListAsync();
+            return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserAddressValidator))]

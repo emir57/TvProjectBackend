@@ -12,10 +12,10 @@ namespace Business.Abstract
         Task<IResult> AddAsync(UserAddress userAddress);
         Task<IResult> DeleteAsync(UserAddress userAddress);
         Task<IResult> UpdateAsync(UserAddress userAddress);
-        IDataResult<IQueryable<UserAddress>> GetByUserId(int userId);
-        IDataResult<IQueryable<UserAddress>> GetList();
+        Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId);
+        Task<IDataResult<List<UserAddress>>> GetListAsync();
         Task<IDataResult<UserAddress>> GetByIdAsync(int addressId);
-        IDataResult<IQueryable<UserAddressCityDto>> GetListCityNameByUserId(int userId);
+        Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserIdAsync(int userId);
 
     }
 }
