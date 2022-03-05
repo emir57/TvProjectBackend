@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserAddressDal : EfEntityRepositoryBase<UserAddress, TvProjectContext>, IUserAddressDal
     {
-        public async Task<List<UserAddressCityDto>> GetAddressByCityName(Expression<Func<UserAddressCityDto, bool>> filter)
+        public async Task<List<UserAddressCityDto>> GetAddressByCityNameAsync(Expression<Func<UserAddressCityDto, bool>> filter)
         {
             using(var context = new TvProjectContext())
             {

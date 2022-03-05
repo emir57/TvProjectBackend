@@ -77,7 +77,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<UserAddressCityDto>>> GetListCityNameByUserIdAsync(int userId)
         {
-            var result = await _userAddressDal.GetAddressByCityName(x=>x.UserId==userId);
+            var result = await _userAddressDal.GetAddressByCityNameAsync(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserAddressCityDto>>(result, Messages.SuccessGet);
         }
 
