@@ -15,7 +15,7 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(Role entity);
         Task<IResult> DeleteAsync(Role entity);
         Task<IDataResult<Role>> GetByIdAsync(int roleId);
-        IDataResult<IQueryable<Role>> GetList();
+        Task<IDataResult<List<Role>>> GetListAsync();
         Task<IResult> AddUserRoleAsync(User user, Role role);
         Task<IResult> RemoveUserRoleAsync(User user, Role role);
     }

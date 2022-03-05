@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,10 +75,10 @@ namespace Business.Concrete
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
-        public IDataResult<IQueryable<Role>> GetList()
+        public async Task<IDataResult<List<Role>>> GetListAsync()
         {
-            var result = _roleDal.GetAll();
-            return new SuccessDataResult<IQueryable<Role>>(result, Messages.SuccessGet);
+            var result = await _roleDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
 
         public async Task<IResult> RemoveUserRoleAsync(User user, Role role)
