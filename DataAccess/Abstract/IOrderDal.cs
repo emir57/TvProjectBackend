@@ -12,7 +12,7 @@ namespace DataAccess.Abstract
 {
     public interface IOrderDal:IEntityRepository<Order>
     {
-        Task<List<OrderDto>> GetOrdersByUserId(int userId);
-        Task<List<OrderDto>> GetAllOrdersDto(Expression<Func<OrderDto,bool>> filter=null);
+        Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId);
+        Task<List<OrderDto>> GetAllOrdersDtoAsync(Expression<Func<OrderDto,bool>> filter=null);
     }
 }

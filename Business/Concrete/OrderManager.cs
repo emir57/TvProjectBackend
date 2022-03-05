@@ -60,7 +60,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync()
         {
-            var result = await _orderDal.GetAllOrdersDto();
+            var result = await _orderDal.GetAllOrdersDtoAsync();
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
 
@@ -69,7 +69,7 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId)
         {
-            var result = await _orderDal.GetOrdersByUserId(userId);
+            var result = await _orderDal.GetOrdersByUserIdAsync(userId);
             return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("User,Admin")]

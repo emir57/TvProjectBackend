@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfOrderDal : EfEntityRepositoryBase<Order, TvProjectContext>, IOrderDal
     {
-        public async Task<List<OrderDto>> GetOrdersByUserId(int userId)
+        public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId)
         {
             using (var context = new TvProjectContext())
             {
@@ -54,7 +54,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<OrderDto>> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
+        public async Task<List<OrderDto>> GetAllOrdersDtoAsync(Expression<Func<OrderDto, bool>> filter = null)
         {
             using (var context = new TvProjectContext())
             {
