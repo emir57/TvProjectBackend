@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,25 +54,25 @@ namespace Business.Concrete
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public IDataResult<IQueryable<Order>> GetList()
+        public async Task<IDataResult<List<Order>>> GetListAsync()
         {
-            var result = _orderDal.GetAll();
-            return new SuccessDataResult<IQueryable<Order>>(result, Messages.SuccessGet);
+            var result = await _orderDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
-        public IDataResult<IQueryable<OrderDto>> GetListOrdersDto()
+        public async Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync()
         {
-            var result = _orderDal.GetAllOrdersDto();
-            return new SuccessDataResult<IQueryable<OrderDto>>(result, Messages.SuccessGet);
+            var result = await _orderDal.GetAllOrdersDto().ToListAsync();
+            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
 
         [SecuredOperation("User,Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
-        public IDataResult<IQueryable<OrderDto>> GetOrdersByUserId(int userId)
+        public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId)
         {
-            var result = _orderDal.GetOrdersByUserId(userId);
-            return new SuccessDataResult<IQueryable<OrderDto>>(result, Messages.SuccessGet);
+            var result = await _orderDal.GetOrdersByUserId(userId).ToListAsync();
+            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("User,Admin")]
         //[ValidationAspect(typeof())]

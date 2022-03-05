@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public IActionResult GetOrders()
         {
-            var result = _orderService.GetListOrdersDto();
+            var result = _orderService.GetListOrdersDtoAsync();
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public IActionResult GetOrders(int id)
         {
-            var result = _orderService.GetOrdersByUserId(id);
+            var result = _orderService.GetOrdersByUserIdAsync(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);

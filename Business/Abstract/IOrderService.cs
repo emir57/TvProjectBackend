@@ -16,9 +16,9 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(Order entity);
         Task<IResult> DeleteAsync(Order entity);
         Task<IDataResult<Order>> GetByIdAsync(int orderId);
-        IDataResult<IQueryable<Order>> GetList();
-        IDataResult<IQueryable<OrderDto>> GetOrdersByUserId(int userId);
-        IDataResult<IQueryable<OrderDto>> GetListOrdersDto();
+        Task<IDataResult<List<Order>>> GetListAsync();
+        Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId);
+        Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync();
 
     }
 }
