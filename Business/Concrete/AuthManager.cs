@@ -9,6 +9,7 @@ using Core.Security.JWT;
 using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +25,10 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
             _userService = userService;
         }
-        public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
+        public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims = await _userService.GetClaimsAsync(user);
-            var result = _tokenHelper.CreateToken(user,claims.Data);
+            var claims = _userService.GetClaims(user);
+            var result = _tokenHelper.CreateToken(user,claims.Data.ToList());
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]

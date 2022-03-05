@@ -28,9 +28,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<ActionResult> GetTvs()
+        public ActionResult GetTvs()
         {
-            var result = await _tvService.GetListTvWithPhotosAsync();
+            var result = _tvService.GetListTvWithPhotos();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -50,9 +50,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getbycategoryid")]
-        public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
+        public ActionResult GetTvsByCategoryId(int id, int page = 1)
         {
-            var result = await _tvService.GetListTvDetailsByCategoryIdAsync(id);
+            var result = _tvService.GetListTvDetailsByCategoryId(id);
             //if (page != -1)
             //{
             //    result = GetProductsPage(page, result);
@@ -74,9 +74,9 @@ namespace WebUI.Controllers
 
         [HttpGet]
         [Route("gettvdetail")]
-        public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
+        public ActionResult GetTvDetails(int tvId,int page=1)
         {
-            var result = await _tvService.GetListTvDetailsAsync();
+            var result = _tvService.GetListTvDetails();
             //if (page != -1)
             //{
             //    var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
@@ -92,9 +92,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("gettvphotos")]
-        public async Task<ActionResult> GetTvPhotos(int tvId)
+        public ActionResult GetTvPhotos(int tvId)
         {
-            var result = await _tvService.GetListPhotosAsync(tvId);
+            var result = _tvService.GetListPhotos(tvId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);

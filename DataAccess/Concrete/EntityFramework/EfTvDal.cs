@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfTvDal : EfEntityRepositoryBase<Tv, TvProjectContext>, ITvDal
     {
-        public async Task<List<Photo>> GetPhotosAsync(int tvId)
+        public IQueryable<Photo> GetPhotos(int tvId)
         {
             using(var context = new TvProjectContext())
             {
@@ -27,7 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ImageUrl = tvPhoto.ImageUrl,
                                  IsMain = tvPhoto.IsMain
                              };
-                return await result.ToListAsync();
+                return result;
             }
         }
 
@@ -57,7 +57,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<TvAndPhotoDetailDto>> GetTvDetailsAsync(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
+        public IQueryable<TvAndPhotoDetailDto> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
             using(var context = new TvProjectContext())
             {
@@ -80,11 +80,11 @@ namespace DataAccess.Concrete.EntityFramework
                                  Stock=t.Stock
                              });
                 return filter == null ?
-                    await result.ToListAsync():
-                    await result.Where(filter).ToListAsync();
+                    result:
+                    result.Where(filter);
             }
         }
-        public async Task<List<TvAndPhotoDto>> GetTvWithPhotosAsync(Expression<Func<TvAndPhotoDto, bool>> filter=null)
+        public IQueryable<TvAndPhotoDto> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)
         {
             using (var context = new TvProjectContext())
             {
@@ -108,8 +108,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  Stock = tvs.Stock
                              };
                 return filter == null ?
-                    await result.ToListAsync() :
-                    await result.Where(filter).ToListAsync();
+                    result:
+                    result.Where(filter);
 
             }
         }

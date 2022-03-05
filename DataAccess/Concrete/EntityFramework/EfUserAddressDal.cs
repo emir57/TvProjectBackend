@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserAddressDal : EfEntityRepositoryBase<UserAddress, TvProjectContext>, IUserAddressDal
     {
-        public async Task<List<UserAddressCityDto>> GetAddressByCityNameAsync(Expression<Func<UserAddressCityDto, bool>> filter)
+        public IQueryable<UserAddressCityDto> GetAddressByCityName(Expression<Func<UserAddressCityDto, bool>> filter)
         {
             using(var context = new TvProjectContext())
             {
@@ -30,7 +30,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  AddressText = adress.AddressText,
                                  CityName = city.CityName
                              };
-                return await result.Where(filter).ToListAsync();
+                return result.Where(filter);
 
             }
         }

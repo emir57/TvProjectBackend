@@ -28,7 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<UserForAddressDto>> GetAddressAsync(User user)
+        public IQueryable<UserForAddressDto> GetAddress(User user)
         {
             using(var context = new TvProjectContext())
             {
@@ -40,11 +40,11 @@ namespace DataAccess.Concrete.EntityFramework
                                  AddressText = address.AddressText,
                                  CityId = address.CityId
                              };
-                return await result.ToListAsync();
+                return result;
             }
         }
 
-        public async Task<List<Role>> GetClaimsAsync(User user)
+        public IQueryable<Role> GetClaims(User user)
         {
             using(var context = new TvProjectContext())
             {
@@ -57,11 +57,11 @@ namespace DataAccess.Concrete.EntityFramework
                                  Id = roles.Id,
                                  Name = roles.Name
                              };
-                return await result.ToListAsync();
+                return result;
             }
         }
 
-        public async Task<List<UserForCreditCardDto>> GetCrediCardsAsync(User user)
+        public IQueryable<UserForCreditCardDto> GetCrediCards(User user)
         {
             using(var context = new TvProjectContext())
             {
@@ -74,7 +74,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CVV = card.CVV,
                                  Date = card.Date
                              };
-                return await result.ToListAsync();
+                return result;
             }
         }
     }

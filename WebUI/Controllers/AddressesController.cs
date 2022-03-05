@@ -23,9 +23,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<IActionResult> GetAddressesByUserId(int userId)
+        public IActionResult GetAddressesByUserId(int userId)
         {
-            var result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
+            var result = _userAddressService.GetListCityNameByUserId(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
