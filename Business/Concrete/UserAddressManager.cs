@@ -44,7 +44,7 @@ namespace Business.Concrete
 
         private async Task<IResult> CheckUserAddressCount6(int userId)
         {
-            var addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId);
+            var addresses = await _userAddressDal.GetAll(a => a.UserId == userId);
             if (addresses.Count >= 6)
             {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
@@ -71,7 +71,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetListAsync()
         {
-            var result = await _userAddressDal.GetAllAsync();
+            var result = await _userAddressDal.GetAll();
             return new SuccessDataResult<List<UserAddress>>(result);
         }
 
@@ -86,7 +86,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId)
         {
-            var result = await _userAddressDal.GetAllAsync(u => u.UserId == userId);
+            var result = await _userAddressDal.GetAll(u => u.UserId == userId);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]

@@ -52,7 +52,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<City>>> GetListAsync()
         {
-            var result = await _citydal.GetAllAsync();
+            var result = await _citydal.GetAll();
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]

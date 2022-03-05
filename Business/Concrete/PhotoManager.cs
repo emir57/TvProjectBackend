@@ -51,14 +51,14 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListAsync()
         {
-            var result = await _photoDal.GetAllAsync();
+            var result = await _photoDal.GetAll();
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
         {
-            var result = await _photoDal.GetAllAsync(x=>x.TvId==tvId);
+            var result = await _photoDal.GetAll(x=>x.TvId==tvId);
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]

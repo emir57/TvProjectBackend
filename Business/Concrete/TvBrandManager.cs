@@ -52,7 +52,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvBrand>>> GetListAsync()
         {
-            var result = await _tvBrandDal.GetAllAsync();
+            var result = await _tvBrandDal.GetAll();
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]

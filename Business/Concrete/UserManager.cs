@@ -59,7 +59,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<User>>> GetListAsync()
         {
-            var result = await _userDal.GetAllAsync();
+            var result = await _userDal.GetAll();
             return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
         }
 

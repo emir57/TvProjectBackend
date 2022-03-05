@@ -39,13 +39,13 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using(var context = new TContext())
             {
                 return filter == null ?
-                    await context.Set<TEntity>().ToListAsync() :
-                    await context.Set<TEntity>().Where(filter).ToListAsync();
+                    context.Set<TEntity>():
+                    context.Set<TEntity>().Where(filter);
             }
         }
 

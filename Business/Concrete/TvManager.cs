@@ -65,7 +65,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Tv>>> GetListAsync()
         {
-            var result = await _tvDal.GetAllAsync();
+            var result = await _tvDal.GetAll();
 
             //BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
@@ -84,7 +84,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
-            var result = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
+            var result = await _tvDal.GetAll(t => t.BrandId == brandId);
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
             
         }
@@ -125,7 +125,7 @@ namespace Business.Concrete
         }
         private async Task<IResult> CheckTvName(Tv entity)
         {
-            var tvs = await _tvDal.GetAllAsync();
+            var tvs = await _tvDal.GetAll();
             if(tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);

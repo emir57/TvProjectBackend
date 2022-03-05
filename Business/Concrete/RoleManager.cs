@@ -75,7 +75,7 @@ namespace Business.Concrete
         [CacheAspect(20)]
         public async Task<IDataResult<List<Role>>> GetListAsync()
         {
-            var result = await _roleDal.GetAllAsync();
+            var result = await _roleDal.GetAll();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
 
