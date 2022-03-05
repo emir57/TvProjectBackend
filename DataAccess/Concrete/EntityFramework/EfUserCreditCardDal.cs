@@ -13,21 +13,23 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserCreditCardDal : EfEntityRepositoryBase<UserCreditCard, TvProjectContext>, IUserCreditCardDal
     {
+        private readonly TvProjectContext _context;
+
+        public EfUserCreditCardDal(TvProjectContext context)
+        {
+            _context = context;
+        }
+
         public async Task AddUserCreditCardAsync(UserCreditCard userCreditCard)
         {
-            using (var context = new TvProjectContext())
-            {
-                await context.UserCreditCards.AddAsync(userCreditCard);
-                await context.SaveChangesAsync();
-            }
+                await _context.UserCreditCards.AddAsync(userCreditCard);
+                await _context.SaveChangesAsync();
         }
 
         public IQueryable<CreditCardWithUserDto> GetUserCreditCards(int userId)
         {
-            using(var context = new TvProjectContext())
-            {
-                var result = from c in context.UserCreditCards
-                             join u in context.Users
+                var result = from c in _context.UserCreditCards
+                             join u in _context.Users
                              on c.UserId equals u.Id
                              where c.UserId == userId
                              select new CreditCardWithUserDto
@@ -40,7 +42,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  LastName=u.LastName
                              };
                 return result;
-            }
         }
     }
 }
