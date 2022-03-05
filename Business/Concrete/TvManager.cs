@@ -111,10 +111,10 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public IDataResult<IQueryable<TvAndPhotoDetailDto>> GetListTvDetails()
+        public IDataResult<List<TvAndPhotoDetailDto>> GetListTvDetails()
         {
-            var result = _tvDal.GetTvDetails();
-            return new SuccessDataResult<IQueryable<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            var result = _tvDal.GetTvDetails().ToList(); ;
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId)

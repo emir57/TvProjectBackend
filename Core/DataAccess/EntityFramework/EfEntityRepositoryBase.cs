@@ -13,49 +13,38 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext,new()
     {
+        private readonly TContext _context = new TContext();
+
+        private DbSet<TEntity> Table => _context.Set<TEntity>();
+
         public async Task AddAsync(TEntity entity)
         {
-            using(var context = new TContext())
-            {
-                context.Entry(entity).State = EntityState.Added;
-                await context.SaveChangesAsync();
-            }
+                await Table.AddAsync(entity);
+                await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
-            using(var context = new TContext())
-            {
-                context.Entry(entity).State = EntityState.Deleted;
-                await context.SaveChangesAsync();
-            }
+            Table.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
-            using(var context = new TContext())
-            {
-                return await context.Set<TEntity>().SingleOrDefaultAsync(filter);
-            }
+                return await Table.SingleOrDefaultAsync(filter);
         }
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            using(var context = new TContext())
-            {
                 return filter == null ?
-                    context.Set<TEntity>():
-                    context.Set<TEntity>().Where(filter);
-            }
+                    Table :
+                    Table.Where(filter);
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            using(var context = new TContext())
-            {
-                context.Entry(entity).State = EntityState.Modified;
-                await context.SaveChangesAsync();
-            }
+                Table.Update(entity);
+                await _context.SaveChangesAsync();
         }
     }
 }

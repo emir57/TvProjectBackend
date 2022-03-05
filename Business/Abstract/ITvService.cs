@@ -21,7 +21,7 @@ namespace Business.Abstract
 
         IDataResult<IQueryable<Photo>> GetListPhotos(int tvId);
         IDataResult<IQueryable<TvAndPhotoDto>> GetListTvWithPhotos();
-        IDataResult<IQueryable<TvAndPhotoDetailDto>> GetListTvDetails();
+        IDataResult<List<TvAndPhotoDetailDto>> GetListTvDetails();
         IDataResult<IQueryable<TvAndPhotoDetailDto>> GetListTvDetailsByCategoryId(int categoryId);
         Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId);
     }
