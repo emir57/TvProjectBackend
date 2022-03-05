@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,10 +52,10 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<City>> GetList()
+        public async Task<IDataResult<List<City>>> GetListAsync()
         {
-            var result = _citydal.GetAll();
-            return new SuccessDataResult<IQueryable<City>>(result, Messages.SuccessGet);
+            var result = await _citydal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]

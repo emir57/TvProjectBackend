@@ -15,6 +15,6 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(City entity);
         Task<IResult> DeleteAsync(City entity);
         Task<IDataResult<City>> GetByIdAsync(int cityId);
-        IDataResult<IQueryable<City>> GetList();
+        Task<IDataResult<List<City>>> GetListAsync();
     }
 }
