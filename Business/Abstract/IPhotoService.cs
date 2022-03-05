@@ -10,11 +10,11 @@ namespace Business.Abstract
 {
     public interface IPhotoService
     {
-        Task<IResult> Add(Photo entity);
-        Task<IResult> Update(Photo entity);
-        Task<IResult> Delete(Photo entity);
-        Task<IDataResult<Photo>> GetById(int photoId);
-        Task<IDataResult<List<Photo>>> GetList();
-        Task<IDataResult<List<Photo>>> GetListByTvId(int tvId);
+        Task<IResult> AddAsync(Photo entity);
+        Task<IResult> UpdateAsync(Photo entity);
+        Task<IResult> DeleteAsync(Photo entity);
+        Task<IDataResult<Photo>> GetByIdAsync(int photoId);
+        Task<IDataResult<List<Photo>>> GetListAsync();
+        Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId);
     }
 }

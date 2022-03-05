@@ -33,13 +33,13 @@ namespace Business.Concrete
             FileUploadHelper.Upload(file, out dataBasePath);
             //var image = new Photo() { ImageUrl = dataBasePath,TvId=tvId };
             photo.ImageUrl = dataBasePath;
-            await _photoService.Add(photo);
+            await _photoService.AddAsync(photo);
             return new SuccessResult(Messages.UploadImage);
         }
 
         private async Task<IResult> IsMainExistsCheck(Photo photo)
         {
-            var photos = await _photoService.GetListByTvId(photo.TvId);
+            var photos = await _photoService.GetListByTvIdAsync(photo.TvId);
             if (photos.Data.Any(x => x.IsMain == true) && photo.IsMain)
             {
                 return new ErrorResult(Messages.IsMainExists);

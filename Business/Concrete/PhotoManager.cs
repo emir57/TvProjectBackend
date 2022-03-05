@@ -28,35 +28,35 @@ namespace Business.Concrete
         [ValidationAspect(typeof(PhotoValidator))]
         [CacheRemoveAspect("IPhotoService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(Photo entity)
+        public async Task<IResult> AddAsync(Photo entity)
         {
             await _photoDal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(Photo entity)
+        public async Task<IResult> DeleteAsync(Photo entity)
         {
             await _photoDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<Photo>> GetById(int photoId)
+        public async Task<IDataResult<Photo>> GetByIdAsync(int photoId)
         {
             var result = await _photoDal.Get(x=>x.Id==photoId);
             return new SuccessDataResult<Photo>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetList()
+        public async Task<IDataResult<List<Photo>>> GetListAsync()
         {
             var result = await _photoDal.GetAll();
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<Photo>>> GetListByTvId(int tvId)
+        public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
         {
             var result = await _photoDal.GetAll(x=>x.TvId==tvId);
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
@@ -65,7 +65,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(PhotoValidator))]
         [CacheRemoveAspect("IPhotoService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(Photo entity)
+        public async Task<IResult> UpdateAsync(Photo entity)
         {
             await _photoDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);
