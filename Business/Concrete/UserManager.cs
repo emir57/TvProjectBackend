@@ -28,7 +28,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> AddAsync(User user)
         {
-            await _userDal.Add(user);
+            await _userDal.AddAsync(user);
             return new SuccessResult(Messages.SuccessAdd);
         }
 
@@ -40,12 +40,12 @@ namespace Business.Concrete
 
         public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
-            var result = await _userDal.Get(x=>x.Id==userId);
+            var result = await _userDal.GetAsync(x=>x.Id==userId);
             return new SuccessDataResult<User>(result);
         }
         public async Task<IDataResult<User>> GetByKeyAsync(string key)
         {
-            var result = await _userDal.Get(x => x.Key == key);
+            var result = await _userDal.GetAsync(x => x.Key == key);
             return new SuccessDataResult<User>(result);
         }
 
@@ -59,7 +59,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<User>>> GetListAsync()
         {
-            var result = await _userDal.GetAll();
+            var result = await _userDal.GetAllAsync();
             return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
         }
 
@@ -67,7 +67,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<User>> GetByMailAsync(string email)
         {
-            var result = await _userDal.Get(u => u.Email == email);
+            var result = await _userDal.GetAsync(u => u.Email == email);
             return new SuccessDataResult<User>(result, Messages.SuccessGet);
         }
         
@@ -87,7 +87,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> UpdateAsync(User user)
         {
-            await _userDal.Update(user);
+            await _userDal.UpdateAsync(user);
             return new SuccessResult();
         }
     }

@@ -41,7 +41,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            await _tvDal.Add(entity);
+            await _tvDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
 
@@ -51,21 +51,21 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> DeleteAsync(Tv entity)
         {
-            await _tvDal.Delete(entity);
+            await _tvDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<Tv>> GetByIdAsync(int tvId)
         {
-            var result = await _tvDal.Get(x=>x.Id== tvId);
+            var result = await _tvDal.GetAsync(x=>x.Id== tvId);
             return new SuccessDataResult<Tv>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Tv>>> GetListAsync()
         {
-            var result = await _tvDal.GetAll();
+            var result = await _tvDal.GetAllAsync();
 
             //BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
@@ -84,7 +84,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
-            var result = await _tvDal.GetAll(t => t.BrandId == brandId);
+            var result = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
             
         }
@@ -100,7 +100,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> UpdateAsync(Tv entity)
         {
-            await _tvDal.Update(entity);
+            await _tvDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
@@ -125,7 +125,7 @@ namespace Business.Concrete
         }
         private async Task<IResult> CheckTvName(Tv entity)
         {
-            var tvs = await _tvDal.GetAll();
+            var tvs = await _tvDal.GetAllAsync();
             if(tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);

@@ -38,13 +38,13 @@ namespace Business.Concrete
             {
                 return result;
             }
-            await _userAddressDal.Add(userAddress);
+            await _userAddressDal.AddAsync(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
         }
 
         private async Task<IResult> CheckUserAddressCount6(int userId)
         {
-            var addresses = await _userAddressDal.GetAll(a => a.UserId == userId);
+            var addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId);
             if (addresses.Count >= 6)
             {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
@@ -57,13 +57,13 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> DeleteAsync(UserAddress userAddress)
         {
-            await _userAddressDal.Delete(userAddress);
+            await _userAddressDal.DeleteAsync(userAddress);
             return new SuccessResult(Messages.DeleteUserAddress);
         }
         [SecuredOperation("User")]
         public async Task<IDataResult<UserAddress>> GetByIdAsync(int addressId)
         {
-            var result = await _userAddressDal.Get(x=>x.Id== addressId);
+            var result = await _userAddressDal.GetAsync(x=>x.Id== addressId);
             return new SuccessDataResult<UserAddress>(result);
         }
         [SecuredOperation("User")]
@@ -71,7 +71,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetListAsync()
         {
-            var result = await _userAddressDal.GetAll();
+            var result = await _userAddressDal.GetAllAsync();
             return new SuccessDataResult<List<UserAddress>>(result);
         }
 
@@ -86,7 +86,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId)
         {
-            var result = await _userAddressDal.GetAll(u => u.UserId == userId);
+            var result = await _userAddressDal.GetAllAsync(u => u.UserId == userId);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]
@@ -95,7 +95,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> UpdateAsync(UserAddress userAddress)
         {
-            await _userAddressDal.Update(userAddress);
+            await _userAddressDal.UpdateAsync(userAddress);
             return new SuccessResult(Messages.UpdateUserAddress);
         }
     }

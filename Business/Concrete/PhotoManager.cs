@@ -30,35 +30,35 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> AddAsync(Photo entity)
         {
-            await _photoDal.Add(entity);
+            await _photoDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
         [PerformanceAspect(3)]
         public async Task<IResult> DeleteAsync(Photo entity)
         {
-            await _photoDal.Delete(entity);
+            await _photoDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<Photo>> GetByIdAsync(int photoId)
         {
-            var result = await _photoDal.Get(x=>x.Id==photoId);
+            var result = await _photoDal.GetAsync(x=>x.Id==photoId);
             return new SuccessDataResult<Photo>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListAsync()
         {
-            var result = await _photoDal.GetAll();
+            var result = await _photoDal.GetAllAsync();
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
         {
-            var result = await _photoDal.GetAll(x=>x.TvId==tvId);
+            var result = await _photoDal.GetAllAsync(x=>x.TvId==tvId);
             return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -67,7 +67,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> UpdateAsync(Photo entity)
         {
-            await _photoDal.Update(entity);
+            await _photoDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
     }

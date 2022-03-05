@@ -30,7 +30,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
         {
-            await _orderDal.Add(entity);
+            await _orderDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("User,Admin")]
@@ -38,7 +38,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> DeleteAsync(Order entity)
         {
-            await _orderDal.Delete(entity);
+            await _orderDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [SecuredOperation("User,Admin")]
@@ -46,7 +46,7 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<Order>> GetByIdAsync(int orderId)
         {
-            var result = await _orderDal.Get(x=>x.Id==orderId);
+            var result = await _orderDal.GetAsync(x=>x.Id==orderId);
             return new SuccessDataResult<Order>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
@@ -54,7 +54,7 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<Order>>> GetListAsync()
         {
-            var result = await _orderDal.GetAll();
+            var result = await _orderDal.GetAllAsync();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
@@ -78,7 +78,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> UpdateAsync(Order entity)
         {
-            await _orderDal.Update(entity);
+            await _orderDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
     }

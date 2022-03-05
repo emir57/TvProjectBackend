@@ -30,7 +30,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> AddAsync(City entity)
         {
-            await _citydal.Add(entity);
+            await _citydal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -38,21 +38,21 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> DeleteAsync(City entity)
         {
-            await _citydal.Delete(entity);
+            await _citydal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<City>> GetByIdAsync(int cityId)
         {
-            var result = await _citydal.Get(x=>x.Id==cityId);
+            var result = await _citydal.GetAsync(x=>x.Id==cityId);
             return new SuccessDataResult<City>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<City>>> GetListAsync()
         {
-            var result = await _citydal.GetAll();
+            var result = await _citydal.GetAllAsync();
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -61,7 +61,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> UpdateAsync(City entity)
         {
-            await _citydal.Update(entity);
+            await _citydal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
     }

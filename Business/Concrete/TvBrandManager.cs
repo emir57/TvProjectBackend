@@ -30,7 +30,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> AddAsync(TvBrand entity)
         {
-            await _tvBrandDal.Add(entity);
+            await _tvBrandDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -38,21 +38,21 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> DeleteAsync(TvBrand entity)
         {
-            await _tvBrandDal.Delete(entity);
+            await _tvBrandDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<TvBrand>> GetByIdAsync(int brandId)
         {
-            var result = await _tvBrandDal.Get(x=>x.Id==brandId);
+            var result = await _tvBrandDal.GetAsync(x=>x.Id==brandId);
             return new SuccessDataResult<TvBrand>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvBrand>>> GetListAsync()
         {
-            var result = await _tvBrandDal.GetAll();
+            var result = await _tvBrandDal.GetAllAsync();
             return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -61,7 +61,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> UpdateAsync(TvBrand entity)
         {
-            await _tvBrandDal.Update(entity);
+            await _tvBrandDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
     }

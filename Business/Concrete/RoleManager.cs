@@ -25,7 +25,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("IRoleService.Get")]
         public async Task<IResult> AddAsync(Role entity)
         {
-            await _roleDal.Add(entity);
+            await _roleDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
         [SecuredOperation("Admin")]
@@ -61,21 +61,21 @@ namespace Business.Concrete
             {
                 return result;
             }
-            await _roleDal.Delete(entity);
+            await _roleDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
         public async Task<IDataResult<Role>> GetByIdAsync(int roleId)
         {
-            var result = await _roleDal.Get(x=>x.Id==roleId);
+            var result = await _roleDal.GetAsync(x=>x.Id==roleId);
             return new SuccessDataResult<Role>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect(20)]
         public async Task<IDataResult<List<Role>>> GetListAsync()
         {
-            var result = await _roleDal.GetAll();
+            var result = await _roleDal.GetAllAsync();
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
 
@@ -96,7 +96,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            await _roleDal.Update(entity);
+            await _roleDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
