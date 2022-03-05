@@ -10,7 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IUserCreditCardDal:IEntityRepository<UserCreditCard>
     {
-        Task AddUserCreditCard(UserCreditCard userCreditCard);
-        Task<List<CreditCardWithUserDto>> GetUserCreditCards(int userId);
+        Task AddUserCreditCardAsync(UserCreditCard userCreditCard);
+        Task<List<CreditCardWithUserDto>> GetUserCreditCardsAsync(int userId);
     }
 }

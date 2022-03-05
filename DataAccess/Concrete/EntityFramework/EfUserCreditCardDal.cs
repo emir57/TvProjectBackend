@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserCreditCardDal : EfEntityRepositoryBase<UserCreditCard, TvProjectContext>, IUserCreditCardDal
     {
-        public async Task AddUserCreditCard(UserCreditCard userCreditCard)
+        public async Task AddUserCreditCardAsync(UserCreditCard userCreditCard)
         {
             using (var context = new TvProjectContext())
             {
@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public async Task<List<CreditCardWithUserDto>> GetUserCreditCards(int userId)
+        public async Task<List<CreditCardWithUserDto>> GetUserCreditCardsAsync(int userId)
         {
             using(var context = new TvProjectContext())
             {

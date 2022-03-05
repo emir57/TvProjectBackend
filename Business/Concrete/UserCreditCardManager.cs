@@ -87,7 +87,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCardsAsync(int userId)
         {
-            var result = await _creditCardDal.GetUserCreditCards(userId);
+            var result = await _creditCardDal.GetUserCreditCardsAsync(userId);
             return new SuccessDataResult<List<CreditCardWithUserDto>>(result);
         }
     }
