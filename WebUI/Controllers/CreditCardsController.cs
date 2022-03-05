@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public IActionResult GetCards()
         {
-            var result = _userCreditCardService.GetList();
+            var result = _userCreditCardService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         [Route("getallbyuserid")]
         public IActionResult GetCardsByUserId(int userId)
         {
-            var result = _userCreditCardService.GetUserCreditCards(userId);
+            var result = _userCreditCardService.GetUserCreditCardsAsync(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);

@@ -9,6 +9,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,26 +55,26 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<UserCreditCard>> GetList()
+        public async Task<IDataResult<List<UserCreditCard>>> GetListAsync()
         {
-            var result = _creditCardDal.GetAll();
-            return new SuccessDataResult<IQueryable<UserCreditCard>>(result);
+            var result = await _creditCardDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<UserCreditCard>> GetListByUserId(int userId)
+        public async Task<IDataResult<List<UserCreditCard>>> GetListByUserIdAsync(int userId)
         {
-            var result = _creditCardDal.GetAll(x=>x.UserId==userId);
-            return new SuccessDataResult<IQueryable<UserCreditCard>>(result);
+            var result = await _creditCardDal.GetAll(x=>x.UserId==userId).ToListAsync();
+            return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<UserCreditCard>> GetByUserId(int userId)
+        public async Task<IDataResult<List<UserCreditCard>>> GetByUserIdAsync(int userId)
         {
-            var result = _creditCardDal.GetAll(c => c.UserId == userId);
-            return new SuccessDataResult<IQueryable<UserCreditCard>>(result);
+            var result = await _creditCardDal.GetAll(c => c.UserId == userId).ToListAsync();
+            return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
@@ -86,10 +87,10 @@ namespace Business.Concrete
         }
         [SecuredOperation("User")]
         [PerformanceAspect(3)]
-        public IDataResult<IQueryable<CreditCardWithUserDto>> GetUserCreditCards(int userId)
+        public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCardsAsync(int userId)
         {
-            var result = _creditCardDal.GetUserCreditCards(userId);
-            return new SuccessDataResult<IQueryable<CreditCardWithUserDto>>(result);
+            var result = await _creditCardDal.GetUserCreditCards(userId).ToListAsync();
+            return new SuccessDataResult<List<CreditCardWithUserDto>>(result);
         }
     }
 }

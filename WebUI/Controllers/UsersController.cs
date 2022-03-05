@@ -29,7 +29,7 @@ namespace WebUI.Controllers
         [Route("get")]
         public IActionResult GetUsers()
         {
-            var result = _userService.GetList();
+            var result = _userService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

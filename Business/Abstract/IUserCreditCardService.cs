@@ -15,10 +15,10 @@ namespace Business.Abstract
         Task<IResult> AddAsync(UserCreditCard userCreditCard);
         Task<IResult> DeleteAsync(UserCreditCard userCreditCard);
         Task<IResult> UpdateAsync(UserCreditCard userCreditCard);
-        IDataResult<IQueryable<UserCreditCard>> GetByUserId(int userId);
-        IDataResult<IQueryable<UserCreditCard>> GetList();
-        IDataResult<IQueryable<UserCreditCard>> GetListByUserId(int userId);
+        Task<IDataResult<List<UserCreditCard>>> GetByUserIdAsync(int userId);
+        Task<IDataResult<List<UserCreditCard>>> GetListAsync();
+        Task<IDataResult<List<UserCreditCard>>> GetListByUserIdAsync(int userId);
         Task<IDataResult<UserCreditCard>> GetByIdAsync(int creditCardId);
-        IDataResult<IQueryable<CreditCardWithUserDto>> GetUserCreditCards(int userId);
+        Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCardsAsync(int userId);
     }
 }

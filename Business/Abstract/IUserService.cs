@@ -12,16 +12,16 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        IDataResult<IQueryable<Role>> GetClaims(User user);
+        Task<IDataResult<List<Role>>> GetClaimsAsync(User user);
         Task<IResult> AddAsync(User user);
         Task<IResult> UpdateAsync(User user);
         Task<IDataResult<User>> GetByIdAsync(int userId);
         Task<IDataResult<User>> GetByKeyAsync(string key);
         Task<IResult> AddUserRoleAsync(User user);
         Task<IDataResult<User>> GetByMailAsync(string email);
-        IDataResult<IQueryable<User>> GetList(); 
+        Task<IDataResult<List<User>>> GetListAsync(); 
 
-        IDataResult<IQueryable<UserForAddressDto>> GetListAddress(User user);
-        IDataResult<IQueryable<UserForCreditCardDto>> GetListCreditCards(User user);
+        Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user);
+        Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user);
     }
 }
