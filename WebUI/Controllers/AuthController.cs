@@ -52,7 +52,7 @@ namespace WebUI.Controllers
         [Route("login")]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _userService.GetByMail(userForLoginDto.Email);
+            var user = await _userService.GetByMailAsync(userForLoginDto.Email);
             var result = await _authService.LoginAsync(userForLoginDto);
             if (!result.IsSuccess)
             {
@@ -76,7 +76,7 @@ namespace WebUI.Controllers
         [Route("checkuser")]
         public async Task<ActionResult> CheckUser(User user)
         {
-            var checkUser = await _userService.GetByMail(user.Email);
+            var checkUser = await _userService.GetByMailAsync(user.Email);
             if (checkUser.Data != null)
             {
                 return Ok(new SuccessResult());
@@ -87,7 +87,7 @@ namespace WebUI.Controllers
         [Route("getuser")]
         public async Task<ActionResult> GetUser(int id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user.Data != null)
             {
                 return Ok(new SuccessDataResult<User>(user.Data));
@@ -99,14 +99,14 @@ namespace WebUI.Controllers
         [Route("sendemail")]
         public async Task<IActionResult> SendEmail(SendMailModel email)
         {
-            var userCheck = await _userService.GetByMail(email.Email);
+            var userCheck = await _userService.GetByMailAsync(email.Email);
             if (userCheck.Data == null)
             {
                 return BadRequest(new ErrorResult("Böyle bir kullanıcı bulunamadı"));
             }
             string key = Guid.NewGuid()+"";
             userCheck.Data.Key = key;
-            await _userService.Update(userCheck.Data);
+            await _userService.UpdateAsync(userCheck.Data);
             await _emailService.SendEmailAsync(email.Email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{key}'>Şifreni Sıfırlamak İçin Tıkla</a>");
             return Ok(new SuccessResult("Şifre Sıfırlama isteği Başarıyla gönderildi"));
         }
@@ -115,7 +115,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             byte[] passwordHash, passwordSalt;
-            var getUser = await _userService.GetByKey(resetPasswordModel.Key);
+            var getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
             if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
             {
                 return BadRequest("Geçersiz Key");
@@ -128,7 +128,7 @@ namespace WebUI.Controllers
             getUser.Data.PasswordHash = passwordHash;
             getUser.Data.PasswordSalt = passwordSalt;
             getUser.Data.Key = "";
-            await _userService.Update(getUser.Data);
+            await _userService.UpdateAsync(getUser.Data);
             return Ok(new SuccessResult("Şifreniz Başarıyla Sıfırlandı"));
 
         }
@@ -136,12 +136,12 @@ namespace WebUI.Controllers
         [Route("getroles")]
         public async Task<IActionResult> GetUserRoles(int id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user.Data == null)
             {
                 return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
             }
-            var roles = await _userService.GetClaims(user.Data);
+            var roles = await _userService.GetClaimsAsync(user.Data);
             return Ok(roles);
         }
 

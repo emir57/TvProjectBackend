@@ -26,14 +26,14 @@ namespace Business.Concrete
         }
         public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
-            var claims = await _userService.GetClaims(user);
+            var claims = await _userService.GetClaimsAsync(user);
             var result = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto)
         {
-            var result = await _userService.GetByMail(userForLoginDto.Email);
+            var result = await _userService.GetByMailAsync(userForLoginDto.Email);
             var user = result.Data;
             if (user == null)
             {
@@ -60,15 +60,15 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            await _userService.Add(user);
-            await _userService.AddUserRole(user);
+            await _userService.AddAsync(user);
+            await _userService.AddUserRoleAsync(user);
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
 
         }
 
         public async Task<IResult> UserExistsAsync(string email)
         {
-            var result = await _userService.GetByMail(email);
+            var result = await _userService.GetByMailAsync(email);
             if (result.Data == null)
             {
                 return new SuccessResult();

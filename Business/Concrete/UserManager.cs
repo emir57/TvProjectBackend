@@ -26,24 +26,24 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(User user)
+        public async Task<IResult> AddAsync(User user)
         {
             await _userDal.Add(user);
             return new SuccessResult(Messages.SuccessAdd);
         }
 
-        public async Task<IResult> AddUserRole(User user)
+        public async Task<IResult> AddUserRoleAsync(User user)
         {
             await _userDal.AddUserRole(user);
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<User>> GetById(int userId)
+        public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
             var result = await _userDal.Get(x=>x.Id==userId);
             return new SuccessDataResult<User>(result);
         }
-        public async Task<IDataResult<User>> GetByKey(string key)
+        public async Task<IDataResult<User>> GetByKeyAsync(string key)
         {
             var result = await _userDal.Get(x => x.Key == key);
             return new SuccessDataResult<User>(result);
@@ -51,13 +51,13 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForAddressDto>>> GetListAddress(User user)
+        public async Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user)
         {
             var result =  await _userDal.GetAddress(user);
             return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<List<User>>> GetList()
+        public async Task<IDataResult<List<User>>> GetListAsync()
         {
             var result = await _userDal.GetAll();
             return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
@@ -65,27 +65,27 @@ namespace Business.Concrete
 
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<User>> GetByMail(string email)
+        public async Task<IDataResult<User>> GetByMailAsync(string email)
         {
             var result = await _userDal.Get(u => u.Email == email);
             return new SuccessDataResult<User>(result, Messages.SuccessGet);
         }
         
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<Role>>> GetClaims(User user)
+        public async Task<IDataResult<List<Role>>> GetClaimsAsync(User user)
         {
             var result = await _userDal.GetClaims(user);
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCards(User user)
+        public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user)
         {
             var result = await _userDal.GetCrediCards(user);
             return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
         }
         [CacheRemoveAspect("IUserService.Get")]
-        public async Task<IResult> Update(User user)
+        public async Task<IResult> UpdateAsync(User user)
         {
             await _userDal.Update(user);
             return new SuccessResult();
