@@ -11,17 +11,17 @@ namespace Business.Abstract
 {
     public interface ITvService
     {
-        Task<IResult> Add(Tv entity);
-        Task<IResult> Update(Tv entity);
-        Task<IResult> Delete(Tv entity);
-        Task<IDataResult<Tv>> GetById(int tvId);
-        Task<IDataResult<List<Tv>>> GetListByBrand(int brandId);
-        Task<IDataResult<List<Tv>>> GetList();
+        Task<IResult> AddAsync(Tv entity);
+        Task<IResult> UpdateAsync(Tv entity);
+        Task<IResult> DeleteAsync(Tv entity);
+        Task<IDataResult<Tv>> GetByIdAsync(int tvId);
+        Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId);
+        Task<IDataResult<List<Tv>>> GetListAsync();
 
-        Task<IDataResult<List<Photo>>> GetListPhotos(int tvId);
-        Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotos();
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails();
-        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId);
-        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId);
+        Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId);
+        Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync();
+        Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId);
+        Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId);
     }
 }

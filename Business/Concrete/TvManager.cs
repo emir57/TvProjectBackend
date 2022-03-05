@@ -32,7 +32,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(TvValidator))]
         [CacheRemoveAspect("ITvService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(Tv entity)
+        public async Task<IResult> AddAsync(Tv entity)
         {
             var result = BusinessRules.Run(
                 await CheckTvName(entity)
@@ -49,21 +49,21 @@ namespace Business.Concrete
         [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("ITvService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(Tv entity)
+        public async Task<IResult> DeleteAsync(Tv entity)
         {
             await _tvDal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<Tv>> GetById(int tvId)
+        public async Task<IDataResult<Tv>> GetByIdAsync(int tvId)
         {
             var result = await _tvDal.Get(x=>x.Id== tvId);
             return new SuccessDataResult<Tv>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<Tv>>> GetList()
+        public async Task<IDataResult<List<Tv>>> GetListAsync()
         {
             var result = await _tvDal.GetAll();
 
@@ -82,14 +82,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Tv>>(products);
         }
 
-        public async Task<IDataResult<List<Tv>>> GetListByBrand(int brandId)
+        public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
             var result = await _tvDal.GetAll(t => t.BrandId == brandId);
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
             
         }
 
-        public async Task<IDataResult<List<Photo>>> GetListPhotos(int tvId)
+        public async Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId)
         {
             var result = await _tvDal.GetPhotos(tvId);
             return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
@@ -98,26 +98,26 @@ namespace Business.Concrete
         [ValidationAspect(typeof(TvValidator))]
         [CacheRemoveAspect("ITvService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(Tv entity)
+        public async Task<IResult> UpdateAsync(Tv entity)
         {
             await _tvDal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
 
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotos()
+        public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
         {
             var result = await _tvDal.GetTvWithPhotos();
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetails()
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync()
         {
             var result = await _tvDal.GetTvDetails();
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
-        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetail(int tvId)
+        public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId)
         {
             var result = await _tvDal.GetTvDetail(x=>x.Id== tvId);
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
@@ -134,7 +134,7 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryId(int categoryId)
+        public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId)
         {
             var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);

@@ -30,7 +30,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvs()
         {
-            var result = await _tvService.GetListTvWithPhotos();
+            var result = await _tvService.GetListTvWithPhotosAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -41,7 +41,7 @@ namespace WebUI.Controllers
         [Route("get")]
         public async Task<ActionResult> GetTv(int id)
         {
-            var result = await _tvService.GetTvDetail(id);
+            var result = await _tvService.GetTvDetailAsync(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -52,7 +52,7 @@ namespace WebUI.Controllers
         [Route("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id, int page = 1)
         {
-            var result = await _tvService.GetListTvDetailsByCategoryId(id);
+            var result = await _tvService.GetListTvDetailsByCategoryIdAsync(id);
             //if (page != -1)
             //{
             //    result = GetProductsPage(page, result);
@@ -76,7 +76,7 @@ namespace WebUI.Controllers
         [Route("gettvdetail")]
         public async Task<ActionResult> GetTvDetails(int tvId,int page=1)
         {
-            var result = await _tvService.GetListTvDetails();
+            var result = await _tvService.GetListTvDetailsAsync();
             //if (page != -1)
             //{
             //    var totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
@@ -94,7 +94,7 @@ namespace WebUI.Controllers
         [Route("gettvphotos")]
         public async Task<ActionResult> GetTvPhotos(int tvId)
         {
-            var result = await _tvService.GetListPhotos(tvId);
+            var result = await _tvService.GetListPhotosAsync(tvId);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -105,7 +105,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddTv(Tv tv,[FromForm]IFormFile photo)
         {
-            var result = await _tvService.Add(tv);
+            var result = await _tvService.AddAsync(tv);
             
             if (!result.IsSuccess)
             {
@@ -117,7 +117,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateTv(Tv tv)
         {
-            var result = await _tvService.Update(tv);
+            var result = await _tvService.UpdateAsync(tv);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -128,12 +128,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteTv(int tvId)
         {
-            var tv = await _tvService.GetById(tvId);
+            var tv = await _tvService.GetByIdAsync(tvId);
             if (tv.Data == null)
             {
                 return BadRequest("Silinecek ürün bulunamadı");
             }
-            var result = await _tvService.Delete(tv.Data);
+            var result = await _tvService.DeleteAsync(tv.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
