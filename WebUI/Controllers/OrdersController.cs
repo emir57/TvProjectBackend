@@ -22,9 +22,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<IActionResult> GetOrders()
+        public IActionResult GetOrders()
         {
-            var result = await _orderService.GetListOrdersDtoAsync();
+            var result = _orderService.GetListOrdersDto();
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -33,9 +33,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getbyid")]
-        public async Task<IActionResult> GetOrders(int id)
+        public IActionResult GetOrders(int id)
         {
-            var result = await _orderService.GetOrdersByUserIdAsync(id);
+            var result = _orderService.GetOrdersByUserId(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);

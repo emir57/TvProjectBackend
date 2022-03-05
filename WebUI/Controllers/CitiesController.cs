@@ -21,9 +21,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<IActionResult> GetCities()
+        public IActionResult GetCities()
         {
-            var result = await _cityService.GetListAsync();
+            var result = _cityService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

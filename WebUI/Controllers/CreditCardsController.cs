@@ -23,9 +23,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getall")]
-        public async Task<IActionResult> GetCards()
+        public IActionResult GetCards()
         {
-            var result = await _userCreditCardService.GetListAsync();
+            var result = _userCreditCardService.GetList();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -34,9 +34,9 @@ namespace WebUI.Controllers
         }
         [HttpGet]
         [Route("getallbyuserid")]
-        public async Task<IActionResult> GetCardsByUserId(int userId)
+        public IActionResult GetCardsByUserId(int userId)
         {
-            var result = await _userCreditCardService.GetUserCreditCardsAsync(userId);
+            var result = _userCreditCardService.GetUserCreditCards(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);

@@ -58,7 +58,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(result);
             }
-            var token = await _authService.CreateAccessTokenAsync(user.Data);
+            var token = _authService.CreateAccessToken(user.Data);
             var loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
@@ -141,7 +141,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
             }
-            var roles = await _userService.GetClaimsAsync(user.Data);
+            var roles = _userService.GetClaims(user.Data);
             return Ok(roles);
         }
 
