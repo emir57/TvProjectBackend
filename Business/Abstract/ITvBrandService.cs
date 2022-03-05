@@ -15,6 +15,6 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(TvBrand entity);
         Task<IResult> DeleteAsync(TvBrand entity);
         Task<IDataResult<TvBrand>> GetByIdAsync(int brandId);
-        IDataResult<IQueryable<TvBrand>> GetList();
+        Task<IDataResult<List<TvBrand>>> GetListAsync();
     }
 }

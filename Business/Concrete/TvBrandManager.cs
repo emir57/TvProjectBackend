@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,10 +52,10 @@ namespace Business.Concrete
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public IDataResult<IQueryable<TvBrand>> GetList()
+        public async Task<IDataResult<List<TvBrand>>> GetListAsync()
         {
-            var result = _tvBrandDal.GetAll();
-            return new SuccessDataResult<IQueryable<TvBrand>>(result, Messages.SuccessGet);
+            var result = await _tvBrandDal.GetAll().ToListAsync();
+            return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
