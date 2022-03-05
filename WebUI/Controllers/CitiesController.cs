@@ -23,7 +23,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetCities()
         {
-            var result = await _cityService.GetList();
+            var result = await _cityService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         [Route("getbyId")]
         public async Task<IActionResult> GetCity(int id)
         {
-            var result = await _cityService.GetById(id);
+            var result = await _cityService.GetByIdAsync(id);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -45,7 +45,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddCity(City city)
         {
-            var result = await _cityService.Add(city);
+            var result = await _cityService.AddAsync(city);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -56,7 +56,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateCity(City city)
         {
-            var result = await _cityService.Update(city);
+            var result = await _cityService.UpdateAsync(city);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -67,12 +67,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteCity(int cityId)
         {
-            var city = await _cityService.GetById(cityId);
+            var city = await _cityService.GetByIdAsync(cityId);
             if (city.Data == null)
             {
                 return BadRequest(Messages.CityIsNotFound);
             }
-            var result = await _cityService.Update(city.Data);
+            var result = await _cityService.UpdateAsync(city.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

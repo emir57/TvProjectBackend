@@ -28,7 +28,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(City entity)
+        public async Task<IResult> AddAsync(City entity)
         {
             await _citydal.Add(entity);
             return new SuccessResult(Messages.SuccessAdd);
@@ -36,21 +36,21 @@ namespace Business.Concrete
         [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(City entity)
+        public async Task<IResult> DeleteAsync(City entity)
         {
             await _citydal.Delete(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<City>> GetById(int cityId)
+        public async Task<IDataResult<City>> GetByIdAsync(int cityId)
         {
             var result = await _citydal.Get(x=>x.Id==cityId);
             return new SuccessDataResult<City>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<City>>> GetList()
+        public async Task<IDataResult<List<City>>> GetListAsync()
         {
             var result = await _citydal.GetAll();
             return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
@@ -59,7 +59,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CityValidator))]
         [CacheRemoveAspect("ICityService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(City entity)
+        public async Task<IResult> UpdateAsync(City entity)
         {
             await _citydal.Update(entity);
             return new SuccessResult(Messages.SuccessUpdate);
