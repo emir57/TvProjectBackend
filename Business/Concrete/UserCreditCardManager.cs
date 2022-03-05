@@ -29,7 +29,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserCreditCardValidator))]
         [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Add(UserCreditCard userCreditCard)
+        public async Task<IResult> AddAsync(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Add(userCreditCard);
             return new SuccessResult(Messages.AddUserCreditCard);
@@ -37,7 +37,7 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Delete(UserCreditCard userCreditCard)
+        public async Task<IResult> DeleteAsync(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Delete(userCreditCard);
             return new SuccessResult(Messages.DeleteUserCreditCard);
@@ -45,7 +45,7 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<UserCreditCard>> GetById(int creditCardId)
+        public async Task<IDataResult<UserCreditCard>> GetByIdAsync(int creditCardId)
         {
             var result = await _creditCardDal.Get(x=>x.Id== creditCardId);
             return new SuccessDataResult<UserCreditCard>(result);
@@ -53,7 +53,7 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserCreditCard>>> GetList()
+        public async Task<IDataResult<List<UserCreditCard>>> GetListAsync()
         {
             var result = await _creditCardDal.GetAll();
             return new SuccessDataResult<List<UserCreditCard>>(result);
@@ -61,7 +61,7 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserCreditCard>>> GetListByUserId(int userId)
+        public async Task<IDataResult<List<UserCreditCard>>> GetListByUserIdAsync(int userId)
         {
             var result = await _creditCardDal.GetAll(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
@@ -69,7 +69,7 @@ namespace Business.Concrete
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
-        public async Task<IDataResult<List<UserCreditCard>>> GetByUserId(int userId)
+        public async Task<IDataResult<List<UserCreditCard>>> GetByUserIdAsync(int userId)
         {
             var result = await _creditCardDal.GetAll(c => c.UserId == userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
@@ -78,14 +78,14 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserCreditCardValidator))]
         [CacheRemoveAspect("IUserCreditCardService.Get")]
         [PerformanceAspect(3)]
-        public async Task<IResult> Update(UserCreditCard userCreditCard)
+        public async Task<IResult> UpdateAsync(UserCreditCard userCreditCard)
         {
             await _creditCardDal.Update(userCreditCard);
             return new SuccessResult(Messages.UpdateCreditCard);
         }
         [SecuredOperation("User")]
         [PerformanceAspect(3)]
-        public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCards(int userId)
+        public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCardsAsync(int userId)
         {
             var result = await _creditCardDal.GetUserCreditCards(userId);
             return new SuccessDataResult<List<CreditCardWithUserDto>>(result);
