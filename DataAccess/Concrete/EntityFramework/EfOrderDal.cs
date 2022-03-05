@@ -14,18 +14,23 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfOrderDal : EfEntityRepositoryBase<Order, TvProjectContext>, IOrderDal
     {
+        private readonly TvProjectContext _context;
+
+        public EfOrderDal(TvProjectContext context)
+        {
+            _context = context;
+        }
+
         public IQueryable<OrderDto> GetOrdersByUserId(int userId)
         {
-            using (var context = new TvProjectContext())
-            {
-                var result = from o in context.Orders
-                             join u in context.Users
+                var result = from o in _context.Orders
+                             join u in _context.Users
                              on o.UserId equals u.Id
-                             join t in context.Tvs
+                             join t in _context.Tvs
                              on o.TvId equals t.Id
-                             join a in context.UserAddresses
+                             join a in _context.UserAddresses
                              on o.AddressId equals a.Id
-                             join c in context.Cities
+                             join c in _context.Cities
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
@@ -38,7 +43,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     ImageUrl = _context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -51,21 +56,18 @@ namespace DataAccess.Concrete.EntityFramework
                                  }
                              };
                 return result.Where(x => x.User.Id == userId);
-            }
         }
 
         public IQueryable<OrderDto> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
         {
-            using (var context = new TvProjectContext())
-            {
-                var result = from o in context.Orders
-                             join u in context.Users
+                var result = from o in _context.Orders
+                             join u in _context.Users
                              on o.UserId equals u.Id
-                             join t in context.Tvs
+                             join t in _context.Tvs
                              on o.TvId equals t.Id
-                             join a in context.UserAddresses
+                             join a in _context.UserAddresses
                              on o.AddressId equals a.Id
-                             join c in context.Cities
+                             join c in _context.Cities
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
@@ -78,7 +80,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     ImageUrl = _context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -93,7 +95,6 @@ namespace DataAccess.Concrete.EntityFramework
                 return filter == null ?
                     result:
                     result.Where(filter);
-            }
         }
     }
 }
