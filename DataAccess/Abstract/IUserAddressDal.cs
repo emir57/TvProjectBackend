@@ -13,6 +13,6 @@ namespace DataAccess.Abstract
 {
     public interface IUserAddressDal:IEntityRepository<UserAddress>
     {
-        IQueryable<UserAddressCityDto> GetAddressByCityName(Expression<Func<UserAddressCityDto, bool>> filter);
+        Task<List<UserAddressCityDto>> GetAddressByCityNameAsync(Expression<Func<UserAddressCityDto, bool>> filter);
     }
 }

@@ -14,28 +14,24 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserAddressDal : EfEntityRepositoryBase<UserAddress, TvProjectContext>, IUserAddressDal
     {
-        private readonly TvProjectContext _context;
-
-        public EfUserAddressDal(TvProjectContext context)
+        public async Task<List<UserAddressCityDto>> GetAddressByCityNameAsync(Expression<Func<UserAddressCityDto, bool>> filter)
         {
-            _context = context;
-        }
-
-        public IQueryable<UserAddressCityDto> GetAddressByCityName(Expression<Func<UserAddressCityDto, bool>> filter)
-        {
-                var result = from adress in _context.UserAddresses
-                             from city in _context.Cities
+            using(var context = new TvProjectContext())
+            {
+                var result = from adress in context.UserAddresses
+                             from city in context.Cities
                              where adress.CityId == city.Id
                              select new UserAddressCityDto
                              {
                                  Id = adress.Id,
                                  UserId = adress.UserId,
-                                 AddressName=adress.AddressName,
+                                 AddressName = adress.AddressName,
                                  CityId = adress.CityId,
                                  AddressText = adress.AddressText,
                                  CityName = city.CityName
                              };
-                return result.Where(filter);
+                return await result.Where(filter).ToListAsync();
+            }
         }
     }
 }
