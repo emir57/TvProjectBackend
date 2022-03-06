@@ -34,7 +34,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(UserAddress userAddress)
         {
             var result = BusinessRules.Run(
-                CheckUserAddressCount6(userAddress.UserId)
+                await CheckUserAddressCount6Async(userAddress.UserId)
                 );
             if (result != null)
             {
@@ -44,10 +44,10 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CreateUserAddress);
         }
 
-        private IResult CheckUserAddressCount6(int userId)
+        private async Task<IResult> CheckUserAddressCount6Async(int userId)
         {
-            var addresses = _userAddressDal.GetAll(a => a.UserId == userId);
-            if (addresses.Count() >= 6)
+            var addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId);
+            if (addresses.Count >= 6)
             {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
             }
@@ -73,7 +73,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetListAsync()
         {
-            var result = await _userAddressDal.GetAll().ToListAsync();
+            var result = await _userAddressDal.GetAllAsync();
             return new SuccessDataResult<List<UserAddress>>(result);
         }
 
@@ -88,7 +88,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserAddress>>> GetByUserIdAsync(int userId)
         {
-            var result = await _userAddressDal.GetAll(u => u.UserId == userId).ToListAsync();
+            var result = await _userAddressDal.GetAllAsync(u => u.UserId == userId);
             return new SuccessDataResult<List<UserAddress>>(result);
         }
         [SecuredOperation("User")]

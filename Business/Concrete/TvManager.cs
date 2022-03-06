@@ -36,7 +36,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(Tv entity)
         {
             var result = BusinessRules.Run(
-                CheckTvName(entity)
+                await CheckTvNameAsync(entity)
                 );
             if (result != null)
             {
@@ -66,7 +66,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Tv>>> GetListAsync()
         {
-            var result = await _tvDal.GetAll().ToListAsync();
+            var result = await _tvDal.GetAllAsync();
 
             //BusinessRules.Run(ApplyDiscount(result));
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
@@ -85,7 +85,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
-            var result = await _tvDal.GetAll(t => t.BrandId == brandId).ToListAsync();
+            var result = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
             return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
             
         }
@@ -124,9 +124,9 @@ namespace Business.Concrete
             return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
 
         }
-        private IResult CheckTvName(Tv entity)
+        private async Task<IResult> CheckTvNameAsync(Tv entity)
         {
-            var tvs = _tvDal.GetAll();
+            var tvs = await _tvDal.GetAllAsync();
             if(tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);

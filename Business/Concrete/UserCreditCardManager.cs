@@ -57,7 +57,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetListAsync()
         {
-            var result = await _creditCardDal.GetAll().ToListAsync();
+            var result = await _creditCardDal.GetAllAsync();
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]
@@ -65,7 +65,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetListByUserIdAsync(int userId)
         {
-            var result = await _creditCardDal.GetAll(x=>x.UserId==userId).ToListAsync();
+            var result = await _creditCardDal.GetAllAsync(x=>x.UserId==userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]
@@ -73,7 +73,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetByUserIdAsync(int userId)
         {
-            var result = await _creditCardDal.GetAll(c => c.UserId == userId).ToListAsync();
+            var result = await _creditCardDal.GetAllAsync(c => c.UserId == userId);
             return new SuccessDataResult<List<UserCreditCard>>(result);
         }
         [SecuredOperation("User")]

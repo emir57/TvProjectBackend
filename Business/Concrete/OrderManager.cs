@@ -56,7 +56,7 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<Order>>> GetListAsync()
         {
-            var result = await _orderDal.GetAll().ToListAsync();
+            var result = await _orderDal.GetAllAsync();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
 
