@@ -13,7 +13,7 @@ namespace DataAccess.Abstract
 {
     public interface IOrderDal:IEntityRepository<Order>
     {
-        IQueryable<OrderDto> GetOrdersByUserId(int userId);
-        IQueryable<OrderDto> GetAllOrdersDto(Expression<Func<OrderDto,bool>> filter=null);
+        Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId);
+        Task<List<OrderDto>> GetAllOrdersDtoAsync(Expression<Func<OrderDto,bool>> filter=null);
     }
 }

@@ -14,23 +14,18 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfOrderDal : EfEntityRepositoryBase<Order, TvProjectContext>, IOrderDal
     {
-        private readonly TvProjectContext _context;
-
-        public EfOrderDal(TvProjectContext context)
+        public async Task<List<OrderDto>> GetOrdersByUserIdAsync(int userId)
         {
-            _context = context;
-        }
-
-        public IQueryable<OrderDto> GetOrdersByUserId(int userId)
-        {
-                var result = from o in _context.Orders
-                             join u in _context.Users
+            using(var context = new TvProjectContext())
+            {
+                var result = from o in context.Orders
+                             join u in context.Users
                              on o.UserId equals u.Id
-                             join t in _context.Tvs
+                             join t in context.Tvs
                              on o.TvId equals t.Id
-                             join a in _context.UserAddresses
+                             join a in context.UserAddresses
                              on o.AddressId equals a.Id
-                             join c in _context.Cities
+                             join c in context.Cities
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
@@ -43,7 +38,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = _context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -55,19 +50,22 @@ namespace DataAccess.Concrete.EntityFramework
                                      ScreenInch = t.ScreenInch
                                  }
                              };
-                return result.Where(x => x.User.Id == userId);
+                return await result.Where(x => x.User.Id == userId).ToListAsync();
+            }
         }
 
-        public IQueryable<OrderDto> GetAllOrdersDto(Expression<Func<OrderDto, bool>> filter = null)
+        public async Task<List<OrderDto>> GetAllOrdersDtoAsync(Expression<Func<OrderDto, bool>> filter = null)
         {
-                var result = from o in _context.Orders
-                             join u in _context.Users
+            using(var context = new TvProjectContext())
+            {
+                var result = from o in context.Orders
+                             join u in context.Users
                              on o.UserId equals u.Id
-                             join t in _context.Tvs
+                             join t in context.Tvs
                              on o.TvId equals t.Id
-                             join a in _context.UserAddresses
+                             join a in context.UserAddresses
                              on o.AddressId equals a.Id
-                             join c in _context.Cities
+                             join c in context.Cities
                              on a.CityId equals c.Id
                              select new OrderDto
                              {
@@ -80,7 +78,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = _context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -93,8 +91,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  }
                              };
                 return filter == null ?
-                    result:
-                    result.Where(filter);
+                    await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
+            }
         }
     }
 }
