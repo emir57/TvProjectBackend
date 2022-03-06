@@ -13,27 +13,25 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, TvProjectContext>, IUserDal
     {
-        private readonly TvProjectContext _context;
-
-        public EfUserDal(TvProjectContext context)
-        {
-            _context = context;
-        }
-
         public async Task AddUserRoleAsync(User user)
         {
+            using(var context = new TvProjectContext())
+            {
                 var userRole = new UserRole
                 {
                     RoleId = 3,
                     UserId = user.Id
                 };
-                _context.UserRoles.Add(userRole);
-                await _context.SaveChangesAsync();
+                context.UserRoles.Add(userRole);
+                await context.SaveChangesAsync();
+            }
         }
 
-        public IQueryable<UserForAddressDto> GetAddress(User user)
+        public async Task<List<UserForAddressDto>> GetAddressAsync(User user)
         {
-                var result = from address in _context.UserAddresses
+            using (var context = new TvProjectContext())
+            {
+                var result = from address in context.UserAddresses
                              where address.UserId == user.Id
                              select new UserForAddressDto
                              {
@@ -41,13 +39,16 @@ namespace DataAccess.Concrete.EntityFramework
                                  AddressText = address.AddressText,
                                  CityId = address.CityId
                              };
-                return result;
+                return await result.ToListAsync();
+            }
         }
 
-        public IQueryable<Role> GetClaims(User user)
+        public async Task<List<Role>> GetClaimsAsync(User user)
         {
-                var result = from roles in _context.Roles
-                             join userRoles in _context.UserRoles
+            using (var context = new TvProjectContext())
+            {
+                var result = from roles in context.Roles
+                             join userRoles in context.UserRoles
                              on roles.Id equals userRoles.RoleId
                              where userRoles.UserId == user.Id
                              select new Role
@@ -55,12 +56,15 @@ namespace DataAccess.Concrete.EntityFramework
                                  Id = roles.Id,
                                  Name = roles.Name
                              };
-                return result;
+                return await result.ToListAsync();
+            }
         }
 
-        public IQueryable<UserForCreditCardDto> GetCrediCards(User user)
+        public async Task<List<UserForCreditCardDto>> GetCrediCardsAsync(User user)
         {
-                var result = from card in _context.UserCreditCards
+            using (var context = new TvProjectContext())
+            {
+                var result = from card in context.UserCreditCards
                              where card.UserId == user.Id
                              select new UserForCreditCardDto
                              {
@@ -69,7 +73,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  CVV = card.CVV,
                                  Date = card.Date
                              };
-                return result;
+                return await result.ToListAsync();
+            }
         }
     }
 }

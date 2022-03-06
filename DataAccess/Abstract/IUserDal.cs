@@ -11,9 +11,9 @@ namespace DataAccess.Abstract
 {
     public interface IUserDal:IEntityRepository<User>
     {
-        IQueryable<Role> GetClaims(User user);
-        IQueryable<UserForAddressDto> GetAddress(User user);
-        IQueryable<UserForCreditCardDto> GetCrediCards(User user);
+        Task<List<Role>> GetClaimsAsync(User user);
+        Task<List<UserForAddressDto>> GetAddressAsync(User user);
+        Task<List<UserForCreditCardDto>> GetCrediCardsAsync(User user);
         Task AddUserRoleAsync(User user);
     }
 }
