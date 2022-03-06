@@ -14,17 +14,12 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfTvDal : EfEntityRepositoryBase<Tv, TvProjectContext>, ITvDal
     {
-        private readonly TvProjectContext _context;
-
-        public EfTvDal(TvProjectContext context)
+        public Task<List<Photo>> GetPhotosAsync(int tvId)
         {
-            _context = context;
-        }
-
-        public IQueryable<Photo> GetPhotos(int tvId)
-        {
-                var result = from tvPhoto in _context.Photos
-                             join tv in _context.Tvs
+            using(var context = new TvProjectContext())
+            {
+                var result = from tvPhoto in context.Photos
+                             join tv in context.Tvs
                              on tvPhoto.TvId equals tv.Id
                              where tvPhoto.TvId == tvId
                              select new Photo
@@ -32,12 +27,15 @@ namespace DataAccess.Concrete.EntityFramework
                                  ImageUrl = tvPhoto.ImageUrl,
                                  IsMain = tvPhoto.IsMain
                              };
-                return result;
+                return result.ToListAsync();
+            }
         }
 
         public async Task<TvAndPhotoDetailDto> GetTvDetailAsync(Expression<Func<TvAndPhotoDetailDto, bool>> filter)
         {
-                var result = _context.Tvs.Select(t =>
+            using(var context = new TvProjectContext())
+            {
+                var result = context.Tvs.Select(t =>
                              new TvAndPhotoDetailDto
                              {
                                  Id = t.Id,
@@ -50,17 +48,20 @@ namespace DataAccess.Concrete.EntityFramework
                                  BrandId = t.BrandId,
                                  Discount = t.Discount,
                                  IsDiscount = t.IsDiscount,
-                                 Photos = _context.Photos
+                                 Photos = context.Photos
                                         .Where(p => p.TvId == t.Id)
                                         .ToList(),
                                  Stock = t.Stock
                              });
                 return await result.SingleOrDefaultAsync(filter);
+            }
         }
 
-        public IQueryable<TvAndPhotoDetailDto> GetTvDetails(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
+        public async Task<List<TvAndPhotoDetailDto>> GetTvDetailsAsync(Expression<Func<TvAndPhotoDetailDto,bool>> filter=null)
         {
-                var result = _context.Tvs.Select(t =>
+            using (var context = new TvProjectContext())
+            {
+                var result = context.Tvs.Select(t =>
                              new TvAndPhotoDetailDto
                              {
                                  Id = t.Id,
@@ -73,19 +74,22 @@ namespace DataAccess.Concrete.EntityFramework
                                  BrandId = t.BrandId,
                                  Discount = t.Discount,
                                  IsDiscount = t.IsDiscount,
-                                 Photos = _context.Photos
+                                 Photos = context.Photos
                                         .Where(p => p.TvId == t.Id)
                                         .ToList(),
-                                 Stock=t.Stock
+                                 Stock = t.Stock
                              });
                 return filter == null ?
-                    result:
-                    result.Where(filter);
+                    await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
+            }
         }
-        public IQueryable<TvAndPhotoDto> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null)
+        public async Task<List<TvAndPhotoDto>> GetTvWithPhotosAsync(Expression<Func<TvAndPhotoDto, bool>> filter=null)
         {
-                var result = from tvs in _context.Tvs
-                             join photos in _context.Photos
+            using(var context = new TvProjectContext())
+            {
+                var result = from tvs in context.Tvs
+                             join photos in context.Photos
                              on tvs.Id equals photos.TvId
                              where photos.IsMain == true
                              select new TvAndPhotoDto
@@ -104,9 +108,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  Stock = tvs.Stock
                              };
                 return filter == null ?
-                    result:
-                    result.Where(filter);
-
+                    await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
+            }
         }
     }
 }

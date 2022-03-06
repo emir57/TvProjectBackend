@@ -12,9 +12,9 @@ namespace DataAccess.Abstract
 {
     public interface ITvDal:IEntityRepository<Tv>
     {
-        IQueryable<Photo> GetPhotos(int tvId);
-        IQueryable<TvAndPhotoDto> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter=null);
-        IQueryable<TvAndPhotoDetailDto> GetTvDetails(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null);
+        Task<List<Photo>> GetPhotosAsync(int tvId);
+        Task<List<TvAndPhotoDto>> GetTvWithPhotosAsync(Expression<Func<TvAndPhotoDto, bool>> filter=null);
+        Task<List<TvAndPhotoDetailDto>> GetTvDetailsAsync(Expression<Func<TvAndPhotoDetailDto, bool>> filter = null);
         Task<TvAndPhotoDetailDto> GetTvDetailAsync(Expression<Func<TvAndPhotoDetailDto, bool>> filter);
     }
 }
