@@ -92,7 +92,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId)
         {
-            var result = await _tvDal.GetPhotos(tvId).ToListAsync();
+            var result = await _tvDal.GetPhotosAsync(tvId);
             return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
@@ -107,14 +107,14 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
         {
-            var result = await _tvDal.GetTvWithPhotos().ToListAsync();
+            var result = await _tvDal.GetTvWithPhotosAsync();
             return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync()
         {
-            var result = await _tvDal.GetTvDetails().ToListAsync();
+            var result = await _tvDal.GetTvDetailsAsync();
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 
@@ -137,7 +137,7 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId)
         {
-            var result = await _tvDal.GetTvDetails(x => x.BrandId == categoryId).ToListAsync();
+            var result = await _tvDal.GetTvDetailsAsync(x => x.BrandId == categoryId);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
         }
 

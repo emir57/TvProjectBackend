@@ -55,7 +55,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user)
         {
-            var result =  await _userDal.GetAddress(user).ToListAsync();
+            var result =  await _userDal.GetAddressAsync(user);
             return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
         }
 
@@ -76,14 +76,14 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Role>>> GetClaimsAsync(User user)
         {
-            var result = await _userDal.GetClaims(user).ToListAsync();
+            var result = await _userDal.GetClaimsAsync(user);
             return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user)
         {
-            var result = await _userDal.GetCrediCards(user).ToListAsync();
+            var result = await _userDal.GetCrediCardsAsync(user);
             return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
         }
         [CacheRemoveAspect("IUserService.Get")]

@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public IQueryable<CreditCardWithUserDto> GetUserCreditCards(int userId)
+        public async Task<List<CreditCardWithUserDto>> GetUserCreditCardsAsync(int userId)
         {
             using (var context = new TvProjectContext())
             {
@@ -39,7 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  FirstName = u.FirstName,
                                  LastName = u.LastName
                              };
-                return result;
+                return await result.ToListAsync();
             }
         }
     }
