@@ -12,6 +12,6 @@ namespace DataAccess.Abstract
     public interface IUserCreditCardDal:IEntityRepository<UserCreditCard>
     {
         Task AddUserCreditCardAsync(UserCreditCard userCreditCard);
-        IQueryable<CreditCardWithUserDto> GetUserCreditCards(int userId);
+        Task<List<CreditCardWithUserDto>> GetUserCreditCardsAsync(int userId);
     }
 }
