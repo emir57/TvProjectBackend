@@ -1,6 +1,6 @@
 # TvProjectBackend
 Async Programming ⚙️<br>
-AOP Programming ⚙️ <br>
+AOP ⚙️ <br>
 JWT Token 🔐 <br>
 Hashing Password 🔑 <br>
 Email Service 📧 <br>
