@@ -17,5 +17,10 @@ namespace Core.Extensions
         {
             return claimsPrincipal?.Claims(ClaimTypes.Role);
         }
+        public static string GetUserEmail(this ClaimsPrincipal claimsPrincipal)
+        {
+            var result = claimsPrincipal?.FindFirst(ClaimTypes.Email).Value;
+            return result;
+        }
     }
 }
