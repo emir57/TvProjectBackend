@@ -2,16 +2,21 @@
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Log4Net;
 using Core.Utilities.Interceptors;
+using Core.Utilities.IoC;
 using Core.Utilities.Messages;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Core.Extensions;
 
 namespace Core.Aspects.Autofac.Exception
 {
     public class ExceptionLogAspect:MethodInterception
     {
         private LoggerServiceBase _loggerServiceBase;
+        private IHttpContextAccessor _httpContextAccessor;
         public ExceptionLogAspect(Type loggerSerivce)
         {
             if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerSerivce))
@@ -19,6 +24,7 @@ namespace Core.Aspects.Autofac.Exception
                 throw new System.Exception(AspectMessages.WrongLoggingType);
             }
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerSerivce);
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
         protected override void OnException(IInvocation invocation, System.Exception exception)
         {
@@ -39,10 +45,14 @@ namespace Core.Aspects.Autofac.Exception
                     Value = invocation.Arguments[i]
                 });
             }
+            string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
+            List<string> userRoles = _httpContextAccessor.HttpContext.User.ClaimRoles();
             var logDetailWithException = new LogDetailWithException
             {
                 MethodName = invocation.Method.Name,
-                LogParameters = logParameters
+                LogParameters = logParameters,
+                UserEmail = userEmail,
+                UserRoles = userRoles
             };
             return logDetailWithException;
         }
