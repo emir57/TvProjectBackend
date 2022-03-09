@@ -2,16 +2,21 @@
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Log4Net;
 using Core.Utilities.Interceptors;
+using Core.Utilities.IoC;
 using Core.Utilities.Messages;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Core.Extensions;
 
 namespace Core.Aspects.Autofac.Logging
 {
     public class LogAspect:MethodInterception
     {
         private LoggerServiceBase _loggerService;
+        private IHttpContextAccessor _httpContextAccessor;
         public LogAspect(Type loggerService)
         {
             if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerService))
@@ -19,6 +24,7 @@ namespace Core.Aspects.Autofac.Logging
                 throw new System.Exception(AspectMessages.WrongLoggingType);
             }
             _loggerService = (LoggerServiceBase)Activator.CreateInstance(loggerService);
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
         protected override void OnBefore(IInvocation invocation)
         {
@@ -37,10 +43,12 @@ namespace Core.Aspects.Autofac.Logging
                     Value = invocation.Arguments[i]
                 });
             }
+            string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
             var logDetail = new LogDetail
             {
                 MethodName = invocation.Method.Name,
-                LogParameters = logParameters
+                LogParameters = logParameters,
+                UserEmail = userEmail
             };
             return logDetail;
         }
