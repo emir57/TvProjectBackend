@@ -19,7 +19,7 @@ namespace Core.Extensions
         }
         public static string GetUserEmail(this ClaimsPrincipal claimsPrincipal)
         {
-            var result = claimsPrincipal?.FindFirst(ClaimTypes.Email).Value;
+            var result = claimsPrincipal?.FindFirst(ClaimTypes.Email).Value ?? "<Anonymous>";
             return result;
         }
     }
