@@ -44,11 +44,13 @@ namespace Core.Aspects.Autofac.Logging
                 });
             }
             string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
+            List<string> userRoles = _httpContextAccessor.HttpContext.User.ClaimRoles();
             var logDetail = new LogDetail
             {
                 MethodName = invocation.Method.Name,
                 LogParameters = logParameters,
-                UserEmail = userEmail
+                UserEmail = userEmail,
+                UserRoles = userRoles
             };
             return logDetail;
         }
