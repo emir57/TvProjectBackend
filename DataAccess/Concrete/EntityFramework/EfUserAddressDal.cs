@@ -20,7 +20,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from adress in context.UserAddresses
                              from city in context.Cities
-                             where adress.CityId == city.Id && adress.DeletedDate != null
+                             where adress.CityId == city.Id && adress.DeletedDate == null
                              select new UserAddressCityDto
                              {
                                  Id = adress.Id,
