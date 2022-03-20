@@ -52,7 +52,8 @@ namespace Core.Aspects.Autofac.Exception
                 MethodName = invocation.Method.Name,
                 LogParameters = logParameters,
                 UserEmail = userEmail,
-                UserRoles = userRoles
+                UserRoles = userRoles,
+                DateTime = DateTime.Now
             };
             return logDetailWithException;
         }
