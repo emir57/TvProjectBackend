@@ -47,12 +47,13 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            var address = await _userAddressService.GetByIdAsync(id);
-            if (address.Data == null)
+            var address = (await _userAddressService.GetByIdAsync(id)).Data;
+            if (address == null)
             {
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));
             }
-            var result = await _userAddressService.DeleteAsync(address.Data);
+            address.DeletedDate = DateTime.Now;
+            var result = await _userAddressService.UpdateAsync(address);
             if (!result.IsSuccess)
             {
                 return Ok(result);
