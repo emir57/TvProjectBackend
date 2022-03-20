@@ -78,7 +78,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain).ImageUrl,
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,

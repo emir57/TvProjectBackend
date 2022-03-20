@@ -12,5 +12,6 @@ namespace Entities.Concrete
         public int UserId { get; set; }
         public string AddressText { get; set; }
         public byte CityId { get; set; }
+        public DateTime DeletedDate { get; set; }
     }
 }

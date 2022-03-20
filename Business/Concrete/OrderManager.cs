@@ -59,7 +59,9 @@ namespace Business.Concrete
             var result = await _orderDal.GetAllAsync();
             return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
         }
-
+        [SecuredOperation("Admin")]
+        [CacheAspect]
+        [PerformanceAspect(8)]
         public async Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync()
         {
             var result = await _orderDal.GetAllOrdersDtoAsync();
