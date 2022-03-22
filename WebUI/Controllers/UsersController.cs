@@ -64,15 +64,20 @@ namespace WebUI.Controllers
             {
                 return BadRequest(Messages.UserNotFound);
             }
-            foreach (var role in updateUserAdminDto.AddedRoles)
+            if (updateUserAdminDto.AddedRoles.Count > 0)
             {
-                await _roleService.AddUserRoleAsync(findUser.Data, role);
+                foreach (var role in updateUserAdminDto.AddedRoles)
+                {
+                    await _roleService.AddUserRoleAsync(findUser.Data, role);
+                }
             }
-            foreach (var role in updateUserAdminDto.RemovedRoles)
+            if(updateUserAdminDto.RemovedRoles.Count > 0)
             {
-                await _roleService.RemoveUserRoleAsync(findUser.Data, role);
+                foreach (var role in updateUserAdminDto.RemovedRoles)
+                {
+                    await _roleService.RemoveUserRoleAsync(findUser.Data, role);
+                }
             }
-
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
             findUser.Data.LastName = updateUserAdminDto.LastName;
             var result = await _userService.UpdateAsync(findUser.Data);
