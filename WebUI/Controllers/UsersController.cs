@@ -64,14 +64,14 @@ namespace WebUI.Controllers
             {
                 return BadRequest(Messages.UserNotFound);
             }
-            if (updateUserAdminDto.AddedRoles.Count > 0)
+            if (updateUserAdminDto.AddedRoles != null)
             {
                 foreach (var role in updateUserAdminDto.AddedRoles)
                 {
                     await _roleService.AddUserRoleAsync(findUser.Data, role);
                 }
             }
-            if(updateUserAdminDto.RemovedRoles.Count > 0)
+            if(updateUserAdminDto.RemovedRoles != null)
             {
                 foreach (var role in updateUserAdminDto.RemovedRoles)
                 {
