@@ -59,7 +59,7 @@ namespace WebUI.Controllers
         [Route("updateAdmin")]
         public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
-            var findUser = await _userService.GetByIdAsync(updateUserAdminDto.UserId);
+            var findUser = await _userService.GetByIdAsync(updateUserAdminDto.Idfix);
             if(findUser.Data == null)
             {
                 return BadRequest(Messages.UserNotFound);
