@@ -7,6 +7,7 @@ using Core.Security.JWT;
 using Core.Utilities.IoC;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,7 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(EntityProfile));
             services.AddControllers();
             TokenOptions tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
