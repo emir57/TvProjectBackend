@@ -49,32 +49,32 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<UserCreditCard>> GetByIdAsync(int creditCardId)
         {
-            var result = await _creditCardDal.GetAsync(x=>x.Id== creditCardId);
-            return new SuccessDataResult<UserCreditCard>(result);
+            UserCreditCard userCreditCard = await _creditCardDal.GetAsync(x => x.Id == creditCardId);
+            return new SuccessDataResult<UserCreditCard>(userCreditCard, Messages.SuccessGet);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetListAsync()
         {
-            var result = await _creditCardDal.GetAllAsync();
-            return new SuccessDataResult<List<UserCreditCard>>(result);
+            List<UserCreditCard> userCreditCards = await _creditCardDal.GetAllAsync();
+            return new SuccessDataResult<List<UserCreditCard>>(userCreditCards, Messages.SuccessGet);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetListByUserIdAsync(int userId)
         {
-            var result = await _creditCardDal.GetAllAsync(x=>x.UserId==userId);
-            return new SuccessDataResult<List<UserCreditCard>>(result);
+            List<UserCreditCard> userCreditCards = await _creditCardDal.GetAllAsync(x => x.UserId == userId);
+            return new SuccessDataResult<List<UserCreditCard>>(userCreditCards, Messages.SuccessGet);
         }
         [SecuredOperation("User")]
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserCreditCard>>> GetByUserIdAsync(int userId)
         {
-            var result = await _creditCardDal.GetAllAsync(c => c.UserId == userId);
-            return new SuccessDataResult<List<UserCreditCard>>(result);
+            List<UserCreditCard> userCreditCards = await _creditCardDal.GetAllAsync(c => c.UserId == userId);
+            return new SuccessDataResult<List<UserCreditCard>>(userCreditCards, Messages.SuccessGet);
         }
         [SecuredOperation("User")]
         [ValidationAspect(typeof(UserCreditCardValidator))]
@@ -89,8 +89,8 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IDataResult<List<CreditCardWithUserDto>>> GetUserCreditCardsAsync(int userId)
         {
-            var result = await _creditCardDal.GetUserCreditCardsAsync(userId);
-            return new SuccessDataResult<List<CreditCardWithUserDto>>(result);
+            List<CreditCardWithUserDto> creditCardWithUserDtos = await _creditCardDal.GetUserCreditCardsAsync(userId);
+            return new SuccessDataResult<List<CreditCardWithUserDto>>(creditCardWithUserDtos, Messages.SuccessGet);
         }
     }
 }
