@@ -29,7 +29,7 @@ namespace WebUI.Controllers
         [Route("get")]
         public async Task<IActionResult> GetUsers()
         {
-            var result = await _userService.GetListAsync();
+            IDataResult<List<User>> result = await _userService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -40,15 +40,15 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
-            var user = await _userService.GetByIdAsync(updateUserDto.UserId);
-            var updatedUser = user.Data;
+            IDataResult<User> user = await _userService.GetByIdAsync(updateUserDto.UserId);
+            User updatedUser = user.Data;
             if (!HashingHelper.VerifyPasswordHash(updateUserDto.Password, user.Data.PasswordHash, user.Data.PasswordSalt))
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
             }
             user.Data.FirstName = updateUserDto.FirstName;
             user.Data.LastName = updateUserDto.LastName;
-            var result = await _userService.UpdateAsync(user.Data);
+            IResult result = await _userService.UpdateAsync(user.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -59,7 +59,7 @@ namespace WebUI.Controllers
         [Route("updateAdmin")]
         public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
-            var findUser = await _userService.GetByIdAsync(updateUserAdminDto.Id);
+            IDataResult<User> findUser = await _userService.GetByIdAsync(updateUserAdminDto.Id);
             if (findUser.Data == null)
             {
                 return BadRequest(Messages.UserNotFound);
@@ -69,7 +69,7 @@ namespace WebUI.Controllers
 
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
             findUser.Data.LastName = updateUserAdminDto.LastName;
-            var result = await _userService.UpdateAsync(findUser.Data);
+            IResult result = await _userService.UpdateAsync(findUser.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -103,7 +103,7 @@ namespace WebUI.Controllers
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
-            var user = await _userService.GetByIdAsync(changePasswordModel.UserId);
+            IDataResult<User> user = await _userService.GetByIdAsync(changePasswordModel.UserId);
             if (!HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash, user.Data.PasswordSalt))
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
@@ -112,7 +112,7 @@ namespace WebUI.Controllers
             HashingHelper.CreatePasswordHash(changePasswordModel.NewPassword, out passwordHash, out passwordSalt);
             user.Data.PasswordHash = passwordHash;
             user.Data.PasswordSalt = passwordSalt;
-            var result = await _userService.UpdateAsync(user.Data);
+            IResult result = await _userService.UpdateAsync(user.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
