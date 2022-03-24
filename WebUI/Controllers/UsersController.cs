@@ -60,24 +60,13 @@ namespace WebUI.Controllers
         public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
             var findUser = await _userService.GetByIdAsync(updateUserAdminDto.Id);
-            if(findUser.Data == null)
+            if (findUser.Data == null)
             {
                 return BadRequest(Messages.UserNotFound);
             }
-            if (updateUserAdminDto.AddedRoles != null)
-            {
-                foreach (var role in updateUserAdminDto.AddedRoles)
-                {
-                    await _roleService.AddUserRoleAsync(findUser.Data, role);
-                }
-            }
-            if(updateUserAdminDto.RemovedRoles != null)
-            {
-                foreach (var role in updateUserAdminDto.RemovedRoles)
-                {
-                    await _roleService.RemoveUserRoleAsync(findUser.Data, role);
-                }
-            }
+            await AddUserRoleAsync(updateUserAdminDto, findUser);
+            await RemoveUserRoleAsync(updateUserAdminDto, findUser);
+
             findUser.Data.FirstName = updateUserAdminDto.FirstName;
             findUser.Data.LastName = updateUserAdminDto.LastName;
             var result = await _userService.UpdateAsync(findUser.Data);
@@ -87,6 +76,29 @@ namespace WebUI.Controllers
             }
             return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
         }
+
+        private async Task RemoveUserRoleAsync(UpdateUserAdminDto updateUserAdminDto, IDataResult<User> findUser)
+        {
+            if (updateUserAdminDto.RemovedRoles != null)
+            {
+                foreach (var role in updateUserAdminDto.RemovedRoles)
+                {
+                    await _roleService.RemoveUserRoleAsync(findUser.Data, role);
+                }
+            }
+        }
+
+        private async Task AddUserRoleAsync(UpdateUserAdminDto updateUserAdminDto, IDataResult<User> findUser)
+        {
+            if (updateUserAdminDto.AddedRoles != null)
+            {
+                foreach (var role in updateUserAdminDto.AddedRoles)
+                {
+                    await _roleService.AddUserRoleAsync(findUser.Data, role);
+                }
+            }
+        }
+
         [HttpPost]
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
