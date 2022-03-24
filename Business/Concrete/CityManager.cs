@@ -47,15 +47,15 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<City>> GetByIdAsync(int cityId)
         {
-            var result = await _citydal.GetAsync(x=>x.Id==cityId);
-            return new SuccessDataResult<City>(result, Messages.SuccessGet);
+            City city = await _citydal.GetAsync(x=>x.Id==cityId);
+            return new SuccessDataResult<City>(city, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<City>>> GetListAsync()
         {
-            var result = await _citydal.GetAllAsync();
-            return new SuccessDataResult<List<City>>(result, Messages.SuccessGet);
+            List<City> cities = await _citydal.GetAllAsync();
+            return new SuccessDataResult<List<City>>(cities, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(CityValidator))]
