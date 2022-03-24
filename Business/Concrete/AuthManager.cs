@@ -55,6 +55,8 @@ namespace Business.Concrete
             
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             User user = _mapper.Map<User>(userForRegisterDto);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
             //var user = new User
             //{
             //    FirstName = userForRegisterDto.FirstName,
