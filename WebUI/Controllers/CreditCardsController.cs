@@ -2,6 +2,7 @@
 using Business.Constants;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,7 +26,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetCards()
         {
-            var result = await _userCreditCardService.GetListAsync();
+            IDataResult<List<UserCreditCard>> result = await _userCreditCardService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -36,7 +37,7 @@ namespace WebUI.Controllers
         [Route("getallbyuserid")]
         public async Task<IActionResult> GetCardsByUserId(int userId)
         {
-            var result = await _userCreditCardService.GetUserCreditCardsAsync(userId);
+            IDataResult<List<CreditCardWithUserDto>> result = await _userCreditCardService.GetUserCreditCardsAsync(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -47,7 +48,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetCard(int id)
         {
-            var result = await _userCreditCardService.GetByIdAsync(id);
+            IDataResult<UserCreditCard> result = await _userCreditCardService.GetByIdAsync(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -58,7 +59,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddCard(UserCreditCard userCreditCard)
         {
-            var result = await _userCreditCardService.AddAsync(userCreditCard);
+            IResult result = await _userCreditCardService.AddAsync(userCreditCard);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -69,12 +70,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteCard(int id)
         {
-            var card = await _userCreditCardService.GetByIdAsync(id);
+            IDataResult<UserCreditCard> card = await _userCreditCardService.GetByIdAsync(id);
             if (card.Data == null)
             {
                 return Ok(new ErrorResult(Messages.CardIsNotFound));
             }
-            var result = await _userCreditCardService.DeleteAsync(card.Data);
+            IResult result = await _userCreditCardService.DeleteAsync(card.Data);
             if (!result.IsSuccess)
             {
                 return Ok(result);
