@@ -2,6 +2,7 @@
 using Business.Constants;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,7 +26,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
-            var result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
+            IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -36,7 +37,7 @@ namespace WebUI.Controllers
         [Route("getbyid")]
         public async Task<IActionResult> GetAddress(int id)
         {
-            var result = await _userAddressService.GetByIdAsync(id);
+            IDataResult<UserAddress> result = await _userAddressService.GetByIdAsync(id);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -47,13 +48,13 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            var address = (await _userAddressService.GetByIdAsync(id)).Data;
+            UserAddress address = (await _userAddressService.GetByIdAsync(id)).Data;
             if (address == null)
             {
                 return Ok(new ErrorResult(Messages.AddressIsNotFound));
             }
             address.DeletedDate = DateTime.Now;
-            var result = await _userAddressService.UpdateAsync(address);
+            IResult result = await _userAddressService.UpdateAsync(address);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -64,7 +65,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<IActionResult> AddAddress(UserAddress userAddress)
         {
-            var result = await _userAddressService.AddAsync(userAddress);
+            IResult result = await _userAddressService.AddAsync(userAddress);
             if (!result.IsSuccess)
             {
                 return Ok(result);
@@ -75,7 +76,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
         {
-            var result = await _userAddressService.UpdateAsync(userAddress);
+            IResult result = await _userAddressService.UpdateAsync(userAddress);
             if (!result.IsSuccess)
             {
                 return Ok(result);
