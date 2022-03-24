@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Business.Constants;
 using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -19,11 +20,12 @@ namespace Business.Concrete
     {
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
-        
-        public AuthManager(ITokenHelper tokenHelper, IUserService userService)
+        private readonly IMapper _mapper;
+        public AuthManager(ITokenHelper tokenHelper, IUserService userService, IMapper mapper)
         {
             _tokenHelper = tokenHelper;
             _userService = userService;
+            _mapper = mapper;
         }
         public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
@@ -52,15 +54,16 @@ namespace Business.Concrete
             byte[] passwordHash, passwordSalt;
             
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            var user = new User
-            {
-                FirstName = userForRegisterDto.FirstName,
-                LastName = userForRegisterDto.LastName,
-                Email = userForRegisterDto.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true
-            };
+            User user = _mapper.Map<User>(userForRegisterDto);
+            //var user = new User
+            //{
+            //    FirstName = userForRegisterDto.FirstName,
+            //    LastName = userForRegisterDto.LastName,
+            //    Email = userForRegisterDto.Email,
+            //    PasswordHash = passwordHash,
+            //    PasswordSalt = passwordSalt,
+            //    Status = true
+            //};
             await _userService.AddAsync(user);
             await _userService.AddUserRoleAsync(user);
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
