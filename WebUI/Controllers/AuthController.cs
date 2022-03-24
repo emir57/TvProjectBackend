@@ -5,6 +5,7 @@ using Core.Entities.Dtos;
 using Core.Security.Hashing;
 using Core.Security.JWT;
 using Core.Utilities.Email;
+using Core.Utilities.Messages;
 using Core.Utilities.Results;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -94,13 +95,13 @@ namespace WebUI.Controllers
             IDataResult<User> userCheck = await _userService.GetByMailAsync(email.Email);
             if (userCheck.Data == null)
             {
-                return BadRequest(new ErrorResult("Böyle bir kullanıcı bulunamadı"));
+                return BadRequest(new ErrorResult(ControllerMessages.UserNotFound));
             }
             string key = Guid.NewGuid()+"";
             userCheck.Data.Key = key;
             await _userService.UpdateAsync(userCheck.Data);
             await _emailService.SendEmailAsync(email.Email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{key}'>Şifreni Sıfırlamak İçin Tıkla</a>");
-            return Ok(new SuccessResult("Şifre Sıfırlama isteği Başarıyla gönderildi"));
+            return Ok(new SuccessResult(ControllerMessages.SuccessResetPasswordSendMail));
         }
         [HttpPost]
         [Route("resetpassword")]
@@ -110,18 +111,18 @@ namespace WebUI.Controllers
             IDataResult<User> getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
             if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
             {
-                return BadRequest("Geçersiz Key");
+                return BadRequest(ControllerMessages.InvalidKey);
             }
             if (!HashingHelper.VerifyPasswordHash(resetPasswordModel.OldPassword, getUser.Data.PasswordHash, getUser.Data.PasswordSalt))
             {
-                return BadRequest("Eski Şifreniz Uyuşmuyor");
+                return BadRequest(ControllerMessages.WrongOldPassword);
             }
             HashingHelper.CreatePasswordHash(resetPasswordModel.NewPassword, out passwordHash, out passwordSalt);
             getUser.Data.PasswordHash = passwordHash;
             getUser.Data.PasswordSalt = passwordSalt;
             getUser.Data.Key = "";
             await _userService.UpdateAsync(getUser.Data);
-            return Ok(new SuccessResult("Şifreniz Başarıyla Sıfırlandı"));
+            return Ok(new SuccessResult(ControllerMessages.SuccessResetPassword));
 
         }
         [HttpGet]
@@ -131,7 +132,7 @@ namespace WebUI.Controllers
             IDataResult<User> user = await _userService.GetByIdAsync(id);
             if (user.Data == null)
             {
-                return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
+                return BadRequest(new ErrorDataResult<User>(ControllerMessages.UserNotFound));
             }
             IDataResult<List<Role>> roles = await _userService.GetClaimsAsync(user.Data);
             return Ok(roles);
