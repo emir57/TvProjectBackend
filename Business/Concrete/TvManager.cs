@@ -108,19 +108,19 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync()
         {
-            var result = await _tvDal.GetTvDetailsAsync();
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            List<TvAndPhotoDetailDto> tvAndPhotoDetailDtos = await _tvDal.GetTvDetailsAsync();
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(tvAndPhotoDetailDtos, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId)
         {
-            var result = await _tvDal.GetTvDetailAsync(x=>x.Id== tvId);
-            return new SuccessDataResult<TvAndPhotoDetailDto>(result, Messages.SuccessGet);
+            TvAndPhotoDetailDto tvAndPhotoDetailDto = await _tvDal.GetTvDetailAsync(x => x.Id == tvId);
+            return new SuccessDataResult<TvAndPhotoDetailDto>(tvAndPhotoDetailDto, Messages.SuccessGet);
 
         }
         private async Task<IResult> CheckTvNameAsync(Tv entity)
         {
-            var tvs = await _tvDal.GetAllAsync();
+            List<Tv> tvs = await _tvDal.GetAllAsync();
             if(tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);
@@ -131,8 +131,8 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId)
         {
-            var result = await _tvDal.GetTvDetailsAsync(x => x.BrandId == categoryId);
-            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(result, Messages.SuccessGet);
+            List<TvAndPhotoDetailDto> tvAndPhotoDetailDtos = await _tvDal.GetTvDetailsAsync(x => x.BrandId == categoryId);
+            return new SuccessDataResult<List<TvAndPhotoDetailDto>>(tvAndPhotoDetailDtos, Messages.SuccessGet);
         }
 
         //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
