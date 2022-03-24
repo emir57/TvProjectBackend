@@ -57,15 +57,7 @@ namespace Business.Concrete
             User user = _mapper.Map<User>(userForRegisterDto);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            //var user = new User
-            //{
-            //    FirstName = userForRegisterDto.FirstName,
-            //    LastName = userForRegisterDto.LastName,
-            //    Email = userForRegisterDto.Email,
-            //    PasswordHash = passwordHash,
-            //    PasswordSalt = passwordSalt,
-            //    Status = true
-            //};
+            user.Status = true;
             await _userService.AddAsync(user);
             await _userService.AddUserRoleAsync(user);
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
