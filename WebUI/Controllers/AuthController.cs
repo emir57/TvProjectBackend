@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Security.Hashing;
@@ -20,12 +21,14 @@ namespace WebUI.Controllers
         private readonly IUserService _userService;
         private readonly IPhotoUploadService _imageService;
         private readonly IEmailService _emailService;
-        public AuthController(IAuthService authService, IUserService userService, IPhotoUploadService imageService, IEmailService emailService)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthService authService, IUserService userService, IPhotoUploadService imageService, IEmailService emailService, IMapper mapper)
         {
             _authService = authService;
             _userService = userService;
             _imageService = imageService;
             _emailService = emailService;
+            _mapper = mapper;
         }
         [HttpPost]
         [Route("register")]
@@ -57,13 +60,7 @@ namespace WebUI.Controllers
             LoginDto loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
-                User = new LoginingUser
-                {
-                    Id = user.Data.Id,
-                    Email = user.Data.Email,
-                    FirstName = user.Data.FirstName,
-                    LastName = user.Data.LastName
-                }
+                User = _mapper.Map<LoginingUser>(user.Data)
             };
             return Ok(new SuccessDataResult<LoginDto>(loginingUser,result.Message));
         }
