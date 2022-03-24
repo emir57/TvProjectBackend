@@ -2,17 +2,12 @@
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Security.Hashing;
+using Core.Security.JWT;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.Dtos;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
@@ -36,12 +31,12 @@ namespace WebUI.Controllers
         [Route("register")]
         public async Task<ActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
+            IResult checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
             if (!checkUser.IsSuccess)
             {
                 return BadRequest(checkUser.Message);
             }
-            var result = await _authService.RegisterAsync(userForRegisterDto, userForRegisterDto.Password);
+            IDataResult<User> result = await _authService.RegisterAsync(userForRegisterDto, userForRegisterDto.Password);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
@@ -52,14 +47,14 @@ namespace WebUI.Controllers
         [Route("login")]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _userService.GetByMailAsync(userForLoginDto.Email);
-            var result = await _authService.LoginAsync(userForLoginDto);
+            IDataResult<User> user = await _userService.GetByMailAsync(userForLoginDto.Email);
+            IDataResult<User> result = await _authService.LoginAsync(userForLoginDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
-            var token = await _authService.CreateAccessTokenAsync(user.Data);
-            var loginingUser = new LoginDto
+            IDataResult<AccessToken> token = await _authService.CreateAccessTokenAsync(user.Data);
+            LoginDto loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
                 User = new LoginingUser
@@ -76,7 +71,7 @@ namespace WebUI.Controllers
         [Route("checkuser")]
         public async Task<ActionResult> CheckUser(User user)
         {
-            var checkUser = await _userService.GetByMailAsync(user.Email);
+            IDataResult<User> checkUser = await _userService.GetByMailAsync(user.Email);
             if (checkUser.Data != null)
             {
                 return Ok(new SuccessResult());
@@ -87,7 +82,7 @@ namespace WebUI.Controllers
         [Route("getuser")]
         public async Task<ActionResult> GetUser(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            IDataResult<User> user = await _userService.GetByIdAsync(id);
             if (user.Data != null)
             {
                 return Ok(new SuccessDataResult<User>(user.Data));
@@ -99,7 +94,7 @@ namespace WebUI.Controllers
         [Route("sendemail")]
         public async Task<IActionResult> SendEmail(SendMailModel email)
         {
-            var userCheck = await _userService.GetByMailAsync(email.Email);
+            IDataResult<User> userCheck = await _userService.GetByMailAsync(email.Email);
             if (userCheck.Data == null)
             {
                 return BadRequest(new ErrorResult("Böyle bir kullanıcı bulunamadı"));
@@ -115,7 +110,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             byte[] passwordHash, passwordSalt;
-            var getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
+            IDataResult<User> getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
             if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
             {
                 return BadRequest("Geçersiz Key");
@@ -136,12 +131,12 @@ namespace WebUI.Controllers
         [Route("getroles")]
         public async Task<IActionResult> GetUserRoles(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            IDataResult<User> user = await _userService.GetByIdAsync(id);
             if (user.Data == null)
             {
                 return BadRequest(new ErrorDataResult<User>("Kullanıcı Bulunamadı"));
             }
-            var roles = await _userService.GetClaimsAsync(user.Data);
+            IDataResult<List<Role>> roles = await _userService.GetClaimsAsync(user.Data);
             return Ok(roles);
         }
 
