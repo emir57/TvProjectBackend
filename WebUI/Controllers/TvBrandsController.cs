@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvBrands()
         {
-            var result = await _brandService.GetListAsync();
+            IDataResult<List<TvBrand>> result = await _brandService.GetListAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -34,8 +35,7 @@ namespace WebUI.Controllers
         [Route("add")]
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
-            Thread.Sleep(5);
-            var result = await _brandService.AddAsync(tvBrand);
+            IResult result = await _brandService.AddAsync(tvBrand);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -46,8 +46,7 @@ namespace WebUI.Controllers
         [Route("update")]
         public async Task<ActionResult> UpdateTvBrand(TvBrand tvBrand)
         {
-            Thread.Sleep(1);
-            var result = await _brandService.UpdateAsync(tvBrand);
+            IResult result = await _brandService.UpdateAsync(tvBrand);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
@@ -58,13 +57,12 @@ namespace WebUI.Controllers
         [Route("delete")]
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
-            Thread.Sleep(1);
-            var tvBrand = await _brandService.GetByIdAsync(tvBrandId);
+            IDataResult<TvBrand> tvBrand = await _brandService.GetByIdAsync(tvBrandId);
             if (tvBrand.Data == null)
             {
                 return BadRequest("Silinecek ürün bulunamadı");
             }
-            var result = await _brandService.DeleteAsync(tvBrand.Data);
+            IResult result = await _brandService.DeleteAsync(tvBrand.Data);
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
