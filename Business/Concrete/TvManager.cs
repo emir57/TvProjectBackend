@@ -10,11 +10,8 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +32,7 @@ namespace Business.Concrete
         [PerformanceAspect(3)]
         public async Task<IResult> AddAsync(Tv entity)
         {
-            var result = BusinessRules.Run(
+            IResult result = BusinessRules.Run(
                 await CheckTvNameAsync(entity)
                 );
             if (result != null)
@@ -45,7 +42,6 @@ namespace Business.Concrete
             await _tvDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
-
 
         [SecuredOperation("Admin,Moderator")]
         [CacheRemoveAspect("ITvService.Get")]
@@ -59,17 +55,15 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<Tv>> GetByIdAsync(int tvId)
         {
-            var result = await _tvDal.GetAsync(x=>x.Id== tvId);
-            return new SuccessDataResult<Tv>(result, Messages.SuccessGet);
+            Tv tv = await _tvDal.GetAsync(x => x.Id == tvId);
+            return new SuccessDataResult<Tv>(tv, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Tv>>> GetListAsync()
         {
-            var result = await _tvDal.GetAllAsync();
-
-            //BusinessRules.Run(ApplyDiscount(result));
-            return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+            List<Tv> tvs = await _tvDal.GetAllAsync();
+            return new SuccessDataResult<List<Tv>>(tvs, Messages.SuccessGet);
         }
         private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
         {
@@ -85,15 +79,15 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
-            var result = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
-            return new SuccessDataResult<List<Tv>>(result, Messages.SuccessGet);
+            List<Tv> tvs = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
+            return new SuccessDataResult<List<Tv>>(tvs, Messages.SuccessGet);
             
         }
 
         public async Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId)
         {
-            var result = await _tvDal.GetPhotosAsync(tvId);
-            return new SuccessDataResult<List<Photo>>(result,Messages.SuccessGet);
+            List<Photo> photos = await _tvDal.GetPhotosAsync(tvId);
+            return new SuccessDataResult<List<Photo>>(photos, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
@@ -107,8 +101,8 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
         {
-            var result = await _tvDal.GetTvWithPhotosAsync();
-            return new SuccessDataResult<List<TvAndPhotoDto>>(result,Messages.SuccessGet);
+            List<TvAndPhotoDto> tvAndPhotoDtos = await _tvDal.GetTvWithPhotosAsync();
+            return new SuccessDataResult<List<TvAndPhotoDto>>(tvAndPhotoDtos, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
