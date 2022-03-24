@@ -36,7 +36,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto)
         {
-            var userResult = await _userService.GetByMailAsync(userForLoginDto.Email);
+            IDataResult<User> userResult = await _userService.GetByMailAsync(userForLoginDto.Email);
             if (userResult.Data == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -65,7 +65,7 @@ namespace Business.Concrete
 
         public async Task<IResult> UserExistsAsync(string email)
         {
-            var result = await _userService.GetByMailAsync(email);
+            IDataResult<User> result = await _userService.GetByMailAsync(email);
             if (result.Data == null)
             {
                 return new SuccessResult();
