@@ -61,30 +61,30 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<User>>> GetListAsync()
         {
-            var result = await _userDal.GetAllAsync();
-            return new SuccessDataResult<List<User>>(result, Messages.SuccessGet);
+            List<User> users = await _userDal.GetAllAsync();
+            return new SuccessDataResult<List<User>>(users, Messages.SuccessGet);
         }
 
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<User>> GetByMailAsync(string email)
         {
-            var result = await _userDal.GetAsync(u => u.Email == email);
-            return new SuccessDataResult<User>(result, Messages.SuccessGet);
+            User user = await _userDal.GetAsync(u => u.Email == email);
+            return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
         
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Role>>> GetClaimsAsync(User user)
         {
-            var result = await _userDal.GetClaimsAsync(user);
-            return new SuccessDataResult<List<Role>>(result, Messages.SuccessGet);
+            List<Role> roles = await _userDal.GetClaimsAsync(user);
+            return new SuccessDataResult<List<Role>>(roles, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user)
         {
-            var result = await _userDal.GetCrediCardsAsync(user);
-            return new SuccessDataResult<List<UserForCreditCardDto>>(result, Messages.SuccessGet);
+            List<UserForCreditCardDto> userForCreditCardDtos = await _userDal.GetCrediCardsAsync(user);
+            return new SuccessDataResult<List<UserForCreditCardDto>>(userForCreditCardDtos, Messages.SuccessGet);
         }
         [CacheRemoveAspect("IUserService.Get")]
         public async Task<IResult> UpdateAsync(User user)
