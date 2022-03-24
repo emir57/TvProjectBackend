@@ -36,17 +36,16 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto)
         {
-            var result = await _userService.GetByMailAsync(userForLoginDto.Email);
-            var user = result.Data;
-            if (user == null)
+            var userResult = await _userService.GetByMailAsync(userForLoginDto.Email);
+            if (userResult.Data == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user.PasswordHash, user.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userResult.Data.PasswordHash, userResult.Data.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.WrongPassword);
             }
-            return new SuccessDataResult<User>(user, Messages.SuccessfulLogin);
+            return new SuccessDataResult<User>(userResult.Data, Messages.SuccessfulLogin);
         }
         [ValidationAspect(typeof(UserForRegisterDtoValidator))]
         public async Task<IDataResult<User>> RegisterAsync(UserForRegisterDto userForRegisterDto, string password)
