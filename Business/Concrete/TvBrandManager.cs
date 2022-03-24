@@ -47,15 +47,15 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<TvBrand>> GetByIdAsync(int brandId)
         {
-            var result = await _tvBrandDal.GetAsync(x=>x.Id==brandId);
-            return new SuccessDataResult<TvBrand>(result, Messages.SuccessGet);
+            TvBrand tvBrand = await _tvBrandDal.GetAsync(x => x.Id == brandId);
+            return new SuccessDataResult<TvBrand>(tvBrand, Messages.SuccessGet);
         }
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<TvBrand>>> GetListAsync()
         {
-            var result = await _tvBrandDal.GetAllAsync();
-            return new SuccessDataResult<List<TvBrand>>(result, Messages.SuccessGet);
+            List<TvBrand> tvBrands = await _tvBrandDal.GetAllAsync();
+            return new SuccessDataResult<List<TvBrand>>(tvBrands, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvBrandValidator))]
