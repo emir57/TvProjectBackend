@@ -48,24 +48,24 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<Order>> GetByIdAsync(int orderId)
         {
-            var result = await _orderDal.GetAsync(x=>x.Id==orderId);
-            return new SuccessDataResult<Order>(result, Messages.SuccessGet);
+            Order order = await _orderDal.GetAsync(x => x.Id == orderId);
+            return new SuccessDataResult<Order>(order, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<Order>>> GetListAsync()
         {
-            var result = await _orderDal.GetAllAsync();
-            return new SuccessDataResult<List<Order>>(result, Messages.SuccessGet);
+            List<Order> orders = await _orderDal.GetAllAsync();
+            return new SuccessDataResult<List<Order>>(orders, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
         [CacheAspect]
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<OrderDto>>> GetListOrdersDtoAsync()
         {
-            var result = await _orderDal.GetAllOrdersDtoAsync();
-            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
+            List<OrderDto> orderDtos = await _orderDal.GetAllOrdersDtoAsync();
+            return new SuccessDataResult<List<OrderDto>>(orderDtos, Messages.SuccessGet);
         }
 
         [SecuredOperation("User,Admin")]
@@ -73,8 +73,8 @@ namespace Business.Concrete
         [PerformanceAspect(8)]
         public async Task<IDataResult<List<OrderDto>>> GetOrdersByUserIdAsync(int userId)
         {
-            var result = await _orderDal.GetOrdersByUserIdAsync(userId);
-            return new SuccessDataResult<List<OrderDto>>(result, Messages.SuccessGet);
+            List<OrderDto> orderDtos = await _orderDal.GetOrdersByUserIdAsync(userId);
+            return new SuccessDataResult<List<OrderDto>>(orderDtos, Messages.SuccessGet);
         }
         [SecuredOperation("User,Admin")]
         //[ValidationAspect(typeof())]
