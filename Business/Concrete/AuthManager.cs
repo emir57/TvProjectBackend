@@ -29,9 +29,9 @@ namespace Business.Concrete
         }
         public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
-            var claims = await _userService.GetClaimsAsync(user);
-            var result = _tokenHelper.CreateToken(user,claims.Data.ToList());
-            return new SuccessDataResult<AccessToken>(result, Messages.AccessTokenCreated);
+            IDataResult<List<Role>> claims = await _userService.GetClaimsAsync(user);
+            AccessToken token = _tokenHelper.CreateToken(user,claims.Data.ToList());
+            return new SuccessDataResult<AccessToken>(token, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
         public async Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto)
