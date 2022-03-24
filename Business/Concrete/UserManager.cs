@@ -42,21 +42,21 @@ namespace Business.Concrete
 
         public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
-            var result = await _userDal.GetAsync(x=>x.Id==userId);
-            return new SuccessDataResult<User>(result);
+            User user = await _userDal.GetAsync(x => x.Id == userId);
+            return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
         public async Task<IDataResult<User>> GetByKeyAsync(string key)
         {
-            var result = await _userDal.GetAsync(x => x.Key == key);
-            return new SuccessDataResult<User>(result);
+            User user = await _userDal.GetAsync(x => x.Key == key);
+            return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
 
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user)
         {
-            var result =  await _userDal.GetAddressAsync(user);
-            return new SuccessDataResult<List<UserForAddressDto>>(result, Messages.SuccessGet);
+            List<UserForAddressDto> userForAddressDtos =  await _userDal.GetAddressAsync(user);
+            return new SuccessDataResult<List<UserForAddressDto>>(userForAddressDtos, Messages.SuccessGet);
         }
 
         public async Task<IDataResult<List<User>>> GetListAsync()
