@@ -46,22 +46,22 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<Photo>> GetByIdAsync(int photoId)
         {
-            var result = await _photoDal.GetAsync(x=>x.Id==photoId);
-            return new SuccessDataResult<Photo>(result, Messages.SuccessGet);
+            Photo photo = await _photoDal.GetAsync(x => x.Id == photoId);
+            return new SuccessDataResult<Photo>(photo, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListAsync()
         {
-            var result = await _photoDal.GetAllAsync();
-            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
+            List<Photo> photos = await _photoDal.GetAllAsync();
+            return new SuccessDataResult<List<Photo>>(photos, Messages.SuccessGet);
         }
         [PerformanceAspect(5)]
         [CacheAspect]
         public async Task<IDataResult<List<Photo>>> GetListByTvIdAsync(int tvId)
         {
-            var result = await _photoDal.GetAllAsync(x=>x.TvId==tvId);
-            return new SuccessDataResult<List<Photo>>(result, Messages.SuccessGet);
+            List<Photo> photos = await _photoDal.GetAllAsync(x=>x.TvId==tvId);
+            return new SuccessDataResult<List<Photo>>(photos, Messages.SuccessGet);
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(PhotoValidator))]
