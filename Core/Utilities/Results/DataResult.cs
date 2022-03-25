@@ -6,18 +6,14 @@ namespace Core.Utilities.Results
 {
     public class DataResult<T> : Result, IDataResult<T>
     {
-        public DataResult(T data,bool isSuccess,string message,int totalPage = 0):base(isSuccess,message)
+        public DataResult(T data,bool isSuccess,string message):base(isSuccess,message)
         {
             Data = data;
-            TotalPage = totalPage;
         }
-        public DataResult(T data,bool isSuccess,int totalPage=0):base(isSuccess)
+        public DataResult(T data,bool isSuccess):base(isSuccess)
         {
             Data = data;
-            TotalPage = totalPage;
         }
         public T Data { get; }
-
-        public int TotalPage { get; }
     }
 }
