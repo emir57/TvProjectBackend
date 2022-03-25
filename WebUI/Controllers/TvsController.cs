@@ -59,15 +59,6 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-
-        private static IDataResult<List<TvAndPhotoDetailDto>> GetProductsPage(int page, IDataResult<List<TvAndPhotoDetailDto>> result)
-        {
-            decimal totalPage = Math.Ceiling((decimal)result.Data.Count / 6);
-            var newResult = new SuccessDataResult<List<TvAndPhotoDetailDto>>
-                (result.Data.Skip(page-1 * 6).Take(6).ToList(), result.Message, (int)totalPage);
-            return newResult;
-        }
-
         [HttpGet]
         [Route("gettvdetail")]
         public async Task<ActionResult> GetTvDetails(int tvId)
