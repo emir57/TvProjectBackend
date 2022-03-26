@@ -34,6 +34,17 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpGet]
+        [Route("getbyid")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            IDataResult<Role> result = await _roleService.GetByIdAsync(id);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
         [Route("getuserroles")]
         public async Task<ActionResult> GetUserRoles(int userId)
         {
