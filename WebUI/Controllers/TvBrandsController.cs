@@ -31,6 +31,17 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        [Route("getbyid")]
+        public async Task<IActionResult> GetTvBrandsById(int id)
+        {
+            IDataResult<TvBrand> result = await _brandService.GetByIdAsync(id);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
         [HttpPost]
         [Route("add")]
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
