@@ -36,6 +36,17 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
+        [HttpGet]
+        [Route("getbyid")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            IDataResult<User> result = await _userService.GetByIdAsync(id);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
