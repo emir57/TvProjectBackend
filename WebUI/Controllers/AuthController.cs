@@ -51,17 +51,16 @@ namespace WebUI.Controllers
         [Route("login")]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            IDataResult<User> user = await _userService.GetByMailAsync(userForLoginDto.Email);
             IDataResult<User> result = await _authService.LoginAsync(userForLoginDto);
             if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
-            IDataResult<AccessToken> token = await _authService.CreateAccessTokenAsync(user.Data);
+            IDataResult<AccessToken> token = await _authService.CreateAccessTokenAsync(result.Data);
             LoginDto loginingUser = new LoginDto
             {
                 AccessToken = token.Data,
-                User = _mapper.Map<LoginingUser>(user.Data)
+                User = _mapper.Map<LoginingUser>(result.Data)
             };
             return Ok(new SuccessDataResult<LoginDto>(loginingUser,result.Message));
         }
