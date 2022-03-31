@@ -96,7 +96,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(new ErrorResult(ControllerMessages.UserNotFound));
             }
-            string key = Guid.NewGuid()+"";
+            string key = Guid.NewGuid().ToString();
             userCheck.Data.Key = key;
             await _userService.UpdateAsync(userCheck.Data);
             await _emailService.SendEmailAsync(email.Email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{key}'>Şifreni Sıfırlamak İçin Tıkla</a>");
