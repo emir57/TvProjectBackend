@@ -63,9 +63,6 @@ namespace WebUI
                 new CoreModule()
             });
 
-            
-
-
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
