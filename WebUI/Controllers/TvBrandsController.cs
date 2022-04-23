@@ -44,6 +44,17 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpGet]
+        [Route("getallwithpriceaverage")]
+        public async Task<ActionResult> GetTvBrandsWithPriceAverage()
+        {
+            IDataResult<List<CategoryWithCountDto>> result = await _brandService.GetBrandsWithCountAsync();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
         [Route("getbyid")]
         public async Task<IActionResult> GetTvBrandsById(int id)
         {
