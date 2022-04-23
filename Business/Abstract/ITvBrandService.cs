@@ -18,5 +18,6 @@ namespace Business.Abstract
         Task<IDataResult<TvBrand>> GetByIdAsync(int brandId);
         Task<IDataResult<List<TvBrand>>> GetListAsync();
         Task<IDataResult<List<CategoryWithCountDto>>> GetBrandsWithCountAsync();
+        Task<IDataResult<List<CategoryWithPriceAverageDto>>> GetBrandsWithPriceAverageAsync();
     }
 }
