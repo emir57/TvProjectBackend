@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,13 @@ namespace Business.Concrete
             await _tvBrandDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
+
+        public async Task<IDataResult<List<CategoryWithCountDto>>> GetBrandsWithCountAsync()
+        {
+            List<CategoryWithCountDto> brandsWithCount = await _tvBrandDal.GetBrandsWithCountAsync();
+            return new SuccessDataResult<List<CategoryWithCountDto>>(brandsWithCount, Messages.SuccessGet);
+        }
+
         [CacheAspect]
         [PerformanceAspect(5)]
         public async Task<IDataResult<TvBrand>> GetByIdAsync(int brandId)
