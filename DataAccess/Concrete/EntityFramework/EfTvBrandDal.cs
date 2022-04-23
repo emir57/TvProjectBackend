@@ -44,14 +44,17 @@ namespace DataAccess.Concrete.EntityFramework
                 return await result.ToListAsync();
             }
         }
-        private decimal CalculateProductsPriceAverage(decimal[] prices)
+        private static decimal CalculateProductsPriceAverage(decimal[] prices)
         {
             decimal total = 0;
+            if (prices.Length == 0)
+                return total;
             for (int i = 0; i < prices.Length; i++)
             {
                 total += prices[i];
             }
-            return total / prices.Length;
+            decimal result = total / prices.Length;
+            return result;
         }
     }
 }
