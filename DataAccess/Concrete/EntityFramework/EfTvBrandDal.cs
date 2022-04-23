@@ -26,5 +26,19 @@ namespace DataAccess.Concrete.EntityFramework
                 return await result.ToListAsync();
             }
         }
+
+        public async Task<List<CategoryWithPriceAverageDto>> GetBrandsWithPriceAverageAsync()
+        {
+            using (var context = new TvProjectContext())
+            {
+                var result = from br in context.TvBrands
+                             select new CategoryWithPriceAverageDto
+                             {
+                                 Name = br.Name,
+                                 PriceAverage = context.Tvs.Where(t => t.BrandId == br.Id).Count()
+                             };
+                return await result.ToListAsync();
+            }
+        }
     }
 }

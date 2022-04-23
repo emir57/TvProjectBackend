@@ -7,7 +7,7 @@ namespace Entities.Dtos
 {
     public class CategoryWithPriceAverageDto : IDto
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
         public int PriceAverage { get; set; }
     }
 }
