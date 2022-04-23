@@ -8,6 +8,6 @@ namespace Entities.Dtos
     public class CategoryWithPriceAverageDto : IDto
     {
         public string Name { get; set; }
-        public int PriceAverage { get; set; }
+        public decimal PriceAverage { get; set; }
     }
 }
