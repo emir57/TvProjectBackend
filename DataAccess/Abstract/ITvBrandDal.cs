@@ -11,5 +11,6 @@ namespace DataAccess.Abstract
     public interface ITvBrandDal:IEntityRepository<TvBrand>
     {
         Task<List<CategoryWithCountDto>> GetBrandsWithCountAsync();
+        Task<List<CategoryWithPriceAverageDto>> GetBrandsWithPriceAverageAsync();
     }
 }
