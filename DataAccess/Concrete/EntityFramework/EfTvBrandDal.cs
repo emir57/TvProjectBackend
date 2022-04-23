@@ -35,7 +35,11 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CategoryWithPriceAverageDto
                              {
                                  Name = br.Name,
-                                 PriceAverage = CalculateProductsPriceAverage(context.Tvs.Where(t => t.BrandId == br.Id).Select(t => t.UnitPrice).ToArray())
+                                 PriceAverage = CalculateProductsPriceAverage(
+                                     context.Tvs.Select(t => new { t.BrandId, t.UnitPrice })
+                                     .Where(t => t.BrandId == br.Id)
+                                     .Select(t => t.UnitPrice)
+                                     .ToArray())
                              };
                 return await result.ToListAsync();
             }
