@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class TvBrandManager:ITvBrandService
+    public class TvBrandManager : ITvBrandService
     {
         private readonly ITvBrandDal _tvBrandDal;
 
@@ -49,6 +49,12 @@ namespace Business.Concrete
         {
             List<CategoryWithCountDto> brandsWithCount = await _tvBrandDal.GetBrandsWithCountAsync();
             return new SuccessDataResult<List<CategoryWithCountDto>>(brandsWithCount, Messages.SuccessGet);
+        }
+
+        public async Task<IDataResult<List<CategoryWithPriceAverageDto>>> GetBrandsWithPriceAverageAsync()
+        {
+            List<CategoryWithPriceAverageDto> brandsWithPriceAverage = await _tvBrandDal.GetBrandsWithPriceAverageAsync();
+            return new SuccessDataResult<List<CategoryWithPriceAverageDto>>(brandsWithPriceAverage, Messages.SuccessGet);
         }
 
         [CacheAspect]
