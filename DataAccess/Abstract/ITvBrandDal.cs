@@ -9,6 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface ITvBrandDal:IEntityRepository<TvBrand>
     {
-        List<CategoryWithCountDto> GetCategoriesWithCount();
+        List<CategoryWithCountDto> GetBrandsWithCount();
     }
 }
