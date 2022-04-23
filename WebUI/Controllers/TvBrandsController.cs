@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -35,7 +36,7 @@ namespace WebUI.Controllers
         [Route("getallwithcount")]
         public async Task<ActionResult> GetTvBrandsWithCount()
         {
-            IDataResult<List<TvBrand>> result = await _brandService.GetListAsync();
+            IDataResult<List<CategoryWithCountDto>> result = await _brandService.GetBrandsWithCountAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result.Message);
