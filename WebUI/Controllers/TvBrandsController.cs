@@ -32,6 +32,17 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpGet]
+        [Route("getallwithcount")]
+        public async Task<ActionResult> GetTvBrandsWithCount()
+        {
+            IDataResult<List<TvBrand>> result = await _brandService.GetListAsync();
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
         [Route("getbyid")]
         public async Task<IActionResult> GetTvBrandsById(int id)
         {
