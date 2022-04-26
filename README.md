@@ -12,3 +12,5 @@ Secure Aspects 🛡️ <br>
 Log Aspects 📓 <br>
 Exception Log Aspects ❌ <br>
 
+<a href="https://github.com/emir57/TvProjectFrontend">Frontend</a>
+
