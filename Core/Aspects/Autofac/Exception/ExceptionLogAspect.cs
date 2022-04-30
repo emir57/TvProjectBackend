@@ -17,13 +17,13 @@ namespace Core.Aspects.Autofac.Exception
     {
         private LoggerServiceBase _loggerServiceBase;
         private IHttpContextAccessor _httpContextAccessor;
-        public ExceptionLogAspect(Type loggerSerivce)
+        public ExceptionLogAspect(Type loggerService)
         {
-            if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerSerivce))
+            if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerService))
             {
                 throw new System.Exception(AspectMessages.WrongLoggingType);
             }
-            _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerSerivce);
+            _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
         protected override void OnException(IInvocation invocation, System.Exception exception)
