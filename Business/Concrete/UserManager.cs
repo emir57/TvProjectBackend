@@ -40,7 +40,7 @@ namespace Business.Concrete
             await _userDal.AddUserRoleAsync(user);
             return new SuccessResult();
         }
-        [SecuredOperation("Admin")]
+        
         public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
             User user = await _userDal.GetAsync(x => x.Id == userId);
