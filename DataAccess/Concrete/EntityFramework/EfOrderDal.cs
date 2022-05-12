@@ -38,7 +38,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDetailDto
                                  {
                                      Id = t.Id,
-                                     Photos = context.Photos.Where(x => x.Id == t.Id).ToList(),
+                                     Photos = context.Photos.Where(x => x.TvId == t.Id).ToList(),
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -78,7 +78,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Tv = new TvAndPhotoDetailDto
                                  {
                                      Id = t.Id,
-                                     Photos = context.Photos.Where(x => x.Id == t.Id).ToList(),
+                                     Photos = context.Photos.Where(x => x.TvId == t.Id).ToList(),
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
