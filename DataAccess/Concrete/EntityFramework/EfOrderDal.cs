@@ -35,10 +35,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  User = u,
                                  AddressText = a.AddressText,
                                  City = c.CityName,
-                                 Tv = new TvAndPhotoDto
+                                 Tv = new TvAndPhotoDetailDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain == true).ImageUrl,
+                                     Photos = context.Photos.Where(x => x.Id == t.Id).ToList(),
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,
@@ -75,10 +75,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  User = u,
                                  AddressText = a.AddressText,
                                  City = c.CityName,
-                                 Tv = new TvAndPhotoDto
+                                 Tv = new TvAndPhotoDetailDto
                                  {
                                      Id = t.Id,
-                                     ImageUrl = context.Photos.SingleOrDefault(x => x.Id == t.Id && x.IsMain).ImageUrl,
+                                     Photos = context.Photos.Where(x => x.Id == t.Id).ToList(),
                                      Discount = t.Discount,
                                      IsDiscount = t.IsDiscount,
                                      ProductCode = t.ProductCode,

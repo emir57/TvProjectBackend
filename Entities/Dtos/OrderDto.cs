@@ -11,7 +11,7 @@ namespace Entities.Dtos
     {
         public int Id { get; set; }
         public User User { get; set; }
-        public TvAndPhotoDto Tv { get; set; }
+        public TvAndPhotoDetailDto Tv { get; set; }
         public DateTime ShippedDate { get; set; }
         public decimal TotalPrice { get; set; }
         public string AddressText { get; set; }
