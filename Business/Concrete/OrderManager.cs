@@ -99,6 +99,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> DeleteAsync(Order entity)
         {
+            await UpdateTvAsync(entity.TvId, StockStatus.Increase);
             await _orderDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
