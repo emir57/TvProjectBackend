@@ -4,6 +4,7 @@ using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,10 +22,12 @@ namespace Business.Concrete
     public class OrderManager : IOrderService
     {
         private readonly IOrderDal _orderDal;
+        private readonly ITvService _tvService;
 
-        public OrderManager(IOrderDal orderDal)
+        public OrderManager(IOrderDal orderDal, ITvService tvService)
         {
             _orderDal = orderDal;
+            _tvService = tvService;
         }
         [SecuredOperation("User,Admin")]
         [ValidationAspect(typeof(Order))]
@@ -32,9 +35,25 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
         {
+            IResult result = BusinessRules.Run(
+                await CheckProductStock(entity.TvId));
+            if (result != null)
+            {
+                return result;
+            }
             await _orderDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
+
+        private async Task<IResult> CheckProductStock(int tvId)
+        {
+            var tv = await _tvService.GetByIdAsync(tvId);
+            if (tv.Data.Stock < 1)
+            {
+                return new ErrorResult("")
+            }
+        }
+
         [SecuredOperation("User,Admin")]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
