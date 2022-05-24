@@ -43,6 +43,7 @@ namespace Business.Concrete
             {
                 return result;
             }
+            entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
