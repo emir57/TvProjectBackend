@@ -22,6 +22,17 @@ namespace WebUI.Controllers
         {
             _orderService = orderService;
         }
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddOrder(Order order)
+        {
+            IResult result = await _orderService.AddAsync(order);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
         [HttpGet]
         [Route("getall")]
         public async Task<IActionResult> GetOrders()
