@@ -62,8 +62,6 @@ namespace Business.Concrete
                 case StockStatus.Decrease:
                     tv.Stock -= 1;
                     break;
-                default:
-                    break;
             }
             await _tvService.UpdateAsync(tv);
         }
