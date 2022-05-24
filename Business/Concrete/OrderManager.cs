@@ -68,7 +68,7 @@ namespace Business.Concrete
             await _tvService.UpdateAsync(tv);
         }
 
-        enum StockStatus
+        private enum StockStatus
         {
             Increase,
             Decrease
