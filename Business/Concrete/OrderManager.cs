@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -36,6 +37,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
         {
+            Thread.Sleep(4000);
             IResult result = BusinessRules.Run(
                 await CheckTv(entity.TvId),
                 await CheckProductStock(entity.TvId));
