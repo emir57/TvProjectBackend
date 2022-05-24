@@ -27,7 +27,7 @@ namespace Business.Concrete
             _orderDal = orderDal;
         }
         [SecuredOperation("User,Admin")]
-        //[ValidationAspect(typeof())]
+        [ValidationAspect(typeof(Order))]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
