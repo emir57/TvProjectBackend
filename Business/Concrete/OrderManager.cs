@@ -47,15 +47,31 @@ namespace Business.Concrete
             }
             entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
-            await UpdateTvAsync(entity.TvId);
+            await UpdateTvAsync(entity.TvId,StockStatus.Decrease);
             return new SuccessResult(Messages.SuccessOrder);
         }
 
-        private async Task UpdateTvAsync(int tvId)
+        private async Task UpdateTvAsync(int tvId,StockStatus stockStatus)
         {
             var tv = (await _tvService.GetByIdAsync(tvId)).Data;
-            tv.Stock -= 1;
+            switch (stockStatus)    
+            {
+                case StockStatus.Increase:
+                    tv.Stock += 1;
+                    break;
+                case StockStatus.Decrease:
+                    tv.Stock -= 1;
+                    break;
+                default:
+                    break;
+            }
             await _tvService.UpdateAsync(tv);
+        }
+
+        enum StockStatus
+        {
+            Increase,
+            Decrease
         }
 
         private async Task<IResult> CheckTvAsync(int tvId)
