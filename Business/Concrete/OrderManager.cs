@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.Validators.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
@@ -30,7 +31,7 @@ namespace Business.Concrete
             _tvService = tvService;
         }
         [SecuredOperation("User,Admin")]
-        [ValidationAspect(typeof(Order))]
+        [ValidationAspect(typeof(OrderValidator))]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
