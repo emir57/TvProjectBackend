@@ -39,8 +39,8 @@ namespace Business.Concrete
         {
             Thread.Sleep(4000);
             IResult result = BusinessRules.Run(
-                await CheckTv(entity.TvId),
-                await CheckProductStock(entity.TvId));
+                await CheckTvAsync(entity.TvId),
+                await CheckProductStockAsync(entity.TvId));
             if (result != null)
             {
                 return result;
@@ -58,7 +58,7 @@ namespace Business.Concrete
             await _tvService.UpdateAsync(tv);
         }
 
-        private async Task<IResult> CheckTv(int tvId)
+        private async Task<IResult> CheckTvAsync(int tvId)
         {
             var tv = await _tvService.GetByIdAsync(tvId);
             if(tv.Data == null)
@@ -68,7 +68,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private async Task<IResult> CheckProductStock(int tvId)
+        private async Task<IResult> CheckProductStockAsync(int tvId)
         {
             var tv = await _tvService.GetByIdAsync(tvId);
             if (tv.Data.Stock < 1)
