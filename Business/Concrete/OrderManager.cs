@@ -50,8 +50,9 @@ namespace Business.Concrete
             var tv = await _tvService.GetByIdAsync(tvId);
             if (tv.Data.Stock < 1)
             {
-                return new ErrorResult("")
+                return new ErrorResult(Messages.TvStock0);
             }
+            return new SuccessResult();
         }
 
         [SecuredOperation("User,Admin")]
