@@ -36,6 +36,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(Order entity)
         {
             IResult result = BusinessRules.Run(
+                await CheckTv(entity.TvId),
                 await CheckProductStock(entity.TvId));
             if (result != null)
             {
@@ -43,6 +44,16 @@ namespace Business.Concrete
             }
             await _orderDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
+        }
+
+        private async Task<IResult> CheckTv(int tvId)
+        {
+            var tv = await _tvService.GetByIdAsync(tvId);
+            if(tv.Data == null)
+            {
+                return new ErrorResult(Messages.TvNotFound);
+            }
+            return new SuccessResult();
         }
 
         private async Task<IResult> CheckProductStock(int tvId)
