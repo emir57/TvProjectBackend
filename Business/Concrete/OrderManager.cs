@@ -47,7 +47,15 @@ namespace Business.Concrete
             }
             entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
+            await UpdateTvAsync(entity.TvId);
             return new SuccessResult(Messages.SuccessOrder);
+        }
+
+        private async Task UpdateTvAsync(int tvId)
+        {
+            var tv = (await _tvService.GetByIdAsync(tvId)).Data;
+            tv.Stock -= 1;
+            await _tvService.UpdateAsync(tv);
         }
 
         private async Task<IResult> CheckTv(int tvId)
