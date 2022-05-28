@@ -134,7 +134,21 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> SendCode(int userId)
         {
-
+            string code = new Random().Next(1000, 9999).ToString();
+            var getUserCode = await _userCodeService.GetByUserIdAysnc(userId);
+            if (!getUserCode.IsSuccess)
+            {
+                await _userCodeService.AddAsync(new Entities.Concrete.UserCode
+                {
+                    UserId = userId,
+                    Code = code
+                });
+                return Ok();
+            }
+            var userCode = getUserCode.Data;
+            userCode.Code = code;
+            await _userCodeService.UpdateAsync(userCode);
+            return Ok();
         }
     }
 }
