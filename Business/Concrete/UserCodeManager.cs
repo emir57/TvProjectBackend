@@ -35,14 +35,18 @@ namespace Business.Concrete
         {
             var userCode = await _userCodeDal.GetAsync(x => x.Id == userCodeId);
             if (userCode == null)
-                return new ErrorResult(Messages.;
+                return new ErrorResult(Messages.FailDelete);
             await _userCodeDal.DeleteAsync(userCode);
             return new SuccessResult(Messages.SuccessDelete);
         }
 
-        public Task<IResult> DeleteByUserIdAsync(int userId)
+        public async Task<IResult> DeleteByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            var userCode = await _userCodeDal.GetAsync(x => x.UserId == userId);
+            if (userCode == null)
+                return new ErrorResult(Messages.FailDelete);
+            await _userCodeDal.DeleteAsync(userCode);
+            return new SuccessResult(Messages.SuccessDelete);
         }
 
         public Task<IDataResult<UserCode>> GetByUserIdAysnc(int userId)
