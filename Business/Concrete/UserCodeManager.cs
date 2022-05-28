@@ -53,8 +53,8 @@ namespace Business.Concrete
         {
             var userCode = await _userCodeDal.GetAsync(x => x.UserId == userId);
             if (userCode == null)
-                return new ErrorDataResult<UserCode>(Messages.get);
-            return new SuccessDataResult<UserCode>();
+                return new ErrorDataResult<UserCode>(Messages.FailGet);
+            return new SuccessDataResult<UserCode>(userCode, Messages.SuccessGet);
         }
 
         public Task<IResult> UpdateAsync(UserCode userCode)
