@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class TvProjectContext:DbContext
+    public class TvProjectContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,5 +25,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserCreditCard> UserCreditCards { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<UserCode> UserCodes { get; set; }
     }
 }
