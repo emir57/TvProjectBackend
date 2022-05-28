@@ -14,7 +14,7 @@ using DataAccess.Concrete.EntityFramework;
 
 namespace Business.DependencyResolvers.Autofac
 {
-    public class AutofacBusinessModule:Module
+    public class AutofacBusinessModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -43,6 +43,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserCreditCardDal>().As<IUserCreditCardDal>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
+            builder.RegisterType<EfUserCodeDal>().As<IUserCodeDal>().SingleInstance();
 
             builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
 
