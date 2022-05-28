@@ -134,12 +134,12 @@ namespace WebUI.Controllers
             }
             return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
         }
-        [HttpPost]
+        [HttpPost("sendcode")]
         public async Task<IActionResult> SendCode(int userId)
         {
             string code = new Random().Next(1000, 9999).ToString();
             var user = await _userService.GetByIdAsync(userId);
-            if(user.Data == null)
+            if (user.Data == null)
             {
                 return BadRequest(user);
             }
@@ -158,10 +158,31 @@ namespace WebUI.Controllers
             userCode.Code = code;
             await SendEmailAsync(user.Data, code);
             await _userCodeService.UpdateAsync(userCode);
-            
+
             return Ok();
         }
-        private async Task SendEmailAsync(User user,string code)
+
+        [HttpPost("verifycode")]
+        public async Task<IActionResult> VerifyCode(int userId,string code)
+        {
+            var user = await _userService.GetByIdAsync(userId);
+            if (user.Data == null)
+            {
+                return BadRequest(user);
+            }
+            var getUserCode = await _userCodeService.GetByUserIdAysnc(userId);
+            if (!getUserCode.IsSuccess)
+            {
+                return BadRequest();
+            }
+            if(getUserCode.Data.Code == code)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        private async Task SendEmailAsync(User user, string code)
         {
             await _emailService.SendEmailAsync(user.Email, "Giriş İçin dorğulama kodunuz", code);
         }
