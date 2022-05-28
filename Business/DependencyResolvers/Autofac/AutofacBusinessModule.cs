@@ -19,7 +19,7 @@ namespace Business.DependencyResolvers.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-            //Business
+            #region Business
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
             builder.RegisterType<PhotoManager>().As<IPhotoService>().SingleInstance();
@@ -32,8 +32,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<UserCodeManager>().As<IUserCodeService>().SingleInstance();
-
-            //DataAccess
+            #endregion
+            #region DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
             builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
             builder.RegisterType<EfTvBrandDal>().As<ITvBrandDal>().SingleInstance();
@@ -44,6 +44,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
             builder.RegisterType<EfRoleDal>().As<IRoleDal>().SingleInstance();
             builder.RegisterType<EfUserCodeDal>().As<IUserCodeDal>().SingleInstance();
+            #endregion
 
             builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
 
