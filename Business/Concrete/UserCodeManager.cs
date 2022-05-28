@@ -57,9 +57,10 @@ namespace Business.Concrete
             return new SuccessDataResult<UserCode>(userCode, Messages.SuccessGet);
         }
 
-        public Task<IResult> UpdateAsync(UserCode userCode)
+        public async Task<IResult> UpdateAsync(UserCode userCode)
         {
-            throw new NotImplementedException();
+            await _userCodeDal.UpdateAsync(userCode);
+            return new SuccessResult(Messages.SuccessUpdate);
         }
     }
 }
