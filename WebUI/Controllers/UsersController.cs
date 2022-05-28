@@ -151,14 +151,19 @@ namespace WebUI.Controllers
                     UserId = userId,
                     Code = code
                 });
-                await _emailService.SendEmailAsync(user.Data.Email, "Giriş İçin dorğulama kodunuz", code);
+                await SendEmailAsync(user.Data, code);
                 return Ok();
             }
             var userCode = getUserCode.Data;
             userCode.Code = code;
+            await SendEmailAsync(user.Data, code);
             await _userCodeService.UpdateAsync(userCode);
-            await _emailService.SendEmailAsync(user.Data.Email, "Giriş İçin dorğulama kodunuz", code);
+            
             return Ok();
+        }
+        private async Task SendEmailAsync(User user,string code)
+        {
+            await _emailService.SendEmailAsync(user.Email, "Giriş İçin dorğulama kodunuz", code);
         }
     }
 }
