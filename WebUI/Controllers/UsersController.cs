@@ -19,11 +19,12 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-
-        public UsersController(IUserService userService, IRoleService roleService)
+        private readonly IUserCodeService _userCodeService;
+        public UsersController(IUserService userService, IRoleService roleService, IUserCodeService userCodeService)
         {
             _userService = userService;
             _roleService = roleService;
+            _userCodeService = userCodeService;
         }
         [HttpGet]
         [Route("get")]
@@ -129,6 +130,11 @@ namespace WebUI.Controllers
                 return Ok(result);
             }
             return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendCode(int userId)
+        {
+
         }
     }
 }
