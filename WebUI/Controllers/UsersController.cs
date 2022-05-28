@@ -138,6 +138,11 @@ namespace WebUI.Controllers
         public async Task<IActionResult> SendCode(int userId)
         {
             string code = new Random().Next(1000, 9999).ToString();
+            var user = await _userService.GetByIdAsync(userId);
+            if(user.Data == null)
+            {
+                return BadRequest(user);
+            }
             var getUserCode = await _userCodeService.GetByUserIdAysnc(userId);
             if (!getUserCode.IsSuccess)
             {
@@ -146,11 +151,13 @@ namespace WebUI.Controllers
                     UserId = userId,
                     Code = code
                 });
+                await _emailService.SendEmailAsync(user.Data.Email, "Giriş İçin dorğulama kodunuz", code);
                 return Ok();
             }
             var userCode = getUserCode.Data;
             userCode.Code = code;
             await _userCodeService.UpdateAsync(userCode);
+            await _emailService.SendEmailAsync(user.Data.Email, "Giriş İçin dorğulama kodunuz", code);
             return Ok();
         }
     }
