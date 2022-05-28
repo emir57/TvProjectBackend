@@ -134,7 +134,7 @@ namespace WebUI.Controllers
             }
             return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
         }
-        [HttpGet("sendcode")]
+        [HttpPost("sendcode")]
         public async Task<IActionResult> SendCode(SendCodeDto sendCodeDto)
         {
             string code = new Random().Next(1000, 9999).ToString();
