@@ -31,6 +31,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserAddressManager>().As<IUserAddressService>().SingleInstance();
             builder.RegisterType<UserCreditCardManager>().As<IUserCreditCardService>().SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+            builder.RegisterType<UserCodeManager>().As<IUserCodeService>().SingleInstance();
 
             //DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
