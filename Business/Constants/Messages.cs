@@ -10,6 +10,7 @@ namespace Business.Constants
     {
         public static string SuccessAdd = "Ekleme Başarılı";
         public static string SuccessDelete = "Silme Başarılı";
+        public static string FailDelete = "Silme Başarısız";
         public static string SuccessUpdate = "Güncelleme Başarılı";
         public static string SuccessGet = "Listeleme Başarılı";
         public static string AuthorizationDenied = "Yetkisiz işlem";
