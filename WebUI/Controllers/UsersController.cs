@@ -163,9 +163,9 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("verifycode")]
-        public async Task<IActionResult> VerifyCode(int userId,string code)
+        public async Task<IActionResult> VerifyCode(VerfiyCodeDto verfiyCodeDto)
         {
-            var user = await _userService.GetByIdAsync(userId);
+            var user = await _userService.GetByIdAsync(v);
             if (user.Data == null)
             {
                 return BadRequest(user);
