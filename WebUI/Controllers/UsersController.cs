@@ -151,12 +151,12 @@ namespace WebUI.Controllers
                     UserId = sendCodeDto.UserId,
                     Code = code
                 });
-                await SendEmailAsync(user.Data, code);
+                //await SendEmailAsync(user.Data, code);
                 return Ok();
             }
             var userCode = getUserCode.Data;
             userCode.Code = code;
-            await SendEmailAsync(user.Data, code);
+            //await SendEmailAsync(user.Data, code);
             await _userCodeService.UpdateAsync(userCode);
 
             return Ok();
