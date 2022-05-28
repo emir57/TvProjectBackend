@@ -163,19 +163,19 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("verifycode")]
-        public async Task<IActionResult> VerifyCode(VerfiyCodeDto verfiyCodeDto)
+        public async Task<IActionResult> VerifyCode(VerifyCodeDto verifyCodeDto)
         {
-            var user = await _userService.GetByIdAsync(v);
+            var user = await _userService.GetByIdAsync(verifyCodeDto.UserId);
             if (user.Data == null)
             {
                 return BadRequest(user);
             }
-            var getUserCode = await _userCodeService.GetByUserIdAysnc(userId);
+            var getUserCode = await _userCodeService.GetByUserIdAysnc(verifyCodeDto.UserId);
             if (!getUserCode.IsSuccess)
             {
                 return BadRequest();
             }
-            if(getUserCode.Data.Code == code)
+            if(getUserCode.Data.Code == verifyCodeDto.Code)
             {
                 return Ok();
             }
