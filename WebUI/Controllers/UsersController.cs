@@ -135,20 +135,20 @@ namespace WebUI.Controllers
             return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
         }
         [HttpGet("sendcode")]
-        public async Task<IActionResult> SendCode(string userId)
+        public async Task<IActionResult> SendCode(SendCodeDto sendCodeDto)
         {
             string code = new Random().Next(1000, 9999).ToString();
-            var user = await _userService.GetByIdAsync(Convert.ToInt32(userId));
+            var user = await _userService.GetByIdAsync(sendCodeDto.UserId);
             if (user.Data == null)
             {
                 return BadRequest(user);
             }
-            var getUserCode = await _userCodeService.GetByUserIdAysnc(Convert.ToInt32(userId));
+            var getUserCode = await _userCodeService.GetByUserIdAysnc(sendCodeDto.UserId);
             if (!getUserCode.IsSuccess)
             {
                 await _userCodeService.AddAsync(new Entities.Concrete.UserCode
                 {
-                    UserId = Convert.ToInt32(userId),
+                    UserId = sendCodeDto.UserId,
                     Code = code
                 });
                 await SendEmailAsync(user.Data, code);
