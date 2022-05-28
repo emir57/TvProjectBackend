@@ -49,9 +49,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessDelete);
         }
 
-        public Task<IDataResult<UserCode>> GetByUserIdAysnc(int userId)
+        public async Task<IDataResult<UserCode>> GetByUserIdAysnc(int userId)
         {
-            throw new NotImplementedException();
+            var userCode = await _userCodeDal.GetAsync(x => x.UserId == userId);
+            if (userCode == null)
+                return new ErrorDataResult<UserCode>(Messages.get);
+            return new SuccessDataResult<UserCode>();
         }
 
         public Task<IResult> UpdateAsync(UserCode userCode)
