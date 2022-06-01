@@ -33,6 +33,7 @@ namespace Business.Concrete
             FileUploadHelper.Upload(file, out dataBasePath);
             //var image = new Photo() { ImageUrl = dataBasePath,TvId=tvId };
             photo.ImageUrl = dataBasePath;
+            photo.Id = 0;
             await _photoService.AddAsync(photo);
             return new SuccessResult(Messages.UploadImage);
         }
