@@ -26,14 +26,18 @@ namespace WebUI.Controllers
         }
         [HttpPost]
         [Route("upload")]
-        public async Task<IActionResult> UploadImage([FromForm]Photo photo,[FromForm]IFormFile file)
+        public async Task<IActionResult> UploadImage([FromForm]Photo photo)
         {
-            IResult result = await _photoUploadService.UploadImageAsync(file, photo);
-            if (!result.IsSuccess)
+            foreach (IFormFile file in Request.Form.Files)
             {
+                IResult result = await _photoUploadService.UploadImageAsync(file, photo);
+                if (!result.IsSuccess)
+                {
+                    return Ok(result);
+                }
                 return Ok(result);
             }
-            return Ok(result);
+            return BadRequest();
         }
     }
 }
