@@ -37,7 +37,7 @@ namespace WebUI.Controllers
                     results.Add(imageResult);
                 }
             }
-            if (results.Count! > 0)
+            if (results.Count == 0)
             {
                 results.Add(new SuccessResult("Resimler başarıyla yüklenmiştir"));
             }
