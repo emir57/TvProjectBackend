@@ -19,14 +19,14 @@ namespace WebUI.Controllers
         private readonly IPhotoService _photoService;
         private readonly IPhotoUploadService _photoUploadService;
 
-        public PhotosController(IPhotoService photoService,IPhotoUploadService photoUploadService)
+        public PhotosController(IPhotoService photoService, IPhotoUploadService photoUploadService)
         {
             _photoService = photoService;
             _photoUploadService = photoUploadService;
         }
         [HttpPost]
         [Route("upload")]
-        public async Task<IActionResult> UploadImage([FromForm]Photo photo)
+        public async Task<IActionResult> UploadImage([FromForm] Photo photo)
         {
             List<IResult> results = new List<IResult>();
             foreach (IFormFile file in Request.Form.Files)
@@ -36,6 +36,10 @@ namespace WebUI.Controllers
                 {
                     results.Add(imageResult);
                 }
+            }
+            if (results.Count! > 0)
+            {
+                results.Add(new SuccessResult("Resimler başarıyla yüklenmiştir"));
             }
             return Ok(results);
         }
