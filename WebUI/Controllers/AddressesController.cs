@@ -42,8 +42,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
             UserAddress address = (await _userAddressService.GetByIdAsync(id)).Data;
