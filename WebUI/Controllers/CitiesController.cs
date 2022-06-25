@@ -21,7 +21,6 @@ namespace WebUI.Controllers
             _cityService = cityService;
         }
         [HttpGet]
-        [Route("getall")]
         public async Task<IActionResult> GetCities()
         {
             IDataResult<List<City>> result = await _cityService.GetListAsync();
