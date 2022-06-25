@@ -59,7 +59,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
         public async Task<IActionResult> AddAddress(UserAddress userAddress)
         {
             IResult result = await _userAddressService.AddAsync(userAddress);
