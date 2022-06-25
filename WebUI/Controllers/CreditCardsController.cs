@@ -66,8 +66,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCard(int id)
         {
             IDataResult<UserCreditCard> card = await _userCreditCardService.GetByIdAsync(id);
