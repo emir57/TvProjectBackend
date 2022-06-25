@@ -22,7 +22,7 @@ namespace WebUI.Controllers
         {
             _userAddressService = userAddressService;
         }
-        [HttpGet("{userId}")]
+        [HttpGet("getbyuserid")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
             IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
