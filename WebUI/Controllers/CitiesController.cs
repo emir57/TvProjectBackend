@@ -61,7 +61,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpDelete]
-        [Route("delete")]
         public async Task<IActionResult> DeleteCity(int cityId)
         {
             IDataResult<City> city = await _cityService.GetByIdAsync(cityId);
