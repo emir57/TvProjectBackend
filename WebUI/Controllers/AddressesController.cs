@@ -32,8 +32,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAddress(int id)
         {
             IDataResult<UserAddress> result = await _userAddressService.GetByIdAsync(id);
