@@ -69,7 +69,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        [Route("update")]
         public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
         {
             IResult result = await _userAddressService.UpdateAsync(userAddress);
