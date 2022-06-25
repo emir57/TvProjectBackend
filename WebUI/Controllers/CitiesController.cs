@@ -41,7 +41,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
         public async Task<IActionResult> AddCity(City city)
         {
             IResult result = await _cityService.AddAsync(city);
