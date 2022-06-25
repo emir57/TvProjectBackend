@@ -44,8 +44,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCard(int id)
         {
             IDataResult<UserCreditCard> result = await _userCreditCardService.GetByIdAsync(id);
@@ -56,7 +55,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
         public async Task<IActionResult> AddCard(UserCreditCard userCreditCard)
         {
             IResult result = await _userCreditCardService.AddAsync(userCreditCard);
