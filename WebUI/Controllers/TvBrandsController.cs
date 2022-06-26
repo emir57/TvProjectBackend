@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvBrands()
         {
             IDataResult<List<TvBrand>> result = await _brandService.GetListAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
