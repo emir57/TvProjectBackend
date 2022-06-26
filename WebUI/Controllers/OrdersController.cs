@@ -42,8 +42,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderById(int id)
         {
             IDataResult<List<OrderDto>> result = await _orderService.GetOrdersByUserIdAsync(id);
