@@ -61,7 +61,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
         public async Task<ActionResult> AddRole(Role role)
         {
             IResult result = await _roleService.AddAsync(role);
@@ -72,7 +71,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        [Route("update")]
         public async Task<ActionResult> UpdateRole(Role role)
         {
             IResult result = await _roleService.UpdateAsync(role);
@@ -82,8 +80,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{roleId}")]
         public async Task<ActionResult> DeleteRole(int roleId)
         {
             IDataResult<Role> role = await _roleService.GetByIdAsync(roleId);
