@@ -29,7 +29,7 @@ namespace Business.Constants
         public static string DeleteUserCreditCard = "Kredi kartı başarıyla silindi";
         public static string AddUserCreditCard = "Kredi kartı başarıyla eklendi";
         public static string UploadImage = "Başarıyla Yüklendi";
-        public static string IsMainExists = "Is Main zaten mevcut lütfen işareti kaldırıp yükleyiniz";
+        public static string IsMainExists = "Ana fotoğraf zaten mevcut lütfen işareti kaldırıp yükleyiniz";
         public static string ProductAlreadyExists = "Böyle bir ürün zaten var";
         public static string SuccessfulChangePassword = "Parola başarıyla sıfırlandı";
         public static string SuccessfulUserUpdate = "Başarıyla Güncellendi";
