@@ -86,13 +86,13 @@ namespace WebUI.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
-            IDataResult<TvBrand> tvBrand = await _brandService.GetByIdAsync(tvBrandId);
-            if (tvBrand.Data == null)
+            IDataResult<TvBrand> tvBrandResult = await _brandService.GetByIdAsync(tvBrandId);
+            if (tvBrandResult.IsSuccess == false)
             {
-                return BadRequest("Silinecek ürün bulunamadı");
+                return BadRequest(tvBrandResult);
             }
-            IResult result = await _brandService.DeleteAsync(tvBrand.Data);
-            if (!result.IsSuccess)
+            IResult result = await _brandService.DeleteAsync(tvBrandResult.Data);
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
