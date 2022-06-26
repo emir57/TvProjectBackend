@@ -33,8 +33,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             IDataResult<Role> result = await _roleService.GetByIdAsync(id);
