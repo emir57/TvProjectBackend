@@ -47,7 +47,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvBrandsWithPriceAverage()
         {
             IDataResult<List<CategoryWithPriceAverageDto>> result = await _brandService.GetBrandsWithPriceAverageAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
