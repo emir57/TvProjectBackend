@@ -86,7 +86,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpDelete]
-        [Route("delete")]
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
             IDataResult<TvBrand> tvBrand = await _brandService.GetByIdAsync(tvBrandId);
