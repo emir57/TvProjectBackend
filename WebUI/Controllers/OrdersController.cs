@@ -33,7 +33,6 @@ namespace WebUI.Controllers
             return BadRequest(result);
         }
         [HttpGet]
-        [Route("getall")]
         public async Task<IActionResult> GetOrders()
         {
             IDataResult<List<OrderDto>> result = await _orderService.GetListOrdersDtoAsync();
