@@ -77,7 +77,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> UpdateTvBrand(TvBrand tvBrand)
         {
             IResult result = await _brandService.UpdateAsync(tvBrand);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
