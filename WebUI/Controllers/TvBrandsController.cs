@@ -57,7 +57,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetTvBrandsById(int id)
         {
             IDataResult<TvBrand> result = await _brandService.GetByIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
