@@ -52,8 +52,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
             IDataResult<Order> order = await _orderService.GetByIdAsync(id);
