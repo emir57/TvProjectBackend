@@ -22,7 +22,6 @@ namespace WebUI.Controllers
             _brandService = brandService;
         }
         [HttpGet]
-        [Route("getall")]
         public async Task<ActionResult> GetTvBrands()
         {
             IDataResult<List<TvBrand>> result = await _brandService.GetListAsync();
