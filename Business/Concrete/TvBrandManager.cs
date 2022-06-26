@@ -62,6 +62,8 @@ namespace Business.Concrete
         public async Task<IDataResult<TvBrand>> GetByIdAsync(int brandId)
         {
             TvBrand tvBrand = await _tvBrandDal.GetAsync(x => x.Id == brandId);
+            if (tvBrand == null)
+                return new ErrorDataResult<TvBrand>(Messages.TvBrandNotFound);
             return new SuccessDataResult<TvBrand>(tvBrand, Messages.SuccessGet);
         }
         [CacheAspect]
