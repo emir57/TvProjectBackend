@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvBrandsWithCount()
         {
             IDataResult<List<CategoryWithCountDto>> result = await _brandService.GetBrandsWithCountAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
