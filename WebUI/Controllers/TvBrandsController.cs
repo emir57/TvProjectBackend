@@ -54,8 +54,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTvBrandsById(int id)
         {
             IDataResult<TvBrand> result = await _brandService.GetByIdAsync(id);
