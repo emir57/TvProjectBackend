@@ -23,7 +23,6 @@ namespace WebUI.Controllers
             _userCreditCardService = userCreditCardService;
         }
         [HttpGet]
-        [Route("getall")]
         public async Task<IActionResult> GetCards()
         {
             IDataResult<List<UserCreditCard>> result = await _userCreditCardService.GetListAsync();
