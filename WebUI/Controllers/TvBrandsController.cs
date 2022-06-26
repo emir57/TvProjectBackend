@@ -66,7 +66,6 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
             IResult result = await _brandService.AddAsync(tvBrand);
