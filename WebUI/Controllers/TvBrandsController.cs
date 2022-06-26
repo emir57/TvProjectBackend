@@ -67,7 +67,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> AddTvBrand(TvBrand tvBrand)
         {
             IResult result = await _brandService.AddAsync(tvBrand);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
