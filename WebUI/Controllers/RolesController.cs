@@ -47,12 +47,12 @@ namespace WebUI.Controllers
         [Route("getuserroles")]
         public async Task<ActionResult> GetUserRoles(int userId)
         {
-            IDataResult<User> user = await _userService.GetByIdAsync(userId);
-            if (user.Data == null)
+            IDataResult<User> userResult = await _userService.GetByIdAsync(userId);
+            if (userResult.IsSuccess == false)
             {
-                return BadRequest();
+                return BadRequest(userResult);
             }
-            IResult result = await _userService.GetClaimsAsync(user.Data);
+            IResult result = await _userService.GetClaimsAsync(userResult.Data);
             if (result.IsSuccess == false)
             {
                 return BadRequest(result);

@@ -44,6 +44,8 @@ namespace Business.Concrete
         public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
             User user = await _userDal.GetAsync(x => x.Id == userId);
+            if (user == null)
+                return new ErrorDataResult<User>(Messages.UserNotFound);
             return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
         public async Task<IDataResult<User>> GetByKeyAsync(string key)
