@@ -24,7 +24,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetCities()
         {
             IDataResult<List<City>> result = await _cityService.GetListAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -34,7 +34,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetCity(int id)
         {
             IDataResult<City> result = await _cityService.GetByIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -44,7 +44,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> AddCity(City city)
         {
             IResult result = await _cityService.AddAsync(city);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -54,7 +54,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> UpdateCity(City city)
         {
             IResult result = await _cityService.UpdateAsync(city);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -63,13 +63,13 @@ namespace WebUI.Controllers
         [HttpDelete("{cityId}")]
         public async Task<IActionResult> DeleteCity(int cityId)
         {
-            IDataResult<City> city = await _cityService.GetByIdAsync(cityId);
-            if (city.Data == null)
+            IDataResult<City> cityResult = await _cityService.GetByIdAsync(cityId);
+            if (cityResult.IsSuccess == false)
             {
-                return BadRequest(Messages.CityIsNotFound);
+                return BadRequest(cityResult);
             }
-            IResult result = await _cityService.UpdateAsync(city.Data);
-            if (!result.IsSuccess)
+            IResult result = await _cityService.UpdateAsync(cityResult.Data);
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
