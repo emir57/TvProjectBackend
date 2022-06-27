@@ -195,7 +195,7 @@ namespace WebUI.Controllers
 
         private async Task SendEmailAsync(User user, string code)
         {
-            await _emailService.SendEmailAsync(user.Email, "Giriş İçin doğrulama kodunuz", code);
+            await _emailService.SendEmailAsync(user.Email, Messages.SendCodeSubject, code);
         }
     }
 }

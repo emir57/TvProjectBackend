@@ -43,5 +43,7 @@ namespace Business.Constants
         public static string UserAddressMaximumCount6 = "En fazla 6 tane adres eklenebilir";
         public static string TvStock0 = "Bu televizyonda stok kalmamış!";
         public static string SuccessOrder = "Siparişiniz başarıyla alınmıştır.";
+
+        public static string SendCodeSubject = "Giriş İçin doğrulama kodunuz";
     }
 }
