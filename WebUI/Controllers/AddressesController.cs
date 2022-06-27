@@ -26,7 +26,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
             IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetAddress(int id)
         {
             IDataResult<UserAddress> result = await _userAddressService.GetByIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -52,17 +52,13 @@ namespace WebUI.Controllers
             }
             address.DeletedDate = DateTime.Now;
             IResult result = await _userAddressService.UpdateAsync(address);
-            if (!result.IsSuccess)
-            {
-                return Ok(result);
-            }
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> AddAddress(UserAddress userAddress)
         {
             IResult result = await _userAddressService.AddAsync(userAddress);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -72,7 +68,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> UpdateAddress(UserAddress userAddress)
         {
             IResult result = await _userAddressService.UpdateAsync(userAddress);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
