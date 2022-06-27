@@ -55,12 +55,12 @@ namespace WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            IDataResult<Order> order = await _orderService.GetByIdAsync(id);
-            if (order.Data == null)
+            IDataResult<Order> orderResult = await _orderService.GetByIdAsync(id);
+            if (orderResult.IsSuccess == false)
             {
-                return Ok(new ErrorResult(Messages.OrderIsNotFound));
+                return BadRequest(orderResult);
             }
-            IResult result = await _orderService.DeleteAsync(order.Data);
+            IResult result = await _orderService.DeleteAsync(orderResult.Data);
             if (result.IsSuccess == false)
             {
                 return Ok(result);
