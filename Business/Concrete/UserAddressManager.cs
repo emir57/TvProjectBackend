@@ -66,6 +66,8 @@ namespace Business.Concrete
         public async Task<IDataResult<UserAddress>> GetByIdAsync(int addressId)
         {
             UserAddress userAddress = await _userAddressDal.GetAsync(x => x.Id == addressId);
+            if (userAddress == null)
+                return new ErrorDataResult<UserAddress>(Messages.AddressIsNotFound);
             return new SuccessDataResult<UserAddress>(userAddress);
         }
         [SecuredOperation("User")]
