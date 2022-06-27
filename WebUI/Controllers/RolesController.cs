@@ -27,7 +27,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetRoles()
         {
             IDataResult<List<Role>> result = await _roleService.GetListAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -37,7 +37,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             IDataResult<Role> result = await _roleService.GetByIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -48,12 +48,12 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetUserRoles(int userId)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(userId);
-            if(user.Data == null)
+            if (user.Data == null)
             {
                 return BadRequest();
             }
             IResult result = await _userService.GetClaimsAsync(user.Data);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -63,7 +63,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> AddRole(Role role)
         {
             IResult result = await _roleService.AddAsync(role);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -73,7 +73,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> UpdateRole(Role role)
         {
             IResult result = await _roleService.UpdateAsync(role);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -88,7 +88,7 @@ namespace WebUI.Controllers
                 return BadRequest(new ErrorResult(Messages.RoleNotFound));
             }
             IResult result = await _roleService.DeleteAsync(role.Data);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
