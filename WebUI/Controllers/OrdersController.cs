@@ -26,17 +26,17 @@ namespace WebUI.Controllers
         public async Task<IActionResult> AddOrder(Order order)
         {
             IResult result = await _orderService.AddAsync(order);
-            if (result.IsSuccess)
+            if (result.IsSuccess == false)
             {
-                return Ok(result);
+                return BadRequest(result);
             }
-            return BadRequest(result);
+            return Ok(result);
         }
         [HttpGet]
         public async Task<IActionResult> GetOrders()
         {
             IDataResult<List<OrderDto>> result = await _orderService.GetListOrdersDtoAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -46,7 +46,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetOrderById(int id)
         {
             IDataResult<List<OrderDto>> result = await _orderService.GetOrdersByUserIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -61,7 +61,7 @@ namespace WebUI.Controllers
                 return Ok(new ErrorResult(Messages.OrderIsNotFound));
             }
             IResult result = await _orderService.DeleteAsync(order.Data);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
