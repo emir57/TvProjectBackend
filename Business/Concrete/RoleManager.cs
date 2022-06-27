@@ -71,6 +71,8 @@ namespace Business.Concrete
         public async Task<IDataResult<Role>> GetByIdAsync(int roleId)
         {
             Role role = await _roleDal.GetAsync(x => x.Id == roleId);
+            if (role == null)
+                return new ErrorDataResult<Role>(Messages.RoleNotFound);
             return new SuccessDataResult<Role>(role, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]

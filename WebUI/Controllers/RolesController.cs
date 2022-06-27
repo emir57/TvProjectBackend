@@ -82,12 +82,12 @@ namespace WebUI.Controllers
         [HttpDelete("{roleId}")]
         public async Task<ActionResult> DeleteRole(int roleId)
         {
-            IDataResult<Role> role = await _roleService.GetByIdAsync(roleId);
-            if (role.Data == null)
+            IDataResult<Role> roleResult = await _roleService.GetByIdAsync(roleId);
+            if (roleResult.IsSuccess == false)
             {
-                return BadRequest(new ErrorResult(Messages.RoleNotFound));
+                return BadRequest(roleResult);
             }
-            IResult result = await _roleService.DeleteAsync(role.Data);
+            IResult result = await _roleService.DeleteAsync(roleResult.Data);
             if (result.IsSuccess == false)
             {
                 return BadRequest(result);
