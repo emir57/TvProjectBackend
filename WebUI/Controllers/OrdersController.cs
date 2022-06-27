@@ -38,7 +38,7 @@ namespace WebUI.Controllers
             IDataResult<List<OrderDto>> result = await _orderService.GetListOrdersDtoAsync();
             if (result.IsSuccess == false)
             {
-                return Ok(result);
+                return BadRequest(result);
             }
             return Ok(result);
         }
@@ -48,7 +48,7 @@ namespace WebUI.Controllers
             IDataResult<List<OrderDto>> result = await _orderService.GetOrdersByUserIdAsync(id);
             if (result.IsSuccess == false)
             {
-                return Ok(result);
+                return BadRequest(result);
             }
             return Ok(result);
         }
