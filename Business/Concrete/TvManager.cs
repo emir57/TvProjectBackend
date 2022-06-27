@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class TvManager:ITvService
+    public class TvManager : ITvService
     {
         private readonly ITvDal _tvDal;
 
         public TvManager(ITvDal tvDal)
         {
             _tvDal = tvDal;
-            
+
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]
@@ -35,10 +35,8 @@ namespace Business.Concrete
             IResult result = BusinessRules.Run(
                 await CheckTvNameAsync(entity)
                 );
-            if (result != null)
-            {
-                return result;
-            }
+            if (result != null) return result;
+
             await _tvDal.AddAsync(entity);
             return new SuccessResult(Messages.SuccessAdd);
         }
@@ -56,6 +54,8 @@ namespace Business.Concrete
         public async Task<IDataResult<Tv>> GetByIdAsync(int tvId)
         {
             Tv tv = await _tvDal.GetAsync(x => x.Id == tvId);
+            if (tv == null)
+                return new ErrorDataResult<Tv>(Messages.TvNotFound);
             return new SuccessDataResult<Tv>(tv, Messages.SuccessGet);
         }
         [CacheAspect]
@@ -71,7 +71,7 @@ namespace Business.Concrete
             {
                 if (product.IsDiscount)
                 {
-                    product.UnitPrice = product.UnitPrice - (product.UnitPrice * product.Discount / 100);  
+                    product.UnitPrice = product.UnitPrice - (product.UnitPrice * product.Discount / 100);
                 }
             }
             return new SuccessDataResult<List<Tv>>(products);
@@ -81,7 +81,7 @@ namespace Business.Concrete
         {
             List<Tv> tvs = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
             return new SuccessDataResult<List<Tv>>(tvs, Messages.SuccessGet);
-            
+
         }
 
         public async Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId)
@@ -121,7 +121,7 @@ namespace Business.Concrete
         private async Task<IResult> CheckTvNameAsync(Tv entity)
         {
             List<Tv> tvs = await _tvDal.GetAllAsync();
-            if(tvs.Any(x => x.ProductName == entity.ProductName))
+            if (tvs.Any(x => x.ProductName == entity.ProductName))
             {
                 return new ErrorResult(Messages.ProductAlreadyExists);
             }
