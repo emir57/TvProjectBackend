@@ -47,14 +47,14 @@ namespace Business.Concrete
             }
             entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
-            await UpdateTvAsync(entity.TvId,StockStatus.Decrease);
+            await UpdateTvAsync(entity.TvId, StockStatus.Decrease);
             return new SuccessResult(Messages.SuccessOrder);
         }
 
-        private async Task UpdateTvAsync(int tvId,StockStatus stockStatus)
+        private async Task UpdateTvAsync(int tvId, StockStatus stockStatus)
         {
             var tv = (await _tvService.GetByIdAsync(tvId)).Data;
-            switch (stockStatus)    
+            switch (stockStatus)
             {
                 case StockStatus.Increase:
                     tv.Stock += 1;
@@ -75,10 +75,8 @@ namespace Business.Concrete
         private async Task<IResult> CheckTvAsync(int tvId)
         {
             var tv = await _tvService.GetByIdAsync(tvId);
-            if(tv.Data == null)
-            {
+            if (tv.Data == null)
                 return new ErrorResult(Messages.TvNotFound);
-            }
             return new SuccessResult();
         }
 
@@ -107,6 +105,8 @@ namespace Business.Concrete
         public async Task<IDataResult<Order>> GetByIdAsync(int orderId)
         {
             Order order = await _orderDal.GetAsync(x => x.Id == orderId);
+            if (order == null)
+                return new ErrorDataResult<Order>(Messages.OrderIsNotFound);
             return new SuccessDataResult<Order>(order, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
