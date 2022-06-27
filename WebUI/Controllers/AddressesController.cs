@@ -45,13 +45,13 @@ namespace WebUI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAddress(int id)
         {
-            UserAddress address = (await _userAddressService.GetByIdAsync(id)).Data;
-            if (address == null)
+            var addressResult = await _userAddressService.GetByIdAsync(id);
+            if (addressResult.IsSuccess == false)
             {
-                return Ok(new ErrorResult(Messages.AddressIsNotFound));
+                return BadRequest(addressResult);
             }
-            address.DeletedDate = DateTime.Now;
-            IResult result = await _userAddressService.UpdateAsync(address);
+            addressResult.Data.DeletedDate = DateTime.Now;
+            IResult result = await _userAddressService.UpdateAsync(addressResult.Data);
             return Ok(result);
         }
         [HttpPost]
