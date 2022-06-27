@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Security.Hashing;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetUsers()
         {
             IDataResult<List<User>> result = await _userService.GetListAsync();
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -45,7 +46,7 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             IDataResult<User> result = await _userService.GetByIdAsync(id);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -57,14 +58,15 @@ namespace WebUI.Controllers
         {
             IDataResult<User> user = await _userService.GetByIdAsync(updateUserDto.UserId);
             User updatedUser = user.Data;
-            if (!HashingHelper.VerifyPasswordHash(updateUserDto.Password, user.Data.PasswordHash, user.Data.PasswordSalt))
+            if (HashingHelper.VerifyPasswordHash(updateUserDto.Password, user.Data.PasswordHash,
+                user.Data.PasswordSalt) == false)
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
             }
             user.Data.FirstName = updateUserDto.FirstName;
             user.Data.LastName = updateUserDto.LastName;
             IResult result = await _userService.UpdateAsync(user.Data);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return Ok(result);
             }
@@ -74,22 +76,22 @@ namespace WebUI.Controllers
         [Route("updateAdmin")]
         public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
-            IDataResult<User> findUser = await _userService.GetByIdAsync(updateUserAdminDto.Id);
-            if (findUser.Data == null)
+            IDataResult<User> findUserResult = await _userService.GetByIdAsync(updateUserAdminDto.Id);
+            if (findUserResult.IsSuccess == false)
             {
-                return BadRequest(Messages.UserNotFound);
+                return BadRequest(findUserResult);
             }
-            await AddUserRoleAsync(updateUserAdminDto, findUser);
-            await RemoveUserRoleAsync(updateUserAdminDto, findUser);
+            await AddUserRoleAsync(updateUserAdminDto, findUserResult);
+            await RemoveUserRoleAsync(updateUserAdminDto, findUserResult);
 
-            findUser.Data.FirstName = updateUserAdminDto.FirstName;
-            findUser.Data.LastName = updateUserAdminDto.LastName;
-            IResult result = await _userService.UpdateAsync(findUser.Data);
-            if (!result.IsSuccess)
+            findUserResult.Data.FirstName = updateUserAdminDto.FirstName;
+            findUserResult.Data.LastName = updateUserAdminDto.LastName;
+            IResult result = await _userService.UpdateAsync(findUserResult.Data);
+            if (result.IsSuccess == false)
             {
-                return Ok(result);
+                return BadRequest(result);
             }
-            return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
+            return Ok(result);
         }
 
         private async Task RemoveUserRoleAsync(UpdateUserAdminDto updateUserAdminDto, IDataResult<User> findUser)
@@ -119,7 +121,8 @@ namespace WebUI.Controllers
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(changePasswordModel.UserId);
-            if (!HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash, user.Data.PasswordSalt))
+            if (HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash,
+                user.Data.PasswordSalt) == false)
             {
                 return Ok(new ErrorResult(Messages.WrongPassword));
             }
@@ -128,9 +131,9 @@ namespace WebUI.Controllers
             user.Data.PasswordHash = passwordHash;
             user.Data.PasswordSalt = passwordSalt;
             IResult result = await _userService.UpdateAsync(user.Data);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
-                return Ok(result);
+                return BadRequest(result);
             }
             return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
         }
@@ -139,43 +142,51 @@ namespace WebUI.Controllers
         {
             string code = new Random().Next(1000, 9999).ToString();
             var user = await _userService.GetByIdAsync(sendCodeDto.UserId);
-            if (user.Data == null)
+            if (user.IsSuccess == false)
             {
                 return BadRequest(user);
             }
             var getUserCode = await _userCodeService.GetByUserIdAysnc(sendCodeDto.UserId);
-            if (!getUserCode.IsSuccess)
+            if (getUserCode.IsSuccess == false)
             {
-                await _userCodeService.AddAsync(new Entities.Concrete.UserCode
-                {
-                    UserId = sendCodeDto.UserId,
-                    Code = code
-                });
-                await SendEmailAsync(user.Data, code);
+                await addUserCode(user.Data, code);
                 return Ok();
             }
-            var userCode = getUserCode.Data;
-            userCode.Code = code;
-            await SendEmailAsync(user.Data, code);
-            await _userCodeService.UpdateAsync(userCode);
+            await updateUserCode(user.Data, getUserCode.Data, code);
 
             return Ok();
+        }
+        private async Task addUserCode(User user, string code)
+        {
+            UserCode userCode = new UserCode
+            {
+                UserId = user.Id,
+                Code = code
+            };
+            await _userCodeService.AddAsync(userCode);
+            await SendEmailAsync(user, code);
+        }
+        private async Task updateUserCode(User user, UserCode userCode, string code)
+        {
+            userCode.Code = code;
+            await SendEmailAsync(user, code);
+            await _userCodeService.UpdateAsync(userCode);
         }
 
         [HttpPost("verifycode")]
         public async Task<IActionResult> VerifyCode(VerifyCodeDto verifyCodeDto)
         {
             var user = await _userService.GetByIdAsync(verifyCodeDto.UserId);
-            if (user.Data == null)
+            if (user.IsSuccess == false)
             {
                 return BadRequest(user);
             }
             var getUserCode = await _userCodeService.GetByUserIdAysnc(verifyCodeDto.UserId);
-            if (!getUserCode.IsSuccess)
+            if (getUserCode.IsSuccess == false)
             {
                 return BadRequest();
             }
-            if(getUserCode.Data.Code == verifyCodeDto.Code)
+            if (getUserCode.Data.Code == verifyCodeDto.Code)
             {
                 return Ok();
             }
