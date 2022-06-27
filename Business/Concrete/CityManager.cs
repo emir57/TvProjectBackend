@@ -47,7 +47,9 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<City>> GetByIdAsync(int cityId)
         {
-            City city = await _citydal.GetAsync(x=>x.Id==cityId);
+            City city = await _citydal.GetAsync(x => x.Id == cityId);
+            if (city == null)
+                return new ErrorDataResult<City>(Messages.CityIsNotFound);
             return new SuccessDataResult<City>(city, Messages.SuccessGet);
         }
         [CacheAspect]
