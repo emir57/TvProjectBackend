@@ -108,9 +108,9 @@ namespace WebUI.Controllers
         public async Task<ActionResult> DeleteTv(int tvId)
         {
             IDataResult<Tv> tvResult = await _tvService.GetByIdAsync(tvId);
-            if (tvResult.Data == null)
+            if (tvResult.IsSuccess == false)
             {
-                return BadRequest("Silinecek ürün bulunamadı");
+                return BadRequest(tvResult);
             }
             IResult result = await _tvService.DeleteAsync(tvResult.Data);
             if (result.IsSuccess == false)
