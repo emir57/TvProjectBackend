@@ -9,6 +9,10 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class TvProjectContext : DbContext
     {
+        public TvProjectContext()
+        {
+            ChangeTracker.LazyLoadingEnabled = false;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TvProjectDb;integrated security=true;");
