@@ -1,13 +1,9 @@
 ﻿using Business.Abstract;
-using Core.Utilities.Helpers;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
@@ -32,7 +28,7 @@ namespace WebUI.Controllers
             foreach (IFormFile file in Request.Form.Files)
             {
                 IResult imageResult = await _photoUploadService.UploadImageAsync(file, photo);
-                if (!imageResult.IsSuccess)
+                if (imageResult.IsSuccess == false)
                 {
                     results.Add(imageResult);
                 }
