@@ -6,11 +6,9 @@ using Core.Utilities.Email;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebUI.Controllers
