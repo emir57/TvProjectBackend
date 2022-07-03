@@ -20,14 +20,12 @@ namespace WebUI.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
-        private readonly IPhotoUploadService _imageService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
-        public AuthController(IAuthService authService, IUserService userService, IPhotoUploadService imageService, IEmailService emailService, IMapper mapper)
+        public AuthController(IAuthService authService, IUserService userService, IEmailService emailService, IMapper mapper)
         {
             _authService = authService;
             _userService = userService;
-            _imageService = imageService;
             _emailService = emailService;
             _mapper = mapper;
         }
@@ -36,12 +34,12 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             IResult checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
-            if (!checkUser.IsSuccess)
+            if (checkUser.IsSuccess == false)
             {
                 return BadRequest(checkUser.Message);
             }
             IDataResult<User> result = await _authService.RegisterAsync(userForRegisterDto, userForRegisterDto.Password);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -52,7 +50,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
             IDataResult<User> result = await _authService.LoginAsync(userForLoginDto);
-            if (!result.IsSuccess)
+            if (result.IsSuccess == false)
             {
                 return BadRequest(result);
             }
@@ -62,29 +60,29 @@ namespace WebUI.Controllers
                 AccessToken = token.Data,
                 User = _mapper.Map<LoginingUser>(result.Data)
             };
-            return Ok(new SuccessDataResult<LoginDto>(loginingUser,result.Message));
+            return Ok(new SuccessDataResult<LoginDto>(loginingUser, result.Message));
         }
         [HttpPost]
         [Route("checkuser")]
         public async Task<ActionResult> CheckUser(User user)
         {
             IDataResult<User> checkUser = await _userService.GetByMailAsync(user.Email);
-            if (checkUser.Data != null)
+            if (checkUser.Data == null)
             {
-                return Ok(new SuccessResult());
+                return BadRequest(new ErrorResult());
             }
-            return BadRequest(new ErrorResult());
+            return Ok(new SuccessResult());
         }
         [HttpGet]
         [Route("getuser")]
         public async Task<ActionResult> GetUser(int id)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(id);
-            if (user.Data != null)
+            if (user.Data == null)
             {
-                return Ok(new SuccessDataResult<User>(user.Data));
+                return BadRequest(new ErrorResult());
             }
-            return BadRequest(new ErrorResult());
+            return Ok(new SuccessDataResult<User>(user.Data));
         }
 
         [HttpPost]
@@ -136,19 +134,5 @@ namespace WebUI.Controllers
             IDataResult<List<Role>> roles = await _userService.GetClaimsAsync(user.Data);
             return Ok(roles);
         }
-
-        //[HttpPost]
-        //[Route("uploadImage")]
-        //public async Task<IActionResult> UploadImage([FromForm] IFormFile image)
-        //{
-        //    //var result = await _imageService.UploadImageAsync(image);
-        //    //if (!result.IsSuccess)
-        //    //{
-        //    //    return BadRequest(result.Message);
-        //    //}
-        //    //return Ok(result.Message);
-        //    return Ok();
-        //}
-        
     }
 }
