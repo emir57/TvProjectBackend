@@ -138,21 +138,10 @@ namespace WebUI.Controllers
         [HttpPost("sendcode")]
         public async Task<IActionResult> SendCode(SendCodeDto sendCodeDto)
         {
-            string code = new Random().Next(1000, 9999).ToString();
-            var user = await _userService.GetByIdAsync(sendCodeDto.UserId);
-            if (user.IsSuccess == false)
-            {
-                return BadRequest(user);
-            }
-            var getUserCode = await _userCodeService.GetByUserIdAsync(sendCodeDto.UserId);
-            if (getUserCode.IsSuccess == false)
-            {
-                await addUserCode(user.Data, code);
-                return Ok();
-            }
-            await updateUserCode(user.Data, getUserCode.Data, code);
-
-            return Ok();
+            var result = await _userService.SendCodeAsync(sendCodeDto);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpPost("verifycode")]
