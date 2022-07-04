@@ -22,6 +22,7 @@ namespace Business.Abstract
         Task<IDataResult<User>> GetByMailAsync(string email);
         Task<IDataResult<List<User>>> GetListAsync();
 
+        Task<IResult> SendCodeAsync(SendCodeDto sendCodeDto);
         Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto);
 
         Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user);
