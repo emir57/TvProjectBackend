@@ -43,8 +43,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbycategoryid")]
+        [HttpGet("getbycategoryid")]
         public async Task<ActionResult> GetTvsByCategoryId(int id)
         {
             IDataResult<List<TvAndPhotoDetailDto>> result = await _tvService.GetListTvDetailsByCategoryIdAsync(id);
@@ -54,8 +53,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("gettvdetail")]
+        [HttpGet("gettvdetail")]
         public async Task<ActionResult> GetTvDetails(int tvId)
         {
             IDataResult<List<TvAndPhotoDetailDto>> result = await _tvService.GetListTvDetailsAsync();
@@ -65,8 +63,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("gettvphotos")]
+        [HttpGet("gettvphotos")]
         public async Task<ActionResult> GetTvPhotos(int tvId)
         {
             IDataResult<List<Photo>> result = await _tvService.GetListPhotosAsync(tvId);
