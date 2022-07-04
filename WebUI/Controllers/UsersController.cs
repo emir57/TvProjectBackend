@@ -176,19 +176,11 @@ namespace WebUI.Controllers
         {
             var user = await _userService.GetByIdAsync(verifyCodeDto.UserId);
             if (user.IsSuccess == false)
-            {
                 return BadRequest(user);
-            }
-            var getUserCode = await _userCodeService.GetByUserIdAysnc(verifyCodeDto.UserId);
-            if (getUserCode.IsSuccess == false)
-            {
-                return BadRequest();
-            }
-            if (getUserCode.Data.Code == verifyCodeDto.Code)
-            {
-                return Ok();
-            }
-            return BadRequest();
+            var result = await _userService.VerifyCodeAsync(verifyCodeDto);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
         private async Task SendEmailAsync(User user, string code)
