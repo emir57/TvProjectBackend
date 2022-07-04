@@ -22,6 +22,8 @@ namespace Business.Abstract
         Task<IDataResult<User>> GetByMailAsync(string email);
         Task<IDataResult<List<User>>> GetListAsync();
 
+        Task<IResult> ResetPasswordAsync(ChangePasswordModel changePasswordModel);
+
         Task<IResult> SendCodeAsync(SendCodeDto sendCodeDto);
         Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto);
 
