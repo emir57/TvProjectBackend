@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Security.Hashing;
 using Core.Utilities.Email;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -147,6 +148,30 @@ namespace Business.Concrete
         private async Task SendEmailAsync(User user, string code)
         {
             await _emailService.SendEmailAsync(user.Email, Messages.SendCodeSubject, code);
+        }
+
+        public async Task<IResult> ResetPasswordAsync(ChangePasswordModel changePasswordModel)
+        {
+            IDataResult<User> user = await GetByIdAsync(changePasswordModel.UserId);
+            if (HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash,
+                user.Data.PasswordSalt) == false)
+            {
+                return new ErrorResult(Messages.WrongPassword);
+            }
+
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(changePasswordModel.NewPassword, out passwordHash, out passwordSalt);
+
+            user.Data.PasswordHash = passwordHash;
+            user.Data.PasswordSalt = passwordSalt;
+
+            IResult result = await UpdateAsync(user.Data);
+
+            if (result.IsSuccess == false)
+            {
+                return new ErrorResult(result.Message);
+            }
+            return new SuccessResult(Messages.SuccessfulChangePassword);
         }
     }
 }
