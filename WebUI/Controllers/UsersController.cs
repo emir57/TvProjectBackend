@@ -118,22 +118,10 @@ namespace WebUI.Controllers
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
         {
-            IDataResult<User> user = await _userService.GetByIdAsync(changePasswordModel.UserId);
-            if (HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash,
-                user.Data.PasswordSalt) == false)
-            {
-                return Ok(new ErrorResult(Messages.WrongPassword));
-            }
-            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(changePasswordModel.NewPassword, out passwordHash, out passwordSalt);
-            user.Data.PasswordHash = passwordHash;
-            user.Data.PasswordSalt = passwordSalt;
-            IResult result = await _userService.UpdateAsync(user.Data);
-            if (result.IsSuccess == false)
-            {
-                return BadRequest(result);
-            }
-            return Ok(new SuccessResult(Messages.SuccessfulChangePassword));
+            var result = await _userService.ResetPasswordAsync(changePasswordModel);
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
         }
         [HttpPost("sendcode")]
         public async Task<IActionResult> SendCode(SendCodeDto sendCodeDto)
