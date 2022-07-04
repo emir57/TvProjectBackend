@@ -78,8 +78,7 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddTv(Tv tv, [FromForm] IFormFile photo)
+        public async Task<IActionResult> AddTv([FromBody] Tv tv, [FromForm] IFormFile photo)
         {
             IResult result = await _tvService.AddAsync(tv);
             if (result.IsSuccess == false)
@@ -89,8 +88,7 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        [Route("update")]
-        public async Task<ActionResult> UpdateTv(Tv tv)
+        public async Task<ActionResult> UpdateTv([FromBody] Tv tv)
         {
             IResult result = await _tvService.UpdateAsync(tv);
             if (result.IsSuccess == false)
@@ -99,8 +97,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
-        [Route("delete")]
+        [HttpDelete("{tvId}")]
         public async Task<ActionResult> DeleteTv(int tvId)
         {
             IDataResult<Tv> tvResult = await _tvService.GetByIdAsync(tvId);
