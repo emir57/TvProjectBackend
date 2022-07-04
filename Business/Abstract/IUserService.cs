@@ -1,6 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace Business.Abstract
         Task<IDataResult<User>> GetByKeyAsync(string key);
         Task<IResult> AddUserRoleAsync(User user);
         Task<IDataResult<User>> GetByMailAsync(string email);
-        Task<IDataResult<List<User>>> GetListAsync(); 
+        Task<IDataResult<List<User>>> GetListAsync();
+
+        Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto);
 
         Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user);
         Task<IDataResult<List<UserForCreditCardDto>>> GetListCreditCardsAsync(User user);
