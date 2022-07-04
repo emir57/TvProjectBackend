@@ -9,6 +9,7 @@ using Core.Entities.Concrete;
 using Core.Entities.Dtos;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,11 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         private readonly IUserDal _userDal;
-        public UserManager(IUserDal userDal)
+        private readonly IUserCodeService _userCodeService;
+        public UserManager(IUserDal userDal, IUserCodeService userCodeService)
         {
             _userDal = userDal;
+            _userCodeService = userCodeService;
         }
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
@@ -40,7 +43,7 @@ namespace Business.Concrete
             await _userDal.AddUserRoleAsync(user);
             return new SuccessResult();
         }
-        
+
         public async Task<IDataResult<User>> GetByIdAsync(int userId)
         {
             User user = await _userDal.GetAsync(x => x.Id == userId);
@@ -58,7 +61,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<UserForAddressDto>>> GetListAddressAsync(User user)
         {
-            List<UserForAddressDto> userForAddressDtos =  await _userDal.GetAddressAsync(user);
+            List<UserForAddressDto> userForAddressDtos = await _userDal.GetAddressAsync(user);
             return new SuccessDataResult<List<UserForAddressDto>>(userForAddressDtos, Messages.SuccessGet);
         }
 
@@ -75,7 +78,7 @@ namespace Business.Concrete
             User user = await _userDal.GetAsync(u => u.Email == email);
             return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
-        
+
         [PerformanceAspect(5)]
         public async Task<IDataResult<List<Role>>> GetClaimsAsync(User user)
         {
@@ -94,6 +97,14 @@ namespace Business.Concrete
         {
             await _userDal.UpdateAsync(user);
             return new SuccessResult();
+        }
+
+        public async Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto)
+        {
+            var getUserCode = await _userCodeService.GetByUserIdAysnc(verifyCodeDto.UserId);
+            if (getUserCode.Data.Code == verifyCodeDto.Code)
+                return new SuccessResult();
+            return new ErrorResult();
         }
     }
 }
