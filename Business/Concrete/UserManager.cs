@@ -142,7 +142,7 @@ namespace Business.Concrete
         private async Task updateUserCode(User user, UserCode userCode, string code)
         {
             userCode.Code = code;
-            await SendEmailAsync(user, code);
+            //await SendEmailAsync(user, code);
             await _userCodeService.UpdateAsync(userCode);
         }
         private async Task SendEmailAsync(User user, string code)
