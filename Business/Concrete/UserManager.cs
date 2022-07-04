@@ -7,8 +7,10 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
+using Core.Utilities.Email;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,10 +26,12 @@ namespace Business.Concrete
     {
         private readonly IUserDal _userDal;
         private readonly IUserCodeService _userCodeService;
-        public UserManager(IUserDal userDal, IUserCodeService userCodeService)
+        private readonly IEmailService _emailService;
+        public UserManager(IUserDal userDal, IUserCodeService userCodeService, IEmailService emailService)
         {
             _userDal = userDal;
             _userCodeService = userCodeService;
+            _emailService = emailService;
         }
         [ValidationAspect(typeof(UserValidator))]
         [CacheRemoveAspect("IUserService.Get")]
@@ -101,10 +105,48 @@ namespace Business.Concrete
 
         public async Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto)
         {
-            var getUserCode = await _userCodeService.GetByUserIdAysnc(verifyCodeDto.UserId);
+            var getUserCode = await _userCodeService.GetByUserIdAsync(verifyCodeDto.UserId);
             if (getUserCode.Data.Code == verifyCodeDto.Code)
                 return new SuccessResult();
             return new ErrorResult();
+        }
+
+        public async Task<IResult> SendCodeAsync(SendCodeDto sendCodeDto)
+        {
+            string code = new Random().Next(1000, 9999).ToString();
+            var user = await GetByIdAsync(sendCodeDto.UserId);
+            if (user.IsSuccess == false)
+                return new ErrorResult(Messages.UserNotFound);
+
+            var getUserCode = await _userCodeService.GetByUserIdAsync(sendCodeDto.UserId);
+            if (getUserCode.IsSuccess == false)
+            {
+                await addUserCode(user.Data, code);
+                return new SuccessResult();
+            }
+            await updateUserCode(user.Data, getUserCode.Data, code);
+
+            return new SuccessResult();
+        }
+        private async Task addUserCode(User user, string code)
+        {
+            UserCode userCode = new UserCode
+            {
+                UserId = user.Id,
+                Code = code
+            };
+            await _userCodeService.AddAsync(userCode);
+            await SendEmailAsync(user, code);
+        }
+        private async Task updateUserCode(User user, UserCode userCode, string code)
+        {
+            userCode.Code = code;
+            await SendEmailAsync(user, code);
+            await _userCodeService.UpdateAsync(userCode);
+        }
+        private async Task SendEmailAsync(User user, string code)
+        {
+            await _emailService.SendEmailAsync(user.Email, Messages.SendCodeSubject, code);
         }
     }
 }

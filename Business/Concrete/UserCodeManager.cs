@@ -49,7 +49,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SuccessDelete);
         }
 
-        public async Task<IDataResult<UserCode>> GetByUserIdAysnc(int userId)
+        public async Task<IDataResult<UserCode>> GetByUserIdAsync(int userId)
         {
             var userCode = await _userCodeDal.GetAsync(x => x.UserId == userId);
             if (userCode == null)

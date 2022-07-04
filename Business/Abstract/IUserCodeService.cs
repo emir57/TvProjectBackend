@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface IUserCodeService
     {
-        Task<IDataResult<UserCode>> GetByUserIdAysnc(int userId);
+        Task<IDataResult<UserCode>> GetByUserIdAsync(int userId);
         Task<IResult> AddAsync(UserCode userCode);
         Task<IResult> DeleteAsync(UserCode userCode);
         Task<IResult> DeleteAsync(int userCodeId);

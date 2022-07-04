@@ -144,7 +144,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(user);
             }
-            var getUserCode = await _userCodeService.GetByUserIdAysnc(sendCodeDto.UserId);
+            var getUserCode = await _userCodeService.GetByUserIdAsync(sendCodeDto.UserId);
             if (getUserCode.IsSuccess == false)
             {
                 await addUserCode(user.Data, code);
@@ -153,22 +153,6 @@ namespace WebUI.Controllers
             await updateUserCode(user.Data, getUserCode.Data, code);
 
             return Ok();
-        }
-        private async Task addUserCode(User user, string code)
-        {
-            UserCode userCode = new UserCode
-            {
-                UserId = user.Id,
-                Code = code
-            };
-            await _userCodeService.AddAsync(userCode);
-            await SendEmailAsync(user, code);
-        }
-        private async Task updateUserCode(User user, UserCode userCode, string code)
-        {
-            userCode.Code = code;
-            await SendEmailAsync(user, code);
-            await _userCodeService.UpdateAsync(userCode);
         }
 
         [HttpPost("verifycode")]
@@ -181,11 +165,6 @@ namespace WebUI.Controllers
             if (result.IsSuccess)
                 return Ok(result);
             return BadRequest(result);
-        }
-
-        private async Task SendEmailAsync(User user, string code)
-        {
-            await _emailService.SendEmailAsync(user.Email, Messages.SendCodeSubject, code);
         }
     }
 }
