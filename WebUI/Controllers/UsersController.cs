@@ -2,12 +2,9 @@
 using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Security.Hashing;
-using Core.Utilities.Email;
 using Core.Utilities.Results;
-using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,14 +16,10 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-        private readonly IUserCodeService _userCodeService;
-        private readonly IEmailService _emailService;
-        public UsersController(IUserService userService, IRoleService roleService, IUserCodeService userCodeService, IEmailService emailService)
+        public UsersController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
             _roleService = roleService;
-            _userCodeService = userCodeService;
-            _emailService = emailService;
         }
         [HttpGet]
         [Route("get")]
