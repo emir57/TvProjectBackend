@@ -33,8 +33,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetTv(int id)
         {
             IDataResult<TvAndPhotoDetailDto> result = await _tvService.GetTvDetailAsync(id);
