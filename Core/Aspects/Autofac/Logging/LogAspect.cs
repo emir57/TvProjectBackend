@@ -59,8 +59,14 @@ namespace Core.Aspects.Autofac.Logging
 
         private object checkPasswordProperties(object obj)
         {
-            PropertyInfo passwordProperty = obj.GetType().GetProperty("Password");
-            if (passwordProperty != null)
+            var objType = obj.GetType();
+            if (objType.GetProperty("Password") != null)
+                return "***";
+            if (objType.GetProperty("PasswordHash") != null)
+                return "***";
+            if (objType.GetProperty("PasswordSalt") != null)
+                return "***";
+            if (objType.GetProperty("Key") != null)
                 return "***";
             return obj;
         }
