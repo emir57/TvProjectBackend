@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Extensions;
+using System.Reflection;
 
 namespace Core.Aspects.Autofac.Logging
 {
-    public class LogAspect:MethodInterception
+    public class LogAspect : MethodInterception
     {
         private LoggerServiceBase _loggerService;
         private IHttpContextAccessor _httpContextAccessor;
@@ -40,7 +41,7 @@ namespace Core.Aspects.Autofac.Logging
                 {
                     Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
                     Type = invocation.Arguments[i].GetType().ToString(),
-                    Value = invocation.Arguments[i]
+                    Value = checkPasswordProperties(invocation.Arguments[i])
                 });
             }
             string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
@@ -54,6 +55,14 @@ namespace Core.Aspects.Autofac.Logging
                 DateTime = DateTime.Now
             };
             return logDetail;
+        }
+
+        private object checkPasswordProperties(object obj)
+        {
+            PropertyInfo passwordProperty = obj.GetType().GetProperty("Password");
+            if (passwordProperty != null)
+                return "***";
+            return obj;
         }
     }
 }
