@@ -41,7 +41,7 @@ namespace Core.Aspects.Autofac.Logging
                 {
                     Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
                     Type = invocation.Arguments[i].GetType().ToString(),
-                    Value = checkPasswordProperties(invocation.Arguments[i])
+                    Value = checkProperties(invocation.Arguments[i]) ? "***" : invocation.Arguments[i]
                 });
             }
             string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
@@ -57,18 +57,18 @@ namespace Core.Aspects.Autofac.Logging
             return logDetail;
         }
 
-        private object checkPasswordProperties(object obj)
+        private bool checkProperties(object obj)
         {
             var objType = obj.GetType();
             if (objType.GetProperty("Password") != null)
-                return "***";
+                return true;
             if (objType.GetProperty("PasswordHash") != null)
-                return "***";
+                return true;
             if (objType.GetProperty("PasswordSalt") != null)
-                return "***";
+                return true;
             if (objType.GetProperty("Key") != null)
-                return "***";
-            return obj;
+                return true;
+            return false;
         }
     }
 }
