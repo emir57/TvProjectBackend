@@ -79,7 +79,8 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Tv>>> GetListByBrandAsync(int brandId)
         {
-            List<Tv> tvs = await _tvDal.GetAllAsync(t => t.BrandId == brandId);
+            List<Tv> tvs = (await GetListAsync()).Data;
+            tvs = tvs.Where(t => t.BrandId == brandId).ToList();
             return new SuccessDataResult<List<Tv>>(tvs, Messages.SuccessGet);
 
         }

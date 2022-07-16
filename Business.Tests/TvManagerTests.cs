@@ -28,23 +28,20 @@ namespace Business.Tests
                 new Tv{Id=3,ProductName="Lg",BrandId=2,ScreenInch="49",ScreenType="QLED"},
                 new Tv{Id=4,ProductName="TCL",BrandId=1,ScreenInch="49",ScreenType="QLED"},
             };
+            _mockTvDal.Setup(m => m.GetAllAsync()).ReturnsAsync(_dbTv);
         }
         [Fact]
         public async void Get_all_tvs()
         {
-            _result = new SuccessDataResult<List<Tv>>(_dbTv);
-            _mockTvDal.Setup(m => m.GetAllAsync()).ReturnsAsync(_dbTv);
-
-            var tvService = new TvManager(_mockTvDal.Object);
+            ITvService tvService = new TvManager(_mockTvDal.Object);
             Assert.Equal(tvService.GetListAsync().Result.Data.Count, 4);
         }
 
         [Fact]
         public async void Get_tvs_by_brand_id()
         {
-            var tvService = new TvManager(new EfTvDal());
-            int count = tvService.GetListByBrandAsync(2).Result.Data.Count;
-            Assert.Equal(count, 2);
+            ITvService tvService = new TvManager(_mockTvDal.Object);
+            Assert.Equal(tvService.GetListByBrandAsync(2).Result.Data.Count, 1);
         }
     }
 }
