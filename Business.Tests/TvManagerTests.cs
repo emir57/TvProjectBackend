@@ -36,12 +36,12 @@ namespace Business.Tests
             ITvService tvService = new TvManager(_mockTvDal.Object);
             Assert.Equal(tvService.GetListAsync().Result.Data.Count, 4);
         }
-
-        [Fact]
-        public async void Get_tvs_by_brand_id()
+        [Theory]
+        [InlineData(2)]
+        public async void Get_tvs_by_brand_id(int brandId)
         {
             ITvService tvService = new TvManager(_mockTvDal.Object);
-            Assert.Equal(tvService.GetListByBrandAsync(2).Result.Data.Count, 1);
+            Assert.Equal(tvService.GetListByBrandAsync(brandId).Result.Data.Count, 1);
         }
     }
 }
