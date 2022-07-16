@@ -30,7 +30,7 @@ namespace Business.Tests
             };
             _mockTvService.Setup(m => m.GetListAsync()).ReturnsAsync(new SuccessDataResult<List<Tv>>(_dbTv));
             _mockTvService.Setup(m => m.GetListByBrandAsync(It.IsAny<int>())).ReturnsAsync((int i) => new SuccessDataResult<List<Tv>>(_dbTv.Where(x => x.BrandId == i).ToList()));
-            _mockTvService.Setup(m => m.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((int i) => new SuccessDataResult<Tv>(_dbTv.Single(x => x.Id == i)));
+            _mockTvService.Setup(m => m.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((int i) => new SuccessDataResult<Tv>(_dbTv.SingleOrDefault(x => x.Id == i)));
         }
         [Fact]
         public async void Get_all_tvs()
@@ -51,7 +51,7 @@ namespace Business.Tests
         public async void Get_tv_by_id(int id)
         {
             var tv = await _mockTvService.Object.GetByIdAsync(id);
-            Assert.NotEqual(tv, null);
+            Assert.NotEqual(tv.Data, null);
         }
     }
 }
