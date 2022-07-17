@@ -1,14 +1,9 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
 using Core.Utilities.Results;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Business.Tests
