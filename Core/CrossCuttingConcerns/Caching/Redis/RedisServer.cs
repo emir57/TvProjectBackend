@@ -16,7 +16,11 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         {
             createRedisConfigurationString(configuration);
 
-            _connectionMultiplexer = ConnectionMultiplexer.Connect(configurationString);
+            _connectionMultiplexer = ConnectionMultiplexer.Connect(configurationString, configure =>
+            {
+                configure.Password = "redispw";
+                configure.User = "default";
+            });
             _database = _connectionMultiplexer.GetDatabase(_currentDatabaseId);
         }
 

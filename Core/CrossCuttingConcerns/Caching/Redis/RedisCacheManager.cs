@@ -1,6 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Core.Utilities.Results;
+using Newtonsoft.Json;
+using ServiceStack.Redis;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis
 {
@@ -13,14 +17,30 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         }
         public void Add(string key, object value, int duration)
         {
-            var jsonData = JsonConvert.SerializeObject(value);
-            _redisServer.Database.StringSet(key, jsonData, TimeSpan.FromMinutes(duration));
+            //dynamic result = value;
+            //if (value is Task)
+            //{
+            //    var dynamicValue = value as dynamic;
+            //    result = dynamicValue.Result;
+            //}
+            //var jsonData = JsonConvert.SerializeObject(result, new JsonSerializerSettings
+            //{
+            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            //});
+            //_redisServer.Database.StringSet(key, jsonData, TimeSpan.FromMinutes(duration));
+            RedisInvoker(x => x.Add(key, JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }), TimeSpan.FromMinutes(duration)));
         }
 
         public T Get<T>(string key)
         {
-            var redisData = _redisServer.Database.StringGet(key);
-            return JsonConvert.DeserializeObject<T>(redisData);
+            //var redisData = _redisServer.Database.StringGet(key);
+            //return JsonConvert.DeserializeObject<T>(redisData);
+            var result = default(T);
+            RedisInvoker(x => { result = x.Get<T>(key); });
+            return result;
         }
 
         public object Get(string key)
@@ -43,6 +63,13 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         {
             var keys = _redisServer.Keys(pattern).ToArray();
             _redisServer.Database.KeyDelete(keys);
+        }
+        private void RedisInvoker(Action<RedisClient> redisAction)
+        {
+            using (var client = new RedisClient("localhost", 49153, "redispw"))
+            {
+                redisAction.Invoke(client);
+            }
         }
     }
 }

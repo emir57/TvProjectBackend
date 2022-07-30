@@ -7,19 +7,20 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Castle.DynamicProxy;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Aspects.Autofac.Caching
 {
-    public class CacheAspect:MethodInterception
+    public class CacheAspect : MethodInterception
     {
         private int _duration;
         private ICacheManager _cacheManager;
-        public CacheAspect(int duration=60)
+        public CacheAspect(int duration = 60)
         {
             _duration = duration;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-        public override void Intercept(IInvocation invocation)
+        public override async void Intercept(IInvocation invocation)
         {
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
