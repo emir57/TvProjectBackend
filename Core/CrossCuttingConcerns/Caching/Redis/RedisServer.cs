@@ -31,9 +31,8 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 
         private void createRedisConfigurationString(IConfiguration configuration)
         {
-            string host = configuration.GetSection("RedisConfiguration:host").Value;
-            string port = configuration.GetSection("RedisConfiguration:port").Value;
-            configurationString = String.Format($"{host}:{port}");
+            RedisConfiguration redisConfiguration = configuration.GetSection("RedisConfiguration").Get<RedisConfiguration>();
+            configurationString = String.Format($"{redisConfiguration.Host}:{redisConfiguration.Port}");
         }
     }
 }
