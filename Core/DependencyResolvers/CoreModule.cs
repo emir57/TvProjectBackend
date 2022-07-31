@@ -1,4 +1,5 @@
 ﻿using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.CrossCuttingConcerns.Caching.Redis;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;

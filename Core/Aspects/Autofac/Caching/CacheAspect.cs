@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Castle.DynamicProxy;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Core.Utilities.Results;
 
 namespace Core.Aspects.Autofac.Caching
 {
