@@ -8,26 +8,32 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 {
     public class RedisCacheManager : ICacheManager
     {
+        private readonly RedisEndpoint _redisEndpoint;
         private readonly RedisServer _redisServer;
 
         public RedisCacheManager(RedisServer redisServer)
         {
             _redisServer = redisServer;
+            _redisEndpoint = new RedisEndpoint("localhost", 49153, "redispw");
         }
 
         public void Add(string key, object value, int duration)
         {
-            var jsonData = JsonConvert.SerializeObject(value, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            });
-            _redisServer.Database.StringSet(key, jsonData, TimeSpan.FromMinutes(duration));
+            //var jsonData = JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            //{
+            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            //});
+            //_redisServer.Database.StringSet(key, jsonData, TimeSpan.FromMinutes(duration));
+            RedisInvoker(x => x.Add(key, value, TimeSpan.FromMinutes(duration)));
         }
 
         public T Get<T>(string key)
         {
-            var redisData = _redisServer.Database.StringGet(key);
-            return JsonConvert.DeserializeObject<T>(redisData);
+            //var redisData = _redisServer.Database.StringGet(key);
+            //return JsonConvert.DeserializeObject<T>(redisData);
+            var result = default(T);
+            RedisInvoker(x => { result = x.Get<T>(key); });
+            return result;
         }
 
         public object Get(string key)
@@ -50,6 +56,14 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
         {
             var keys = _redisServer.Keys(pattern).ToArray();
             _redisServer.Database.KeyDelete(keys);
+        }
+
+        private void RedisInvoker(Action<RedisClient> redisAction)
+        {
+            using (var client = new RedisClient(_redisEndpoint))
+            {
+                redisAction.Invoke(client);
+            }
         }
     }
 }

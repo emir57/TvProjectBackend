@@ -14,8 +14,8 @@ namespace Core.Utilities.Results
         {
             IsSuccess = isSuccess;
         }
-        public string Message { get; }
+        public string Message { get; set; }
 
-        public bool IsSuccess { get; }
+        public bool IsSuccess { get; set; }
     }
 }
