@@ -1,18 +1,35 @@
-﻿using Core.CrossCuttingConcerns.Caching;
+﻿using Castle.DynamicProxy;
+using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Castle.DynamicProxy;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Core.Utilities.Results;
 
 namespace Core.Aspects.Autofac.Caching
 {
+    public class CacheAspect<T> : MethodInterception
+    {
+        private int _duration;
+        private ICacheManager _cacheManager;
+        public CacheAspect(int duration = 60)
+        {
+            _duration = duration;
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+        }
+        public override async void Intercept(IInvocation invocation)
+        {
+            string key = KeyHelper.GenerateMethodKey(invocation);
+            if (_cacheManager.IsAdd(key))
+            {
+                var value = _cacheManager.Get<T>(key);
+                invocation.ReturnValue = Task.Run(() => value);
+                return;
+            }
+            invocation.Proceed();
+            _cacheManager.Add(key, invocation.ReturnValue, _duration);
+        }
+    }
     public class CacheAspect : MethodInterception
     {
         private int _duration;
@@ -24,9 +41,7 @@ namespace Core.Aspects.Autofac.Caching
         }
         public override async void Intercept(IInvocation invocation)
         {
-            var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
-            var arguments = invocation.Arguments.ToList();
-            var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
+            string key = KeyHelper.GenerateMethodKey(invocation);
             if (_cacheManager.IsAdd(key))
             {
                 invocation.ReturnValue = _cacheManager.Get(key);
@@ -34,6 +49,16 @@ namespace Core.Aspects.Autofac.Caching
             }
             invocation.Proceed();
             _cacheManager.Add(key, invocation.ReturnValue, _duration);
+        }
+    }
+    internal class KeyHelper
+    {
+        public static string GenerateMethodKey(IInvocation invocation)
+        {
+            string methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
+            var arguments = invocation.Arguments.ToList();
+            string key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
+            return key;
         }
     }
 }

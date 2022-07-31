@@ -20,7 +20,7 @@ namespace Business.Abstract
         Task<IDataResult<List<Tv>>> GetListAsync();
 
         Task<IDataResult<List<Photo>>> GetListPhotosAsync(int tvId);
-        Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync();
+        Task<DataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync();
         Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsAsync();
         Task<IDataResult<List<TvAndPhotoDetailDto>>> GetListTvDetailsByCategoryIdAsync(int categoryId);
         Task<IDataResult<TvAndPhotoDetailDto>> GetTvDetailAsync(int tvId);

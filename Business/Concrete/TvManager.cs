@@ -97,7 +97,8 @@ namespace Business.Concrete
             await _tvDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
-        public async Task<IDataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
+        [CacheAspect<DataResult<List<TvAndPhotoDto>>>]
+        public async Task<DataResult<List<TvAndPhotoDto>>> GetListTvWithPhotosAsync()
         {
             List<TvAndPhotoDto> tvAndPhotoDtos = await _tvDal.GetTvWithPhotosAsync();
             return new SuccessDataResult<List<TvAndPhotoDto>>(tvAndPhotoDtos, Messages.SuccessGet);

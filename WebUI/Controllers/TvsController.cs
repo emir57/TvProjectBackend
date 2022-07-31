@@ -50,17 +50,7 @@ namespace WebUI.Controllers
         [Route("getall")]
         public async Task<ActionResult> GetTvs()
         {
-            IDataResult<List<TvAndPhotoDto>> result;
-            if (_cacheManager.IsAdd("test2"))
-            {
-                result = _cacheManager.Get<SuccessDataResult<List<TvAndPhotoDto>>>("test2");
-            }
-            else
-            {
-                result = await _tvService.GetListTvWithPhotosAsync();
-                if (result.IsSuccess)
-                    _cacheManager.Add("test2", result, 5);
-            }
+            IDataResult<List<TvAndPhotoDto>> result = await _tvService.GetListTvWithPhotosAsync();
             if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
