@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Core.CrossCuttingConcerns.Caching.Redis;
+using System;
 
 namespace WebUI.Controllers
 {
