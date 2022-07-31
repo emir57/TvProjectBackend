@@ -49,21 +49,27 @@ namespace WebUI.Controllers
         public async Task<ActionResult> GetTvs()
         {
             IDataResult<List<TvAndPhotoDto>> result;
-            if (_cacheManager.IsAdd("test"))
+            if (_cacheManager.IsAdd("test2"))
             {
-                result = _cacheManager.Get<SuccessDataResult<List<TvAndPhotoDto>>>("test");
+                result = _cacheManager.Get<SuccessDataResult<List<TvAndPhotoDto>>>("test2");
             }
             else
             {
                 result = await _tvService.GetListTvWithPhotosAsync();
                 if (result.IsSuccess)
-                    _cacheManager.Add("test", result, 5);
+                    _cacheManager.Add("test2", result, 5);
             }
             if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
             }
             return Ok(result);
+        }
+        [HttpGet("removecache")]
+        public IActionResult RemoveCache()
+        {
+            _cacheManager.RemoveByPattern("test2");
+            return Ok();
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTv(int id)
