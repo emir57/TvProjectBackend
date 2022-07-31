@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.CrossCuttingConcerns.Caching;
+using Core.Utilities.IoC;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUI.Controllers
 {
@@ -16,11 +19,30 @@ namespace WebUI.Controllers
         private readonly ITvService _tvService;
         private readonly IPhotoUploadService _imageUploadService;
         private readonly IPhotoService _photoService;
+        private readonly ICacheManager _cacheManager;
         public TvsController(ITvService tvService, IPhotoUploadService imageUploadService, IPhotoService photoService)
         {
             _tvService = tvService;
             _imageUploadService = imageUploadService;
             _photoService = photoService;
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
+        }
+        [HttpGet("test")]
+        public async Task<IActionResult> Test()
+        {
+            TvAndPhotoDto dto = new TvAndPhotoDto
+            {
+                BrandId = 1,
+                Discount = 5,
+                ScreenInch = "32"
+            };
+            if (_cacheManager.IsAdd("test"))
+            {
+                return Ok(_cacheManager.Get<TvAndPhotoDto>("test"));
+            }
+            _cacheManager.Add("test", dto, 5);
+            return BadRequest(dto);
+
         }
         [HttpGet]
         [Route("getall")]

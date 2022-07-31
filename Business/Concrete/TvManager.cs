@@ -12,7 +12,6 @@ using Entities.Concrete;
 using Entities.Dtos;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -24,7 +23,6 @@ namespace Business.Concrete
         public TvManager(ITvDal tvDal)
         {
             _tvDal = tvDal;
-
         }
         [SecuredOperation("Admin,Moderator")]
         [ValidationAspect(typeof(TvValidator))]

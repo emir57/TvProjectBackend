@@ -1,70 +1,55 @@
-﻿using Core.Utilities.Results;
-using Newtonsoft.Json;
-using ServiceStack.AsyncEx;
+﻿using Newtonsoft.Json;
 using ServiceStack.Redis;
 using System;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Caching.Redis
 {
     public class RedisCacheManager : ICacheManager
     {
-        private readonly RedisEndpoint _redisEndpoint;
+        private readonly RedisServer _redisServer;
 
-        public RedisCacheManager()
+        public RedisCacheManager(RedisServer redisServer)
         {
-            _redisEndpoint = new RedisEndpoint("localhost", 49153, "redispw");
+            _redisServer = redisServer;
         }
+
+        public void Add(string key, object value, int duration)
+        {
+            var jsonData = JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            });
+            _redisServer.Database.StringSet(key, jsonData, TimeSpan.FromMinutes(duration));
+        }
+
         public T Get<T>(string key)
         {
-            var result = default(T);
-            RedisInvoker(x => { result = x.Get<T>(key); });
-            return result;
+            var redisData = _redisServer.Database.StringGet(key);
+            return JsonConvert.DeserializeObject<T>(redisData);
         }
 
         public object Get(string key)
         {
-            var result = default(object);
-            RedisInvoker(x => { result = x.Get<object>(key); });
-            return result;
-        }
-
-        public void Add(string key, object data, int duration)
-        {
-            RedisInvoker(x => x.Add(key, data, TimeSpan.FromMinutes(duration)));
+            var redisData = _redisServer.Database.StringGet(key);
+            return JsonConvert.DeserializeObject(redisData);
         }
 
         public bool IsAdd(string key)
         {
-            var isAdded = false;
-            RedisInvoker(x => isAdded = x.ContainsKey(key));
-            return isAdded;
+            return _redisServer.Database.KeyExists(key);
         }
 
         public void Remove(string key)
         {
-            RedisInvoker(x => x.Remove(key));
+            _redisServer.Database.KeyDelete(key);
         }
 
         public void RemoveByPattern(string pattern)
         {
-            RedisInvoker(x => x.RemoveByPattern(pattern));
-        }
-
-        public void Clear()
-        {
-            RedisInvoker(x => x.FlushAll());
-        }
-
-        private void RedisInvoker(Action<RedisClient> redisAction)
-        {
-            using (var client = new RedisClient(_redisEndpoint))
-            {
-                redisAction.Invoke(client);
-            }
+            var keys = _redisServer.Keys(pattern).ToArray();
+            _redisServer.Database.KeyDelete(keys);
         }
     }
 }
