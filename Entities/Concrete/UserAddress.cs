@@ -1,17 +1,25 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
-    public class UserAddress:IEntity
+    public class UserAddress : IEntity
     {
         public int Id { get; set; }
         public string AddressName { get; set; }
+
         public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+
         public string AddressText { get; set; }
-        public byte CityId { get; set; }
+
+        public byte? CityId { get; set; }
+        [ForeignKey("CityId")]
+        public City City { get; set; }
+
         public DateTime? DeletedDate { get; set; }
     }
 }
