@@ -61,5 +61,18 @@ namespace Business.Tests
 
             Assert.False(result.IsSuccess);
         }
+
+        [Fact]
+        public async Task Add_brand()
+        {
+            _mockTvBrandDal.Setup(x => x.AddAsync(It.IsAny<TvBrand>()));
+
+            TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
+            TvBrand tvBrand = new TvBrand() { Id = 1, Address = "Address", Name = "Name", PhoneNumber = "" };
+            IResult result = await tvBrandManager.AddAsync(tvBrand);
+
+            Assert.True(result.IsSuccess);
+        }
+
     }
 }
