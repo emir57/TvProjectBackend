@@ -37,7 +37,7 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  UserId = user.Id,
                                  AddressText = address.AddressText,
-                                 CityId = address.CityId
+                                 CityId = (int)address.CityId
                              };
                 return await result.ToListAsync();
             }

@@ -39,15 +39,15 @@ namespace Business.Concrete
         {
             Thread.Sleep(4000);
             IResult result = BusinessRules.Run(
-                await CheckTvAsync(entity.TvId),
-                await CheckProductStockAsync(entity.TvId));
+                await CheckTvAsync((int)entity.TvId),
+                await CheckProductStockAsync((int)entity.TvId));
             if (result != null)
             {
                 return result;
             }
             entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
-            await UpdateTvAsync(entity.TvId, StockStatus.Decrease);
+            await UpdateTvAsync((int)entity.TvId, StockStatus.Decrease);
             return new SuccessResult(Messages.SuccessOrder);
         }
 
@@ -95,7 +95,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> DeleteAsync(Order entity)
         {
-            await UpdateTvAsync(entity.TvId, StockStatus.Increase);
+            await UpdateTvAsync((int)entity.TvId, StockStatus.Increase);
             await _orderDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }

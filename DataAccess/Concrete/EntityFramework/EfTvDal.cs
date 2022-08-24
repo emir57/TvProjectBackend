@@ -45,7 +45,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ScreenInch = t.ScreenInch,
                                  Extras = t.Extras,
                                  UnitPrice = t.UnitPrice,
-                                 BrandId = t.BrandId,
+                                 BrandId = (int)t.BrandId,
                                  Discount = t.Discount,
                                  IsDiscount = t.IsDiscount,
                                  Photos = context.Photos
@@ -71,7 +71,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ScreenInch = t.ScreenInch,
                                  Extras = t.Extras,
                                  UnitPrice = t.UnitPrice,
-                                 BrandId = t.BrandId,
+                                 BrandId = (int)t.BrandId,
                                  Discount = t.Discount,
                                  IsDiscount = t.IsDiscount,
                                  Photos = context.Photos
@@ -101,7 +101,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ScreenInch = tvs.ScreenInch,
                                  Extras = tvs.Extras,
                                  UnitPrice = tvs.UnitPrice,
-                                 BrandId = tvs.BrandId,
+                                 BrandId = (int)tvs.BrandId,
                                  Discount = tvs.Discount,
                                  IsDiscount = tvs.IsDiscount,
                                  ImageUrl = photos.ImageUrl,
