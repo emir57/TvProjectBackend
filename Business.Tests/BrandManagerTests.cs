@@ -4,7 +4,10 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Moq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -35,6 +38,28 @@ namespace Business.Tests
             IDataResult<List<TvBrand>> result = await tvBrandManager.GetListAsync();
 
             Assert.Equal(result.Data.Count, 4);
+        }
+
+        [Theory, InlineData(1)]
+        public async Task Get_by_id_brand_success(int id)
+        {
+            _mockTvBrandDal.Setup(x => x.GetAsync(It.IsAny<Expression<Func<TvBrand, bool>>>())).ReturnsAsync(_dbBrand.SingleOrDefault(x => x.Id == id));
+
+            TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
+            IDataResult<TvBrand> result = await tvBrandManager.GetByIdAsync(id);
+
+            Assert.True(result.IsSuccess);
+        }
+
+        [Theory, InlineData(5)]
+        public async Task Get_by_id_brand_error(int id)
+        {
+            _mockTvBrandDal.Setup(x => x.GetAsync(It.IsAny<Expression<Func<TvBrand, bool>>>())).ReturnsAsync(_dbBrand.SingleOrDefault(x => x.Id == id));
+
+            TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
+            IDataResult<TvBrand> result = await tvBrandManager.GetByIdAsync(id);
+
+            Assert.False(result.IsSuccess);
         }
     }
 }
