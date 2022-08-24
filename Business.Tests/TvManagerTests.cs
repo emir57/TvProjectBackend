@@ -88,5 +88,17 @@ namespace Business.Tests
 
             Assert.True(result.IsSuccess);
         }
+
+        [Fact]
+        public async Task Delete_tv_success()
+        {
+            _mockTvDal.Setup(x => x.DeleteAsync(It.IsAny<Tv>()));
+
+            TvManager tvManager = new TvManager(_mockTvDal.Object);
+            Tv tv = new Tv { Id = 1 };
+            IResult result = await tvManager.DeleteAsync(tv);
+
+            Assert.True(result.IsSuccess);
+        }
     }
 }
