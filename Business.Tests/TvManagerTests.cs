@@ -17,7 +17,6 @@ namespace Business.Tests
     {
         Mock<ITvDal> _mockTvDal;
         List<Tv> _dbTv;
-        IDataResult<List<Tv>> _result;
         public TvManagerTests()
         {
             _mockTvDal = new Mock<ITvDal>();
@@ -29,6 +28,7 @@ namespace Business.Tests
                 new Tv{Id=4,ProductName="TCL",BrandId=1,ScreenInch="49",ScreenType="QLED"},
             };
         }
+
         [Fact]
         public async void Get_all_tv_count_4()
         {
@@ -50,6 +50,7 @@ namespace Business.Tests
 
             Assert.True(result.IsSuccess);
         }
+
         [Fact]
         public async Task Add_tv_success()
         {
@@ -61,6 +62,19 @@ namespace Business.Tests
             IResult result = await tvManager.AddAsync(tv);
 
             Assert.True(result.IsSuccess);
+        }
+
+        [Fact]
+        public async Task Add_tv_name_already_exists_error()
+        {
+            _mockTvDal.Setup(x => x.AddAsync(It.IsAny<Tv>()));
+            _mockTvDal.Setup(x => x.GetAllAsync()).ReturnsAsync(_dbTv);
+
+            TvManager tvManager = new TvManager(_mockTvDal.Object);
+            Tv tv = new Tv { Id = 1, ProductName = "Samsung", Discount = 1, ScreenInch = "49\"", Stock = 2, UnitPrice = 5999, ProductCode = "Code", IsDiscount = true, ScreenType = "LED", Extras = "Extras", BrandId = 1 };
+            IResult result = await tvManager.AddAsync(tv);
+
+            Assert.False(result.IsSuccess);
         }
     }
 }
