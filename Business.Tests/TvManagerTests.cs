@@ -76,5 +76,17 @@ namespace Business.Tests
 
             Assert.False(result.IsSuccess);
         }
+
+        [Fact]
+        public async Task Update_tv_success()
+        {
+            _mockTvDal.Setup(x => x.UpdateAsync(It.IsAny<Tv>()));
+
+            TvManager tvManager = new TvManager(_mockTvDal.Object);
+            Tv tv = new Tv { Id = 1, ProductName = "Samsung", Discount = 1, ScreenInch = "49\"", Stock = 2, UnitPrice = 5999, ProductCode = "Code", IsDiscount = true, ScreenType = "LED", Extras = "Extras", BrandId = 1 };
+            IResult result = await tvManager.UpdateAsync(tv);
+
+            Assert.True(result.IsSuccess);
+        }
     }
 }
