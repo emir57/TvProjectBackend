@@ -50,5 +50,17 @@ namespace Business.Tests
 
             Assert.True(result.IsSuccess);
         }
+        [Fact]
+        public async Task Add_tv_success()
+        {
+            _mockTvDal.Setup(x => x.AddAsync(It.IsAny<Tv>()));
+            _mockTvDal.Setup(x => x.GetAllAsync()).ReturnsAsync(_dbTv);
+
+            TvManager tvManager = new TvManager(_mockTvDal.Object);
+            Tv tv = new Tv { Id = 1, ProductName = "Tv Name", Discount = 1, ScreenInch = "49\"", Stock = 2, UnitPrice = 5999, ProductCode = "Code", IsDiscount = true, ScreenType = "LED", Extras = "Extras", BrandId = 1 };
+            IResult result = await tvManager.AddAsync(tv);
+
+            Assert.True(result.IsSuccess);
+        }
     }
 }
