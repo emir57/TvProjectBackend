@@ -1,19 +1,22 @@
 ﻿using Business.Abstract;
+using Business.Concrete;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Moq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Business.Tests
 {
     public class BrandManagerTests
     {
-        Mock<ITvBrandService> _mockBrandService;
+        Mock<ITvBrandDal> _mockTvBrandDal;
         List<TvBrand> _dbBrand;
         public BrandManagerTests()
         {
-            _mockBrandService = new Mock<ITvBrandService>();
+            _mockTvBrandDal = new Mock<ITvBrandDal>();
             _dbBrand = new List<TvBrand>
             {
                 new TvBrand{Id=1,Name="Samsung",Address="",PhoneNumber=""},
@@ -21,14 +24,17 @@ namespace Business.Tests
                 new TvBrand{Id=3,Name="TCL",Address="",PhoneNumber=""},
                 new TvBrand{Id=4,Name="LG",Address="",PhoneNumber=""},
             };
-            _mockBrandService.Setup(x => x.GetListAsync()).ReturnsAsync(new SuccessDataResult<List<TvBrand>>(_dbBrand));
         }
 
         [Fact]
-        public async void Get_all_brands()
+        public async Task Get_all_brand_count_4()
         {
-            var brands = await _mockBrandService.Object.GetListAsync();
-            Assert.Equal(brands.Data.Count, 4);
+            _mockTvBrandDal.Setup(x => x.GetAllAsync()).ReturnsAsync(_dbBrand);
+
+            TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
+            IDataResult<List<TvBrand>> result = await tvBrandManager.GetListAsync();
+
+            Assert.Equal(result.Data.Count, 4);
         }
     }
 }
