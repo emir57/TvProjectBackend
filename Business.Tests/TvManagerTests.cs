@@ -4,8 +4,11 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Business.Tests
@@ -32,9 +35,20 @@ namespace Business.Tests
             _mockTvDal.Setup(x => x.GetAllAsync()).ReturnsAsync(_dbTv);
 
             TvManager tvManager = new TvManager(_mockTvDal.Object);
-            IDataResult<List<Tv>> list = await tvManager.GetListAsync();
+            IDataResult<List<Tv>> result = await tvManager.GetListAsync();
 
-            Assert.Equal(list.Data.Count, 4);
+            Assert.Equal(result.Data.Count, 4);
+        }
+
+        [Theory, InlineData(1)]
+        public async Task Get_by_id_tv(int id)
+        {
+            _mockTvDal.Setup(x => x.GetAsync(It.IsAny<Expression<Func<Tv, bool>>>())).ReturnsAsync(_dbTv.SingleOrDefault(x => x.Id == id));
+
+            TvManager tvManager = new TvManager(_mockTvDal.Object);
+            IDataResult<Tv> result = await tvManager.GetByIdAsync(id);
+
+            Assert.True(result.IsSuccess);
         }
     }
 }
