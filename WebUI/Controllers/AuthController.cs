@@ -104,22 +104,10 @@ namespace WebUI.Controllers
         [Route("resetpassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
-            byte[] passwordHash, passwordSalt;
-            IDataResult<User> getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
-            if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
-            {
-                return BadRequest(ControllerMessages.InvalidKey);
-            }
-            if (!HashingHelper.VerifyPasswordHash(resetPasswordModel.OldPassword, getUser.Data.PasswordHash, getUser.Data.PasswordSalt))
-            {
-                return BadRequest(ControllerMessages.WrongOldPassword);
-            }
-            HashingHelper.CreatePasswordHash(resetPasswordModel.NewPassword, out passwordHash, out passwordSalt);
-            getUser.Data.PasswordHash = passwordHash;
-            getUser.Data.PasswordSalt = passwordSalt;
-            getUser.Data.Key = "";
-            await _userService.UpdateAsync(getUser.Data);
-            return Ok(new SuccessResult(ControllerMessages.SuccessResetPassword));
+            IResult result = await _authService.ResetPasswordAsync(resetPasswordModel);
+            if (result.IsSuccess == false)
+                return BadRequest(result);
+            return Ok(result);
 
         }
         [HttpGet]

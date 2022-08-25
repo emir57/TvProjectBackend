@@ -45,5 +45,10 @@ namespace Business.Constants
         public static string SuccessOrder = "Siparişiniz başarıyla alınmıştır.";
 
         public static string SendCodeSubject = "Giriş İçin doğrulama kodunuz";
+
+        public static string SuccessResetPasswordSendMail = "Şifre Sıfırlama isteği Başarıyla gönderildi";
+        public static string InvalidKey = "Geçersiz Key";
+        public static string WrongOldPassword = "Eski Şifreniz Uyuşmuyor";
+        public static string SuccessResetPassword = "Şifreniz Başarıyla Sıfırlandı";
     }
 }

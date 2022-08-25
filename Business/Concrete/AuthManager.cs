@@ -63,6 +63,29 @@ namespace Business.Concrete
 
         }
 
+        public async Task<IResult> ResetPasswordAsync(ResetPasswordModel resetPasswordModel)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            IDataResult<User> getUser = await _userService.GetByKeyAsync(resetPasswordModel.Key);
+            if (getUser.Data == null || getUser.Data.Key != resetPasswordModel.Key)
+            {
+                return new ErrorResult(Messages.InvalidKey);
+            }
+            if (!HashingHelper.VerifyPasswordHash(resetPasswordModel.OldPassword, getUser.Data.PasswordHash, getUser.Data.PasswordSalt))
+            {
+                return new ErrorResult(Messages.WrongOldPassword);
+            }
+
+            HashingHelper.CreatePasswordHash(resetPasswordModel.NewPassword, out passwordHash, out passwordSalt);
+            getUser.Data.PasswordHash = passwordHash;
+            getUser.Data.PasswordSalt = passwordSalt;
+            getUser.Data.Key = "";
+            await _userService.UpdateAsync(getUser.Data);
+
+            return new SuccessResult(Messages.SuccessResetPassword);
+        }
+
         public async Task<IResult> UserExistsAsync(string email)
         {
             IDataResult<User> result = await _userService.GetByMailAsync(email);

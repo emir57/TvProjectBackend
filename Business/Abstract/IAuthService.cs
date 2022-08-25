@@ -2,9 +2,6 @@
 using Core.Entities.Dtos;
 using Core.Security.JWT;
 using Core.Utilities.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Abstract
@@ -15,5 +12,7 @@ namespace Business.Abstract
         Task<IDataResult<User>> LoginAsync(UserForLoginDto userForLoginDto);
         Task<IResult> UserExistsAsync(string email);
         Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user);
+
+        Task<IResult> ResetPasswordAsync(ResetPasswordModel resetPasswordModel);
     }
 }
