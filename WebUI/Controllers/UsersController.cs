@@ -16,13 +16,15 @@ namespace WebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-        public UsersController(IUserService userService, IRoleService roleService)
+        private readonly IUserAddressService _userAddressService;
+
+        public UsersController(IUserService userService, IRoleService roleService, IUserAddressService userAddressService)
         {
             _userService = userService;
             _roleService = roleService;
+            _userAddressService = userAddressService;
         }
         [HttpGet]
-        [Route("get")]
         public async Task<IActionResult> GetUsers()
         {
             IDataResult<List<User>> result = await _userService.GetListAsync();
@@ -32,8 +34,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getbyid")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
             IDataResult<User> result = await _userService.GetByIdAsync(id);
@@ -43,8 +44,19 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpPost]
-        [Route("update")]
+
+        [HttpGet("{id}/addresses")]
+        public async Task<IActionResult> GetAddressesByUserId(int userId)
+        {
+            IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
+            if (result.IsSuccess == false)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(updateUserDto.UserId);
@@ -63,7 +75,7 @@ namespace WebUI.Controllers
             }
             return Ok(new SuccessResult(Messages.SuccessfulUserUpdate));
         }
-        [HttpPost]
+        [HttpPut]
         [Route("updateAdmin")]
         public async Task<IActionResult> UpdateUserAdmin(UpdateUserAdminDto updateUserAdminDto)
         {
