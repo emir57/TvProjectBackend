@@ -34,7 +34,7 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(UserAddress userAddress)
         {
             IResult result = BusinessRules.Run(
-                await CheckUserAddressCount6Async(userAddress.UserId)
+                await checkUserAddressCount6Async(userAddress.UserId)
                 );
             if (result != null)
             {
@@ -44,9 +44,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CreateUserAddress);
         }
 
-        private async Task<IResult> CheckUserAddressCount6Async(int userId)
+        private async Task<IResult> checkUserAddressCount6Async(int userId)
         {
-            List<UserAddress> addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId);
+            List<UserAddress> addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId && a.DeletedDate != null);
             if (addresses.Count >= 6)
             {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
