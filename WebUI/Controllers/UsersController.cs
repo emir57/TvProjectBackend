@@ -45,7 +45,7 @@ namespace WebUI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}/addresses")]
+        [HttpGet("{userId}/addresses")]
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
             IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
