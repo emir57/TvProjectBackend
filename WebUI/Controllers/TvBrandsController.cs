@@ -79,7 +79,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpDelete]
+        [HttpDelete("{tvBrandId}")]
         public async Task<ActionResult> DeleteTvBrand(int tvBrandId)
         {
             IDataResult<TvBrand> tvBrandResult = await _brandService.GetByIdAsync(tvBrandId);
