@@ -19,7 +19,6 @@ namespace WebUI.Controllers
             _userService = userService;
         }
         [HttpGet]
-        [Route("getall")]
         public async Task<ActionResult> GetRoles()
         {
             IDataResult<List<Role>> result = await _roleService.GetListAsync();
