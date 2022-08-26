@@ -19,19 +19,12 @@ namespace WebUI.Controllers
     public class TvsController : ControllerBase
     {
         private readonly ITvService _tvService;
-        private readonly IPhotoUploadService _imageUploadService;
-        private readonly IPhotoService _photoService;
-        private readonly ICacheManager _cacheManager;
-        public TvsController(ITvService tvService, IPhotoUploadService imageUploadService, IPhotoService photoService)
+        public TvsController(ITvService tvService)
         {
             _tvService = tvService;
-            _imageUploadService = imageUploadService;
-            _photoService = photoService;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
 
         [HttpGet]
-        [Route("getall")]
         public async Task<ActionResult> GetTvs()
         {
             IDataResult<List<TvAndPhotoDto>> result = await _tvService.GetListTvWithPhotosAsync();
