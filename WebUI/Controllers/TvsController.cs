@@ -29,23 +29,7 @@ namespace WebUI.Controllers
             _photoService = photoService;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-        [HttpGet("test")]
-        public async Task<IActionResult> Test()
-        {
-            TvAndPhotoDto dto = new TvAndPhotoDto
-            {
-                BrandId = 1,
-                Discount = 5,
-                ScreenInch = "32"
-            };
-            if (_cacheManager.IsAdd("test"))
-            {
-                return Ok(_cacheManager.Get<TvAndPhotoDto>("test"));
-            }
-            _cacheManager.Add("test", dto, 5);
-            return BadRequest(dto);
 
-        }
         [HttpGet]
         [Route("getall")]
         public async Task<ActionResult> GetTvs()
@@ -57,12 +41,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("removecache")]
-        public IActionResult RemoveCache()
-        {
-            _cacheManager.RemoveByPattern("test2");
-            return Ok();
-        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetTv(int id)
         {
