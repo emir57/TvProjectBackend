@@ -56,7 +56,7 @@ namespace WebUI.Controllers
             return Ok(result);
         }
         [HttpGet("gettvdetail")]
-        public async Task<ActionResult> GetTvDetails(int tvId)
+        public async Task<ActionResult> GetTvDetails()
         {
             IDataResult<List<TvAndPhotoDetailDto>> result = await _tvService.GetListTvDetailsAsync();
             if (result.IsSuccess == false)
