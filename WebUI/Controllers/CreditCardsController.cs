@@ -29,17 +29,7 @@ namespace WebUI.Controllers
             }
             return Ok(result);
         }
-        [HttpGet]
-        [Route("getallbyuserid")]
-        public async Task<IActionResult> GetCardsByUserId(int userId)
-        {
-            IDataResult<List<CreditCardWithUserDto>> result = await _userCreditCardService.GetUserCreditCardsAsync(userId);
-            if (result.IsSuccess == false)
-            {
-                return Ok(result);
-            }
-            return Ok(result);
-        }
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCard(int id)
         {

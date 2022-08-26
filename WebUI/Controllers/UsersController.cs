@@ -17,12 +17,14 @@ namespace WebUI.Controllers
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IUserAddressService _userAddressService;
+        private readonly IUserCreditCardService _userCreditCardService;
 
-        public UsersController(IUserService userService, IRoleService roleService, IUserAddressService userAddressService)
+        public UsersController(IUserService userService, IRoleService roleService, IUserAddressService userAddressService, IUserCreditCardService userCreditCardService)
         {
             _userService = userService;
             _roleService = roleService;
             _userAddressService = userAddressService;
+            _userCreditCardService = userCreditCardService;
         }
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -49,6 +51,17 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetAddressesByUserId(int userId)
         {
             IDataResult<List<UserAddressCityDto>> result = await _userAddressService.GetListCityNameByUserIdAsync(userId);
+            if (result.IsSuccess == false)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("{userId}/creditcards")]
+        public async Task<IActionResult> GetCardsByUserId(int userId)
+        {
+            IDataResult<List<CreditCardWithUserDto>> result = await _userCreditCardService.GetUserCreditCardsAsync(userId);
             if (result.IsSuccess == false)
             {
                 return Ok(result);
