@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Castle.DynamicProxy;
+using System.Threading.Tasks;
+using Core.Utilities.Results;
 
 namespace Core.Aspects.Autofac.Caching
 {
@@ -20,6 +22,16 @@ namespace Core.Aspects.Autofac.Caching
         }
         protected override void OnSuccess(IInvocation invocation)
         {
+            //if return value is ErrorResult when don't remove cache key
+            dynamic returnValue = invocation.ReturnValue as dynamic;
+            if(returnValue is Task)
+            {
+                returnValue.Wait();
+                returnValue = returnValue.Result;
+            }
+            if (returnValue is ErrorResult)
+                return;
+
             _cacheManager.RemoveByPattern(_pattern);
         }
     }
