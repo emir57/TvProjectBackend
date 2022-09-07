@@ -1,16 +1,35 @@
 # TvProjectBackend
+<h3> ⬇️ Used Technologies ⬇️ </h3>
+<ul>
+<li>.Net Core 3.1</li>
+<li>EntityFrameworkCore 3.1</li>
+<li>Autofac</li>
+<li>DynamicProxy</li>
+<li>AutoMapper</li>
+<li>Redis</li>
+<li>Memory Cache</li>
+<li>FluentValidation</li>
+<li>Log4Net</li>
+<li>JWT</li>
+</ul>
+<hr>
+<h3> ⬇️ Aspects ⬇️ </h3>
+<ul>
+<li>Cache and Cache Remove Aspect 🧰</li>
+<li>Transaction Aspect 🧰</li>
+<li>Performance Aspect 🚀</li>
+<li>Validation Aspect ✔️</li>
+<li>Secure Aspect 🛡️</li>
+<li>Log Aspect 📓</li>
+<li>Exception Log Aspect ❌</li>
+</ul>
+<hr>
 Async Programming ⚙️<br>
 Aspect Oriented Programming ⚙️ <br>
-JWT Token 🔐 <br>
 Hashing Password 🔑 <br>
 Email Service 📧 <br>
 <hr>
-Cache and Cache Remove Aspects 🧰 <br>
-Performance Aspects 🚀 <br>
-Validation Aspects ✔️ <br>
-Secure Aspects 🛡️ <br>
-Log Aspects 📓 <br>
-Exception Log Aspects ❌ <br>
+
 
 <a href="https://github.com/emir57/TvProjectFrontend">Frontend</a>
 
