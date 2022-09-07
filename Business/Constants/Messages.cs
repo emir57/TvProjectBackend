@@ -8,7 +8,6 @@
         public static string SuccessUpdate = "Güncelleme Başarılı";
         public static string SuccessGet = "Listeleme Başarılı";
         public static string FailGet = "Listeleme Başarısız";
-        public static string AuthorizationDenied = "Yetkisiz işlem";
         public static string AccessTokenCreated = "Token Başarıyla Oluşturuldu";
         public static string UserNotFound = "Kullanıcı bulunamadı";
         public static string TvNotFound = "Tv bulunamadı";

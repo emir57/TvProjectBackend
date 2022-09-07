@@ -1,5 +1,6 @@
 ﻿using Business.Constants;
 using Castle.DynamicProxy;
+using Core.Exceptions;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -25,7 +26,7 @@ namespace Business.BusinessAspects.Autofac
                 if (claims.Contains(role))
                     return;
 
-            throw new Exception(Messages.AuthorizationDenied);
+            throw new UnAuthorizeException();
         }
     }
 }
