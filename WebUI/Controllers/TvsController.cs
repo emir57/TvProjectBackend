@@ -1,6 +1,4 @@
 ﻿using Business.Abstract;
-using Core.CrossCuttingConcerns.Caching;
-using Core.Utilities.IoC;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -8,9 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Core.CrossCuttingConcerns.Caching.Redis;
-using System;
 
 namespace WebUI.Controllers
 {

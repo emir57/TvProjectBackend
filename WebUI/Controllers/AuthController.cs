@@ -2,7 +2,6 @@
 using Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Entities.Dtos;
-using Core.Security.Hashing;
 using Core.Security.JWT;
 using Core.Utilities.Email;
 using Core.Utilities.Messages;

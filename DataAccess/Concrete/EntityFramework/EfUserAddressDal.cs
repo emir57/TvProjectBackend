@@ -2,13 +2,12 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
