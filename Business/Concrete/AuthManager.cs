@@ -28,7 +28,9 @@ namespace Business.Concrete
         public async Task<IDataResult<AccessToken>> CreateAccessTokenAsync(User user)
         {
             IDataResult<List<Role>> claims = await _userService.GetClaimsAsync(user);
-            AccessToken token = _tokenHelper.CreateToken(user,claims.Data.ToList());
+
+            AccessToken token = _tokenHelper.CreateToken(user, claims.Data.ToList());
+
             return new SuccessDataResult<AccessToken>(token, Messages.AccessTokenCreated);
         }
         [ValidationAspect(typeof(UserForLoginDtoValidator))]
@@ -36,27 +38,30 @@ namespace Business.Concrete
         {
             IDataResult<User> userResult = await _userService.GetByMailAsync(userForLoginDto.Email);
             if (userResult.Data == null)
-            {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
-            }
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userResult.Data.PasswordHash, userResult.Data.PasswordSalt))
-            {
+
+            if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password,
+                    userResult.Data.PasswordHash,
+                    userResult.Data.PasswordSalt) == false)
                 return new ErrorDataResult<User>(Messages.WrongPassword);
-            }
+
             return new SuccessDataResult<User>(userResult.Data, Messages.SuccessfulLogin);
         }
         [ValidationAspect(typeof(UserForRegisterDtoValidator))]
         public async Task<IDataResult<User>> RegisterAsync(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
-            
+
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
             User user = _mapper.Map<User>(userForRegisterDto);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.Status = true;
+
             await _userService.AddAsync(user);
             await _userService.AddUserRoleAsync(user);
+
             return new SuccessDataResult<User>(user, Messages.SuccessfulRegister);
 
         }

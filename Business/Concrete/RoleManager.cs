@@ -6,12 +6,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -35,20 +30,19 @@ namespace Business.Concrete
         {
             IResult result = BusinessRules.Run(
                 await CheckRoleIsAdd(user, role));
+
             if (result == null)
-            {
                 await _roleDal.AddUserRoleAsync(user, role);
-            }
+
             return new SuccessResult();
         }
 
         private async Task<IResult> CheckRoleIsAdd(User user, Role role)
         {
             UserRole userRole = await _roleDal.GetUserRoleAsync(x => x.UserId == user.Id && x.RoleId == role.Id);
-            if(userRole == null)
-            {
+            if (userRole == null)
                 return new SuccessResult();
-            }
+
             return new ErrorResult();
         }
 
@@ -60,9 +54,8 @@ namespace Business.Concrete
                 CheckAdminRole(entity)
                 );
             if (result != null)
-            {
                 return result;
-            }
+
             await _roleDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
@@ -73,6 +66,7 @@ namespace Business.Concrete
             Role role = await _roleDal.GetAsync(x => x.Id == roleId);
             if (role == null)
                 return new ErrorDataResult<Role>(Messages.RoleNotFound);
+
             return new SuccessDataResult<Role>(role, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
@@ -97,9 +91,8 @@ namespace Business.Concrete
                 CheckAdminRole(entity)
                 );
             if (result != null)
-            {
                 return result;
-            }
+
             await _roleDal.UpdateAsync(entity);
             return new SuccessResult(Messages.SuccessUpdate);
         }
@@ -107,9 +100,8 @@ namespace Business.Concrete
         private IResult CheckAdminRole(Role entity)
         {
             if (entity.Name == "Admin")
-            {
                 return new ErrorResult(Messages.DontChangeAdminRole);
-            }
+
             return new SuccessResult();
         }
     }

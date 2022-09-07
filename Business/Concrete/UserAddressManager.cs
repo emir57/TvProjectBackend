@@ -10,12 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -37,9 +32,8 @@ namespace Business.Concrete
                 await checkUserAddressCount6Async(userAddress.UserId)
                 );
             if (result != null)
-            {
                 return result;
-            }
+
             await _userAddressDal.AddAsync(userAddress);
             return new SuccessResult(Messages.CreateUserAddress);
         }
@@ -48,9 +42,8 @@ namespace Business.Concrete
         {
             List<UserAddress> addresses = await _userAddressDal.GetAllAsync(a => a.UserId == userId && a.DeletedDate != null);
             if (addresses.Count >= 6)
-            {
                 return new ErrorResult(Messages.UserAddressMaximumCount6);
-            }
+
             return new SuccessResult();
         }
 
@@ -68,6 +61,7 @@ namespace Business.Concrete
             UserAddress userAddress = await _userAddressDal.GetAsync(x => x.Id == addressId);
             if (userAddress == null)
                 return new ErrorDataResult<UserAddress>(Messages.AddressIsNotFound);
+
             return new SuccessDataResult<UserAddress>(userAddress);
         }
         [SecuredOperation("User")]

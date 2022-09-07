@@ -9,12 +9,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -64,6 +59,7 @@ namespace Business.Concrete
             TvBrand tvBrand = await _tvBrandDal.GetAsync(x => x.Id == brandId);
             if (tvBrand == null)
                 return new ErrorDataResult<TvBrand>(Messages.TvBrandNotFound);
+
             return new SuccessDataResult<TvBrand>(tvBrand, Messages.SuccessGet);
         }
         [CacheAspect]

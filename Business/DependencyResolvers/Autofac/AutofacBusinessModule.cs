@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
@@ -18,7 +15,10 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
+            #region JWT
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
+            #endregion
+
             #region Business
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<CityManager>().As<ICityService>().SingleInstance();
@@ -33,6 +33,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<UserCodeManager>().As<IUserCodeService>().SingleInstance();
             #endregion
+
             #region DataAccess
             builder.RegisterType<EfCityDal>().As<ICityDal>().SingleInstance();
             builder.RegisterType<EfPhotoDal>().As<IPhotoDal>().SingleInstance();
@@ -46,10 +47,11 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserCodeDal>().As<IUserCodeDal>().SingleInstance();
             #endregion
 
+            #region Email Service
             builder.RegisterType<SmtpEmailSender>().As<IEmailService>().SingleInstance();
+            #endregion
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions
                 {

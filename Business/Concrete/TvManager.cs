@@ -54,6 +54,7 @@ namespace Business.Concrete
             Tv tv = await _tvDal.GetAsync(x => x.Id == tvId);
             if (tv == null)
                 return new ErrorDataResult<Tv>(Messages.TvNotFound);
+
             return new SuccessDataResult<Tv>(tv, Messages.SuccessGet);
         }
         [CacheAspect]
@@ -66,12 +67,9 @@ namespace Business.Concrete
         private IDataResult<List<Tv>> ApplyDiscount(List<Tv> products)
         {
             foreach (var product in products)
-            {
                 if (product.IsDiscount)
-                {
                     product.UnitPrice = product.UnitPrice - (product.UnitPrice * product.Discount / 100);
-                }
-            }
+
             return new SuccessDataResult<List<Tv>>(products);
         }
 
@@ -121,9 +119,8 @@ namespace Business.Concrete
         {
             List<Tv> tvs = await _tvDal.GetAllAsync();
             if (tvs.Any(x => x.ProductName == entity.ProductName))
-            {
                 return new ErrorResult(Messages.ProductAlreadyExists);
-            }
+
             return new SuccessResult();
         }
         [PerformanceAspect(5)]
@@ -133,11 +130,5 @@ namespace Business.Concrete
             List<TvAndPhotoDetailDto> tvAndPhotoDetailDtos = await _tvDal.GetTvDetailsAsync(x => x.BrandId == categoryId);
             return new SuccessDataResult<List<TvAndPhotoDetailDto>>(tvAndPhotoDetailDtos, Messages.SuccessGet);
         }
-
-        //public async Task<IDataResult<List<TvAndPhotoDto>>> GetTvWithPhotos(Expression<Func<TvAndPhotoDto, bool>> filter)
-        //{
-        //    var result = await _tvDal.GetTvWithPhotos(filter);
-        //    return new SuccessDataResult<List<TvAndPhotoDto>>(result, Messages.SuccessGet);
-        //}
     }
 }

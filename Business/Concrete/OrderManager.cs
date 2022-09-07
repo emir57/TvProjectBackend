@@ -10,13 +10,8 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -37,14 +32,12 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IResult> AddAsync(Order entity)
         {
-            Thread.Sleep(4000);
             IResult result = BusinessRules.Run(
                 await CheckTvAsync((int)entity.TvId),
                 await CheckProductStockAsync((int)entity.TvId));
             if (result != null)
-            {
                 return result;
-            }
+
             entity.ShippedDate = DateTime.Now;
             await _orderDal.AddAsync(entity);
             await UpdateTvAsync((int)entity.TvId, StockStatus.Decrease);
@@ -53,7 +46,7 @@ namespace Business.Concrete
 
         private async Task UpdateTvAsync(int tvId, StockStatus stockStatus)
         {
-            var tv = (await _tvService.GetByIdAsync(tvId)).Data;
+            Tv tv = (await _tvService.GetByIdAsync(tvId)).Data;
             switch (stockStatus)
             {
                 case StockStatus.Increase:
@@ -84,9 +77,8 @@ namespace Business.Concrete
         {
             var tv = await _tvService.GetByIdAsync(tvId);
             if (tv.Data.Stock < 1)
-            {
                 return new ErrorResult(Messages.TvStock0);
-            }
+
             return new SuccessResult();
         }
 
@@ -96,6 +88,7 @@ namespace Business.Concrete
         public async Task<IResult> DeleteAsync(Order entity)
         {
             await UpdateTvAsync((int)entity.TvId, StockStatus.Increase);
+
             await _orderDal.DeleteAsync(entity);
             return new SuccessResult(Messages.SuccessDelete);
         }
@@ -107,6 +100,7 @@ namespace Business.Concrete
             Order order = await _orderDal.GetAsync(x => x.Id == orderId);
             if (order == null)
                 return new ErrorDataResult<Order>(Messages.OrderIsNotFound);
+
             return new SuccessDataResult<Order>(order, Messages.SuccessGet);
         }
         [SecuredOperation("Admin")]
@@ -135,7 +129,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OrderDto>>(orderDtos, Messages.SuccessGet);
         }
         [SecuredOperation("User,Admin")]
-        //[ValidationAspect(typeof())]
+        [ValidationAspect(typeof(OrderValidator))]
         [CacheRemoveAspect("IOrderService.Get")]
         [PerformanceAspect(5)]
         public async Task<IResult> UpdateAsync(Order entity)

@@ -1,12 +1,9 @@
 ﻿using Core.Entities.Dtos;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Validators.FluentValidation
 {
-    public class UserForRegisterDtoValidator:AbstractValidator<UserForRegisterDto>
+    public class UserForRegisterDtoValidator : AbstractValidator<UserForRegisterDto>
     {
         public UserForRegisterDtoValidator()
         {

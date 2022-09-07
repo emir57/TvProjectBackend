@@ -8,12 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -50,6 +45,7 @@ namespace Business.Concrete
             City city = await _citydal.GetAsync(x => x.Id == cityId);
             if (city == null)
                 return new ErrorDataResult<City>(Messages.CityIsNotFound);
+
             return new SuccessDataResult<City>(city, Messages.SuccessGet);
         }
         [CacheAspect]
