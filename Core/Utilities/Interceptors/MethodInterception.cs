@@ -1,12 +1,10 @@
 ﻿using Castle.DynamicProxy;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Utilities.Interceptors
 {
-    public class MethodInterception:MethodInterceptionBaseAttributes
+    public class MethodInterception : MethodInterceptionBaseAttributes
     {
         protected virtual void OnBefore(IInvocation invocation) { }
         protected virtual void OnSuccess(IInvocation invocation) { }
@@ -20,16 +18,13 @@ namespace Core.Utilities.Interceptors
             try
             {
                 invocation.Proceed();
-                var task = invocation.ReturnValue as Task;
+                Task task = invocation.ReturnValue as Task;
                 if (task != null)
-                {
                     if (task.IsFaulted)
                     {
                         isSuccess = false;
                         OnException(invocation, task.Exception);
                     }
-                        
-                }
             }
             catch (Exception exception)
             {
@@ -40,9 +35,7 @@ namespace Core.Utilities.Interceptors
             finally
             {
                 if (isSuccess)
-                {
                     OnSuccess(invocation);
-                }
             }
             OnAfter(invocation);
         }

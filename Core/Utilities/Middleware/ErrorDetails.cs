@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Text;
 
 namespace Core.Utilities.Middleware
 {
@@ -10,8 +8,6 @@ namespace Core.Utilities.Middleware
         public string Message { get; set; }
 
         public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+            => JsonConvert.SerializeObject(this);
     }
 }
