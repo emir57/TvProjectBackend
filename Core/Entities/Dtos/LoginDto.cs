@@ -1,10 +1,4 @@
-﻿using Core.Entities;
-using Core.Entities.Concrete;
-using Core.Entities.Dtos;
-using Core.Security.JWT;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Security.JWT;
 
 namespace Core.Entities.Dtos
 {

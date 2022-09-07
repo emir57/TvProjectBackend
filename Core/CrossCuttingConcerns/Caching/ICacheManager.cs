@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.CrossCuttingConcerns.Caching
+﻿namespace Core.CrossCuttingConcerns.Caching
 {
     public interface ICacheManager
     {

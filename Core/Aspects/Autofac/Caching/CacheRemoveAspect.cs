@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Core.Aspects.Autofac.Caching
 {
-    public class CacheRemoveAspect:MethodInterception
+    public class CacheRemoveAspect : MethodInterception
     {
         private string _pattern;
         private ICacheManager _cacheManager;
         public CacheRemoveAspect(string pattern)
         {
             _pattern = pattern;
-            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>(); 
+            _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
         protected override void OnSuccess(IInvocation invocation)
         {
             //if return value is ErrorResult when don't remove cache key
             dynamic returnValue = invocation.ReturnValue as dynamic;
-            if(returnValue is Task)
+            if (returnValue is Task)
             {
                 returnValue.Wait();
                 returnValue = returnValue.Result;

@@ -1,7 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Extensions;
 using Core.Security.Encryption;
-using Core.Utilities.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,7 +8,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace Core.Security.JWT
 {
@@ -45,12 +43,12 @@ namespace Core.Security.JWT
             var jwt = new JwtSecurityToken(
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
-                claims:SetClaims(user,operationClaims),
+                claims: SetClaims(user, operationClaims),
                 notBefore: DateTime.Now,
                 expires: _accessTokenExpiration,
                 signingCredentials: signingCredentials);
             return jwt;
-    }
+        }
 
         private IEnumerable<Claim> SetClaims(User user, List<Role> operationClaims)
         {
@@ -62,5 +60,5 @@ namespace Core.Security.JWT
 
             return claims;
         }
-    } 
+    }
 }

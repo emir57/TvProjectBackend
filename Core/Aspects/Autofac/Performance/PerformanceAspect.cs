@@ -1,15 +1,12 @@
 ﻿using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Core.Aspects.Autofac.Performance
 {
-    public class PerformanceAspect:MethodInterception
+    public class PerformanceAspect : MethodInterception
     {
         private int _interval;
         private Stopwatch _stopwatch;
