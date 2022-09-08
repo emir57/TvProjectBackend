@@ -32,9 +32,9 @@ namespace DataAccess.Contexts
 
         private string getConnectionString(string name)
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
-            IConfigurationRoot configuration = builder.Build();
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
             string connectionString = configuration.GetConnectionString(name);
             return connectionString;
