@@ -1,6 +1,8 @@
 ﻿using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace DataAccess.Contexts
 {
@@ -12,7 +14,7 @@ namespace DataAccess.Contexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TvProjectDb;integrated security=true;");
+            optionsBuilder.UseSqlServer(getConnectionString("SqlServer"));
         }
 
         public DbSet<User> Users { get; set; }
@@ -27,5 +29,15 @@ namespace DataAccess.Contexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<UserCode> UserCodes { get; set; }
+
+        private string getConnectionString(string name)
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
+            IConfigurationRoot configuration = builder.Build();
+
+            string connectionString = configuration.GetConnectionString(name);
+            return connectionString;
+        }
     }
 }
