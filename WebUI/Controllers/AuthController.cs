@@ -34,14 +34,12 @@ namespace WebUI.Controllers
         {
             IResult checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
             if (checkUser.IsSuccess == false)
-            {
                 return BadRequest(checkUser.Message);
-            }
+
             IDataResult<User> result = await _authService.RegisterAsync(userForRegisterDto, userForRegisterDto.Password);
             if (result.IsSuccess == false)
-            {
                 return BadRequest(result);
-            }
+
             return Ok(result);
         }
         [HttpPost]
@@ -50,26 +48,26 @@ namespace WebUI.Controllers
         {
             IDataResult<User> result = await _authService.LoginAsync(userForLoginDto);
             if (result.IsSuccess == false)
-            {
                 return BadRequest(result);
-            }
-            IDataResult<AccessToken> token = await _authService.CreateAccessTokenAsync(result.Data);
+
+
+            IDataResult<AccessToken> tokenResult = await _authService.CreateAccessTokenAsync(result.Data);
             LoginDto loginingUser = new LoginDto
             {
-                AccessToken = token.Data,
+                AccessToken = tokenResult.Data,
                 User = _mapper.Map<LoginingUser>(result.Data)
             };
             return Ok(new SuccessDataResult<LoginDto>(loginingUser, result.Message));
         }
+
         [HttpPost]
         [Route("checkuser")]
         public async Task<ActionResult> CheckUser(User user)
         {
             IDataResult<User> checkUser = await _userService.GetByMailAsync(user.Email);
             if (checkUser.Data == null)
-            {
                 return BadRequest(new ErrorResult());
-            }
+
             return Ok(new SuccessResult());
         }
         [HttpGet]
@@ -78,9 +76,8 @@ namespace WebUI.Controllers
         {
             IDataResult<User> user = await _userService.GetByIdAsync(id);
             if (user.Data == null)
-            {
                 return BadRequest(new ErrorResult());
-            }
+
             return Ok(new SuccessDataResult<User>(user.Data));
         }
 
@@ -90,13 +87,14 @@ namespace WebUI.Controllers
         {
             IDataResult<User> userCheck = await _userService.GetByMailAsync(email.Email);
             if (userCheck.Data == null)
-            {
                 return BadRequest(new ErrorResult(ControllerMessages.UserNotFound));
-            }
+
             string key = Guid.NewGuid().ToString();
             userCheck.Data.Key = key;
+
             await _userService.UpdateAsync(userCheck.Data);
             await _emailService.SendEmailAsync(email.Email, "Şifre Sıfırlama", $"<a href='http://localhost:4200/resetpassword/{key}'>Şifreni Sıfırlamak İçin Tıkla</a>");
+
             return Ok(new SuccessResult(ControllerMessages.SuccessResetPasswordSendMail));
         }
         [HttpPost]
@@ -106,6 +104,7 @@ namespace WebUI.Controllers
             IResult result = await _authService.ResetPasswordAsync(resetPasswordModel);
             if (result.IsSuccess == false)
                 return BadRequest(result);
+
             return Ok(result);
 
         }
@@ -115,9 +114,8 @@ namespace WebUI.Controllers
         {
             IDataResult<User> user = await _userService.GetByIdAsync(id);
             if (user.Data == null)
-            {
                 return BadRequest(new ErrorDataResult<User>(ControllerMessages.UserNotFound));
-            }
+
             IDataResult<List<Role>> roles = await _userService.GetClaimsAsync(user.Data);
             return Ok(roles);
         }
