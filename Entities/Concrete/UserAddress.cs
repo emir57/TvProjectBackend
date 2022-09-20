@@ -22,6 +22,8 @@ namespace Entities.Concrete
 
         public DateTime? DeletedDate { get; set; }
 
+
+        public UserAddress() { }
         public UserAddress(int id, string addressName, int userId, string addressText, byte? cityId)
         {
             Id = id;
