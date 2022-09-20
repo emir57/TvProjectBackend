@@ -96,6 +96,16 @@ namespace Business.Tests
             Assert.True(result.IsSuccess);
         }
 
+        [Fact]
+        public async Task Delete_UserAddress_success()
+        {
+            _mockUserAddressDal.Setup(x => x.DeleteAsync(It.IsAny<UserAddress>()));
+
+            UserAddressManager userAddressManager = new UserAddressManager(_mockUserAddressDal.Object);
+            IResult result = await userAddressManager.DeleteAsync(new UserAddress());
+
+            Assert.True(result.IsSuccess);
+        }
 
 
         private IEnumerable<UserAddress> userAddresses()
