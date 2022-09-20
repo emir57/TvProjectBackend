@@ -3,8 +3,10 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,6 +29,28 @@ namespace Business.Tests
             IDataResult<List<UserAddress>> result = await userAddressManager.GetListAsync();
 
             Assert.Equal(5, result.Data.Count);
+        }
+
+        [Fact]
+        public async Task Add_success()
+        {
+            _mockUserAddressDal.Setup(x => x.GetAllAsync(It.IsAny<Expression<Func<UserAddress, bool>>>())).ReturnsAsync(
+                userAddresses().ToList()
+                );
+            _mockUserAddressDal.Setup(x => x.AddAsync(It.IsAny<UserAddress>()));
+
+            UserAddress userAddress = new UserAddress()
+            {
+                AddressName = "Address name",
+                AddressText = "Address text",
+                CityId = 1,
+                UserId = 1
+            };
+
+            UserAddressManager userAddressManager = new UserAddressManager(_mockUserAddressDal.Object);
+            IResult result = await userAddressManager.AddAsync(userAddress);
+
+            Assert.True(result.IsSuccess);
         }
 
 
