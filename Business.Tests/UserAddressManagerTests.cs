@@ -53,12 +53,40 @@ namespace Business.Tests
             Assert.True(result.IsSuccess);
         }
 
+        [Fact]
+        public async Task Add_UserAddress_Count_6_error()
+        {
+            _mockUserAddressDal.Setup(x => x.GetAllAsync(It.IsAny<Expression<Func<UserAddress, bool>>>())).ReturnsAsync(
+                userIdCount6UserAddresses().ToList()
+                );
+            _mockUserAddressDal.Setup(x => x.AddAsync(It.IsAny<UserAddress>()));
+
+            UserAddress userAddress = new UserAddress()
+            {
+                AddressName = "Address name",
+                AddressText = "Address text",
+                CityId = 1,
+                UserId = 1
+            };
+            UserAddressManager userAddressManager = new UserAddressManager(_mockUserAddressDal.Object);
+            IResult result = await userAddressManager.AddAsync(userAddress);
+
+            Assert.False(result.IsSuccess);
+        }
+
 
         private IEnumerable<UserAddress> userAddresses()
         {
             for (int i = 1; i < 6; i++)
             {
                 yield return new UserAddress(i, $"Address Name {i}", i, $"Address Text {i}", (byte)i);
+            }
+        }
+        private IEnumerable<UserAddress> userIdCount6UserAddresses()
+        {
+            for (int i = 1; i < 7; i++)
+            {
+                yield return new UserAddress(i, $"Address Name {i}", 1, $"Address Text {i}", (byte)i);
             }
         }
     }
