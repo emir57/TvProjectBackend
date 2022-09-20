@@ -1,6 +1,6 @@
 ﻿namespace Core.Entities.Dtos
 {
-    public class LoginingUser
+    public class LoginingUserDto : IDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

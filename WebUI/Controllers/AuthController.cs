@@ -55,7 +55,7 @@ namespace WebUI.Controllers
             LoginDto loginingUser = new LoginDto
             {
                 AccessToken = tokenResult.Data,
-                User = _mapper.Map<LoginingUser>(result.Data)
+                User = _mapper.Map<LoginingUserDto>(result.Data)
             };
             return Ok(new SuccessDataResult<LoginDto>(loginingUser, result.Message));
         }

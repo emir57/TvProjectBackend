@@ -8,7 +8,7 @@ namespace Business.Helpers
     {
         public AutoMapperHelper()
         {
-            CreateMap<User, LoginingUser>().ReverseMap();
+            CreateMap<User, LoginingUserDto>().ReverseMap();
             CreateMap<User, UserForRegisterDto>().ReverseMap();
 
         }
