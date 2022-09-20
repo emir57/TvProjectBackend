@@ -85,6 +85,17 @@ namespace Business.Tests
             Assert.False(result.IsSuccess);
         }
 
+        [Fact]
+        public async Task Update_userAddress_success()
+        {
+            _mockUserAddressDal.Setup(x => x.UpdateAsync(It.IsAny<UserAddress>()));
+
+            UserAddressManager userAddressManager = new UserAddressManager(_mockUserAddressDal.Object);
+            IResult result = await userAddressManager.UpdateAsync(new UserAddress());
+
+            Assert.True(result.IsSuccess);
+        }
+
 
 
         private IEnumerable<UserAddress> userAddresses()
