@@ -18,6 +18,7 @@ namespace Core.Aspects.Autofac.Exception
         private IHttpContextAccessor _httpContextAccessor;
         public ExceptionLogAspect(Type loggerService)
         {
+            //todo: Refactoring
             if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerService))
             {
                 throw new System.Exception(AspectMessages.WrongLoggingType);
@@ -34,7 +35,7 @@ namespace Core.Aspects.Autofac.Exception
 
         private LogDetailWithException GetLogDetail(IInvocation invocation)
         {
-            var logParameters = new List<LogParameter>();
+            List<LogParameter> logParameters = new List<LogParameter>();
             for (int i = 0; i < invocation.Arguments.Length; i++)
             {
                 logParameters.Add(new LogParameter
@@ -44,9 +45,11 @@ namespace Core.Aspects.Autofac.Exception
                     Value = invocation.Arguments[i]
                 });
             }
+
             string userEmail = _httpContextAccessor.HttpContext.User.GetUserEmail();
             List<string> userRoles = _httpContextAccessor.HttpContext.User.ClaimRoles();
-            var logDetailWithException = new LogDetailWithException
+
+            LogDetailWithException logDetailWithException = new LogDetailWithException
             {
                 MethodName = invocation.Method.Name,
                 LogParameters = logParameters,
