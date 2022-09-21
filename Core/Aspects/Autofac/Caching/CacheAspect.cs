@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,9 +57,11 @@ namespace Core.Aspects.Autofac.Caching
     {
         public static string GenerateMethodKey(IInvocation invocation)
         {
+            Func<object, string> argumentsValue = x => x?.ToString() ?? "<Null>";
+
             string methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
-            string key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
+            string key = $"{methodName}({string.Join(",", arguments.Select(argumentsValue))})";
             return key;
         }
     }
