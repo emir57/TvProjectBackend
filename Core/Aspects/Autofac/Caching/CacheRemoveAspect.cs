@@ -23,7 +23,7 @@ namespace Core.Aspects.Autofac.Caching
             dynamic returnValue = invocation.ReturnValue as dynamic;
             if (returnValue is Task)
             {
-                returnValue.Wait();
+                returnValue.GetAwaiter().GetResult(); // returnValue.Wait();
                 returnValue = returnValue.Result;
             }
             if (returnValue is ErrorResult)
