@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.Log4Net;
+using Core.Exceptions;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -18,11 +19,8 @@ namespace Core.Aspects.Autofac.Exception
         private IHttpContextAccessor _httpContextAccessor;
         public ExceptionLogAspect(Type loggerService)
         {
-            //todo: Refactoring
-            if (!typeof(LoggerServiceBase).IsAssignableFrom(loggerService))
-            {
-                throw new System.Exception(AspectMessages.WrongLoggingType);
-            }
+            WrongLoggingTypeException.ThrowIfNotEqual(_loggerServiceBase, loggerService);
+
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
