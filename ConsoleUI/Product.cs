@@ -19,6 +19,11 @@ namespace ConsoleUI
         public string Name { get; set; }
     }
 
+    class ProductDto : IDto
+    {
+
+    }
+
     interface IMapEntity
     {
 
