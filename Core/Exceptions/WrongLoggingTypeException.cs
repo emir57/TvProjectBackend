@@ -17,9 +17,9 @@ namespace Core.Exceptions
         {
         }
 
-        public static void ThrowIfNotEqualType(object arg1, Type arg2)
+        public static void ThrowIfNotEqualType(Type arg1, Type arg2)
         {
-            if (arg1.GetType().IsAssignableFrom(arg2) == false)
+            if (arg1.IsAssignableFrom(arg2) == false)
                 throw new WrongLoggingTypeException();
         }
     }
