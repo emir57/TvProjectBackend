@@ -19,7 +19,7 @@ namespace Core.Aspects.Autofac.Exception
         private IHttpContextAccessor _httpContextAccessor;
         public ExceptionLogAspect(Type loggerService)
         {
-            WrongLoggingTypeException.ThrowIfNotEqualType(_loggerServiceBase.GetType(), loggerService);
+            WrongLoggingTypeException.ThrowIfNotEqualType(typeof(LoggerServiceBase), loggerService);
 
             _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(loggerService);
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();

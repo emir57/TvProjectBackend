@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entities;
+using ServiceStack;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,16 +30,21 @@ namespace ConsoleUI
             ProductReadDto productReadDto = mapper.Map<ProductReadDto>(new Product() { Id = 1, Name = "Foo" });
 
             Console.WriteLine($"{productReadDto.Id} {productReadDto.Name}");
+
+            Console.WriteLine(String.Join("\n", productReadDto.GetType().GetProperties().Select(x => x.GetCustomAttribute<DenemeAttribute>().Priority)));
         }
     }
 
-    public class AutoMapperProfile : Profile
+    public class AutoMapperProfile : BaseAssemblyProfile
     {
         public AutoMapperProfile()
         {
             DefaultAssemblyScan(Assembly.GetExecutingAssembly(), Assembly.GetExecutingAssembly());
         }
+    }
 
+    public class BaseAssemblyProfile : Profile
+    {
         protected virtual void EntryAssemblyScan()
         {
             var assembly = Assembly.GetEntryAssembly();
