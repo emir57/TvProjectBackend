@@ -14,7 +14,7 @@ namespace Core.Aspects.Autofac.Validation
         private Type _validatorType;
         public ValidationAspect(Type validatorType)
         {
-            WrongValidationTypeException.ThrowIfNotEqualType(_validatorType, validatorType);
+            WrongValidationTypeException.ThrowIfNotEqualType(typeof(IValidator), validatorType);
 
             _validatorType = validatorType;
         }
