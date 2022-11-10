@@ -105,8 +105,8 @@ namespace Business.Concrete
 
         public async Task<IResult> VerifyCodeAsync(VerifyCodeDto verifyCodeDto)
         {
-            var getUserCode = await _userCodeService.GetByUserIdAsync(verifyCodeDto.UserId);
-            if (getUserCode.Data.Code == verifyCodeDto.Code)
+            IDataResult<UserCode> userCodeResult = await _userCodeService.GetByUserIdAsync(verifyCodeDto.UserId);
+            if (userCodeResult.Data.Code == verifyCodeDto.Code)
                 return new SuccessResult();
             return new ErrorResult();
         }
@@ -114,21 +114,21 @@ namespace Business.Concrete
         public async Task<IResult> SendCodeAsync(SendCodeDto sendCodeDto)
         {
             string code = new Random().Next(1000, 9999).ToString();
-            var user = await GetByIdAsync(sendCodeDto.UserId);
-            if (user.IsSuccess == false)
+            IDataResult<User> userResult = await GetByIdAsync(sendCodeDto.UserId);
+            if (userResult.IsSuccess == false)
                 return new ErrorResult(Messages.UserNotFound);
 
-            var getUserCode = await _userCodeService.GetByUserIdAsync(sendCodeDto.UserId);
-            if (getUserCode.IsSuccess == false)
+            IDataResult<UserCode> userCodeResult = await _userCodeService.GetByUserIdAsync(sendCodeDto.UserId);
+            if (userCodeResult.IsSuccess == false)
             {
-                await addUserCode(user.Data, code);
+                await addUserCodeAsync(userResult.Data, code);
                 return new SuccessResult();
             }
-            await updateUserCode(user.Data, getUserCode.Data, code);
+            await updateUserCode(userResult.Data, userCodeResult.Data, code);
 
             return new SuccessResult();
         }
-        private async Task addUserCode(User user, string code)
+        private async Task addUserCodeAsync(User user, string code)
         {
             UserCode userCode = new UserCode
             {
@@ -151,9 +151,9 @@ namespace Business.Concrete
 
         public async Task<IResult> ResetPasswordAsync(ChangePasswordModel changePasswordModel)
         {
-            IDataResult<User> user = await GetByIdAsync(changePasswordModel.UserId);
-            if (HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, user.Data.PasswordHash,
-                user.Data.PasswordSalt) == false)
+            IDataResult<User> userResult = await GetByIdAsync(changePasswordModel.UserId);
+            if (HashingHelper.VerifyPasswordHash(changePasswordModel.OldPassword, userResult.Data.PasswordHash,
+                userResult.Data.PasswordSalt) == false)
             {
                 return new ErrorResult(Messages.WrongPassword);
             }
@@ -161,10 +161,10 @@ namespace Business.Concrete
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(changePasswordModel.NewPassword, out passwordHash, out passwordSalt);
 
-            user.Data.PasswordHash = passwordHash;
-            user.Data.PasswordSalt = passwordSalt;
+            userResult.Data.PasswordHash = passwordHash;
+            userResult.Data.PasswordSalt = passwordSalt;
 
-            IResult result = await UpdateAsync(user.Data);
+            IResult result = await UpdateAsync(userResult.Data);
 
             if (result.IsSuccess == false)
                 return new ErrorResult(result.Message);
