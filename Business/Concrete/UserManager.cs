@@ -49,6 +49,7 @@ namespace Business.Concrete
             User user = await _userDal.GetAsync(x => x.Id == userId);
             if (user == null)
                 return new ErrorDataResult<User>(Messages.UserNotFound);
+
             return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
         public async Task<IDataResult<User>> GetByKeyAsync(string key)
@@ -76,6 +77,9 @@ namespace Business.Concrete
         public async Task<IDataResult<User>> GetByMailAsync(string email)
         {
             User user = await _userDal.GetAsync(u => u.Email == email);
+            if (user == null)
+                return new ErrorDataResult<User>(Messages.UserNotFound);
+
             return new SuccessDataResult<User>(user, Messages.SuccessGet);
         }
 
