@@ -26,8 +26,7 @@ namespace Business.Concrete
             if (result != null)
                 return result;
 
-            string dataBasePath = "";
-            FileUploadHelper.Upload(file, out dataBasePath);
+            FileUploadHelper.Upload(file, out string dataBasePath);
 
             photo.ImageUrl = dataBasePath;
             photo.Id = 0;
