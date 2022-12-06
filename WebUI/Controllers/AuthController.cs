@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebUI.Controllers
+namespace WebUI.Controllers;
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,8 +28,7 @@ namespace WebUI.Controllers
             _emailService = emailService;
             _mapper = mapper;
         }
-        [HttpPost]
-        [Route("register")]
+        [HttpPost("register")]
         public async Task<ActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             IResult checkUser = await _authService.UserExistsAsync(userForRegisterDto.Email);
@@ -42,8 +41,7 @@ namespace WebUI.Controllers
 
             return Ok(result);
         }
-        [HttpPost]
-        [Route("login")]
+        [HttpPost("login")]
         public async Task<ActionResult> Login(UserForLoginDto userForLoginDto)
         {
             IDataResult<User> result = await _authService.LoginAsync(userForLoginDto);
@@ -60,8 +58,7 @@ namespace WebUI.Controllers
             return Ok(new SuccessDataResult<LoginDto>(loginingUser, result.Message));
         }
 
-        [HttpPost]
-        [Route("checkuser")]
+        [HttpPost("checkuser")]
         public async Task<ActionResult> CheckUser(User user)
         {
             IDataResult<User> checkUser = await _userService.GetByMailAsync(user.Email);
@@ -70,8 +67,7 @@ namespace WebUI.Controllers
 
             return Ok(new SuccessResult());
         }
-        [HttpGet]
-        [Route("getuser")]
+        [HttpGet("getuser")]
         public async Task<ActionResult> GetUser(int id)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(id);
@@ -81,8 +77,7 @@ namespace WebUI.Controllers
             return Ok(new SuccessDataResult<User>(user.Data));
         }
 
-        [HttpPost]
-        [Route("sendemail")]
+        [HttpPost("sendemail")]
         public async Task<IActionResult> SendEmail(SendMailModel email)
         {
             IDataResult<User> userCheck = await _userService.GetByMailAsync(email.Email);
@@ -97,8 +92,7 @@ namespace WebUI.Controllers
 
             return Ok(new SuccessResult(ControllerMessages.SuccessResetPasswordSendMail));
         }
-        [HttpPost]
-        [Route("resetpassword")]
+        [HttpPost("resetpassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
         {
             IResult result = await _authService.ResetPasswordAsync(resetPasswordModel);
@@ -108,8 +102,7 @@ namespace WebUI.Controllers
             return Ok(result);
 
         }
-        [HttpGet]
-        [Route("getroles")]
+        [HttpGet("getroles")]
         public async Task<IActionResult> GetUserRoles(int id)
         {
             IDataResult<User> user = await _userService.GetByIdAsync(id);
