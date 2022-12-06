@@ -30,7 +30,8 @@ namespace Business.Tests
 
             Assert.Equal(5, result.Data.Count);
         }
-        [Theory, InlineData(1)]
+        [Theory]
+        [InlineData(1)]
         public async Task Get_by_user_id_success(int userId)
         {
             _mockUserAddressDal.Setup(x => x.GetAllAsync(It.IsAny<Expression<Func<UserAddress, bool>>>())).ReturnsAsync(
@@ -39,7 +40,7 @@ namespace Business.Tests
             UserAddressManager userAddressManager = new UserAddressManager(_mockUserAddressDal.Object);
             IDataResult<List<UserAddress>> result = await userAddressManager.GetByUserIdAsync(userId);
 
-            Assert.Equal(1, result.Data.Count);
+            Assert.Single(result.Data);
         }
 
         [Fact]
