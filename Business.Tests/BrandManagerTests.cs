@@ -19,13 +19,7 @@ namespace Business.Tests
         public BrandManagerTests()
         {
             _mockTvBrandDal = new Mock<ITvBrandDal>();
-            _dbBrand = new List<TvBrand>
-            {
-                new TvBrand{Id=1,Name="Samsung",Address="",PhoneNumber=""},
-                new TvBrand{Id=2,Name="Philips",Address="",PhoneNumber=""},
-                new TvBrand{Id=3,Name="TCL",Address="",PhoneNumber=""},
-                new TvBrand{Id=4,Name="LG",Address="",PhoneNumber=""},
-            };
+            _dbBrand = getBrands().ToList();
         }
 
         [Fact]
@@ -36,29 +30,35 @@ namespace Business.Tests
             TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
             IDataResult<List<TvBrand>> result = await tvBrandManager.GetListAsync();
 
-            Assert.Equal(result.Data.Count, 4);
+            Assert.Equal(4, result.Data.Count);
         }
 
-        [Theory, InlineData(1)]
-        public async Task Get_by_id_brand_success(int id)
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(2, true)]
+        [InlineData(5, false)]
+        public async Task Get_by_id_brand_success(int id, bool success)
         {
             _mockTvBrandDal.Setup(x => x.GetAsync(It.IsAny<Expression<Func<TvBrand, bool>>>())).ReturnsAsync(_dbBrand.SingleOrDefault(x => x.Id == id));
 
             TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
             IDataResult<TvBrand> result = await tvBrandManager.GetByIdAsync(id);
 
-            Assert.True(result.IsSuccess);
+            Assert.Equal(result.IsSuccess, success);
         }
 
-        [Theory, InlineData(5)]
-        public async Task Get_by_id_brand_error(int id)
+        [Theory]
+        [InlineData(4, true)]
+        [InlineData(5, false)]
+        [InlineData(6, false)]
+        public async Task Get_by_id_brand_error(int id, bool success)
         {
             _mockTvBrandDal.Setup(x => x.GetAsync(It.IsAny<Expression<Func<TvBrand, bool>>>())).ReturnsAsync(_dbBrand.SingleOrDefault(x => x.Id == id));
 
             TvBrandManager tvBrandManager = new TvBrandManager(_mockTvBrandDal.Object);
             IDataResult<TvBrand> result = await tvBrandManager.GetByIdAsync(id);
 
-            Assert.False(result.IsSuccess);
+            Assert.Equal(result.IsSuccess, success);
         }
 
         [Fact]
@@ -95,6 +95,14 @@ namespace Business.Tests
             IResult result = await tvBrandManager.DeleteAsync(tvBrand);
 
             Assert.True(result.IsSuccess);
+        }
+
+        private IEnumerable<TvBrand> getBrands()
+        {
+            yield return new TvBrand { Id = 1, Name = "Samsung", Address = "", PhoneNumber = "" };
+            yield return new TvBrand { Id = 2, Name = "Philips", Address = "", PhoneNumber = "" };
+            yield return new TvBrand { Id = 3, Name = "TCL", Address = "", PhoneNumber = "" };
+            yield return new TvBrand { Id = 4, Name = "LG", Address = "", PhoneNumber = "" };
         }
     }
 }
