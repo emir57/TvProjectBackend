@@ -19,13 +19,7 @@ namespace Business.Tests
         public TvManagerTests()
         {
             _mockTvDal = new Mock<ITvDal>();
-            _dbTv = new List<Tv>()
-            {
-                new Tv{Id=1,ProductName="Samsung",BrandId=1,ScreenInch="49",ScreenType="QLED"},
-                new Tv{Id=2,ProductName="Philips",BrandId=1,ScreenInch="49",ScreenType="QLED"},
-                new Tv{Id=3,ProductName="Lg",BrandId=2,ScreenInch="49",ScreenType="QLED"},
-                new Tv{Id=4,ProductName="TCL",BrandId=1,ScreenInch="49",ScreenType="QLED"},
-            };
+            _dbTv = getTvs().ToList();
         }
 
         [Fact]
@@ -36,7 +30,7 @@ namespace Business.Tests
             TvManager tvManager = new TvManager(_mockTvDal.Object);
             IDataResult<List<Tv>> result = await tvManager.GetListAsync();
 
-            Assert.Equal(result.Data.Count, 4);
+            Assert.Equal(4, result.Data.Count);
         }
 
         [Theory, InlineData(1)]
@@ -98,6 +92,14 @@ namespace Business.Tests
             IResult result = await tvManager.DeleteAsync(tv);
 
             Assert.True(result.IsSuccess);
+        }
+
+        private IEnumerable<Tv> getTvs()
+        {
+            yield return new Tv { Id = 1, ProductName = "Samsung", BrandId = 1, ScreenInch = "49", ScreenType = "QLED" };
+            yield return new Tv { Id = 2, ProductName = "Philips", BrandId = 1, ScreenInch = "49", ScreenType = "QLED" };
+            yield return new Tv { Id = 3, ProductName = "Lg", BrandId = 2, ScreenInch = "49", ScreenType = "QLED" };
+            yield return new Tv { Id = 4, ProductName = "TCL", BrandId = 1, ScreenInch = "49", ScreenType = "QLED" };
         }
     }
 }
