@@ -2,7 +2,6 @@
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using FluentValidation;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -20,13 +19,7 @@ namespace Business.Tests
         public CityManagerTests()
         {
             _cityDalMock = new Mock<ICityDal>();
-            _cityDb = new List<City>()
-            {
-                new City{Id=1,CityName="Adana"},
-                new City{Id=6,CityName="Ankara"},
-                new City{Id=34,CityName="İstanbul"},
-                new City{Id=35,CityName="İzmir"}
-            };
+            _cityDb = getCities().ToList();
         }
 
         [Fact]
@@ -89,6 +82,14 @@ namespace Business.Tests
             IResult result = await cityManager.DeleteAsync(city);
 
             Assert.True(result.IsSuccess);
+        }
+
+        private IEnumerable<City> getCities()
+        {
+            yield return new City { Id = 1, CityName = "Adana" };
+            yield return new City { Id = 6, CityName = "Ankara" };
+            yield return new City { Id = 34, CityName = "İstanbul" };
+            yield return new City { Id = 35, CityName = "İzmir" };
         }
     }
 }
