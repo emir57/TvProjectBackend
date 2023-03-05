@@ -28,22 +28,10 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            TokenOptions tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = tokenOptions.Issuer,
-                        ValidAudience = tokenOptions.Audience,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
-                    };
-                });
+            #region Jwt Authentication
+            services.AddJwtAuthentication(Configuration);
+            #endregion
 
             #region AutoMapper
             services.AddAutoMapper(typeof(AutoMapperHelper));
