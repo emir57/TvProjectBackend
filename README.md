@@ -1,8 +1,8 @@
 # TvProjectBackend
 <h3> ⬇️ Used Technologies ⬇️ </h3>
 <ul>
-<li>.Net Core 3.1</li>
-<li>EntityFrameworkCore 3.1</li>
+<li>.Net 8</li>
+<li>EntityFrameworkCore 8</li>
 <li>Autofac</li>
 <li>DynamicProxy</li>
 <li>AutoMapper</li>
