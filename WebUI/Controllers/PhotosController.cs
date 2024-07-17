@@ -24,10 +24,10 @@ namespace WebUI.Controllers
         [Route("upload")]
         public async Task<IActionResult> UploadImage([FromForm] Photo photo)
         {
-            List<IResult> results = new List<IResult>();
+            List<Core.Utilities.Results.IResult> results = new List<Core.Utilities.Results.IResult>();
             foreach (IFormFile file in Request.Form.Files)
             {
-                IResult imageResult = await _photoUploadService.UploadImageAsync(file, photo);
+                Core.Utilities.Results.IResult imageResult = await _photoUploadService.UploadImageAsync(file, photo);
                 if (imageResult.IsSuccess == false)
                 {
                     results.Add(imageResult);

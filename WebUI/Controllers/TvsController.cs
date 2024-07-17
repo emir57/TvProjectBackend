@@ -73,7 +73,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTv([FromBody] Tv tv, [FromForm] IFormFile photo)
         {
-            IResult result = await _tvService.AddAsync(tv);
+            Core.Utilities.Results.IResult result = await _tvService.AddAsync(tv);
             if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
@@ -83,7 +83,7 @@ namespace WebUI.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateTv([FromBody] Tv tv)
         {
-            IResult result = await _tvService.UpdateAsync(tv);
+            Core.Utilities.Results.IResult result = await _tvService.UpdateAsync(tv);
             if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);
@@ -98,7 +98,7 @@ namespace WebUI.Controllers
             {
                 return BadRequest(tvResult);
             }
-            IResult result = await _tvService.DeleteAsync(tvResult.Data);
+            Core.Utilities.Results.IResult result = await _tvService.DeleteAsync(tvResult.Data);
             if (result.IsSuccess == false)
             {
                 return BadRequest(result.Message);

@@ -1,6 +1,5 @@
 ﻿using Core.Utilities.Business;
 using Core.Utilities.Results;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 
@@ -8,7 +7,7 @@ namespace Core.Utilities.Helpers
 {
     public class FileUploadHelper
     {
-        public static IResult Upload(IFormFile file, out string databasePath)
+        public static IResult Upload(Microsoft.AspNetCore.Http.IFormFile file, out string databasePath)
         {
             databasePath = "";
             var result = BusinessRules.Run(
@@ -41,7 +40,7 @@ namespace Core.Utilities.Helpers
         //    }
         //    databasePath = filePath;
         //}
-        protected static IResult CheckFile(IFormFile file)
+        protected static IResult CheckFile(Microsoft.AspNetCore.Http.IFormFile file)
         {
             if (file == null || !(file.Length > 0))
                 return new ErrorResult("Dosya seçiniz");

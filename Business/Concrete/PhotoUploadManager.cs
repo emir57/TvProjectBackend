@@ -18,9 +18,9 @@ namespace Business.Concrete
         {
             _photoService = photoService;
         }
-        public async Task<IResult> UploadImageAsync(IFormFile file, Photo photo)
+        public async Task<Core.Utilities.Results.IResult> UploadImageAsync(IFormFile file, Photo photo)
         {
-            IResult result = BusinessRules.Run(
+            Core.Utilities.Results.IResult result = BusinessRules.Run(
                 await IsMainExistsCheck(photo)
                 );
             if (result != null)
@@ -35,7 +35,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UploadImage);
         }
 
-        private async Task<IResult> IsMainExistsCheck(Photo photo)
+        private async Task<Core.Utilities.Results.IResult> IsMainExistsCheck(Photo photo)
         {
             IDataResult<List<Photo>> photos = await _photoService.GetListByTvIdAsync((int)photo.TvId);
             if (photos.Data.Any(x => x.IsMain == true) && photo.IsMain)
